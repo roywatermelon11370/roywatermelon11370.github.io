@@ -20,6 +20,12 @@
 	<script src="../assets/js/main.js"></script>
 </head>
 
+<script>
+    $(document).ready(function() {
+        $('#content').load('filelist.html');
+    });
+</script>
+
 <body>
     <nav class="navbar navbar-light bg-light sticky-top">
         <div class="container align-items-center">
@@ -27,26 +33,23 @@
                 <a href="../index.html" class="uil uil-arrow-left h2 mb-0"></a>
                 <h4 class="mb-0">相關檔案</h4>
             </div>
-            <a href="#" class="uil uil-ellipsis-h h4 mb-0"></a>
+            <a href="examples.zip" class="btn btn-primary"><span class="uil uil-cloud-download"></span> 全部下載</a>
         </div>
     </nav>
-    <div class="d-flex justify-content-center">
-        <div class="container p-2 row">
-            <a href="example2.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3">
-                <span class="uil uil-file display-4 text-info"></span>
-                <p class="text-dark">例題二</p>
-            </a>
 
-            <a href="example3.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3">
-                <span class="uil uil-file display-4 text-info"></span>
-                <p class="text-dark">例題三</p>
-            </a>
 
-            <a href="example4.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3">
-                <span class="uil uil-file display-4 text-info"></span>
-                <p class="text-dark">例題四</p>
-            </a>
+    <nav id="breadcrumb" aria-label="breadcrumb" style="background: #eee;">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li id="breadParent" class="breadcrumb-item"><a id="home" href="filelist.html">首頁</a></li>
+                <li id="breadChild" class="breadcrumb-item"></li>
+            </ol>
         </div>
+    </nav>
+
+
+    <div id="content">
+        
     </div>
 </body>
 
