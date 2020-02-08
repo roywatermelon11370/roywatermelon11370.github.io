@@ -42,5 +42,80 @@
         <div class="inside-box"></div>
         <div class="ball"></div>
     </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter">
+        <span class="uil uil-arrow"></span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre><code>
+                        
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;meta http-equiv="X-UA-Compatible" content="ie=edge">
+    &lt;title>例題二&lt;/title>
+&lt;/head>
+
+&lt;style>
+* {
+    box-sizing: border-box;
+}
+
+.outside-box {
+    padding: 25px;
+    width: 800px;
+    height: 400px;
+    position: relative;
+}
+
+.inside-box {
+    width: 740px;
+    height: 340px;
+    border: 5px solid royalblue;
+}
+
+.ball {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background: seagreen;
+    border-radius: 50%;
+}
+&lt;/style>
+
+&lt;body>
+    &lt;a href="index.html">返回&lt;/a>
+    &lt;p>請參考例題二，讓圓圈動起來並繞完整個長方形。&lt;/p>
+    &lt;div class="outside-box">
+        &lt;div class="inside-box">&lt;/div>
+        &lt;div class="ball">&lt;/div>
+    &lt;/div>
+&lt;/body>
+&lt;/html>
+                    </code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

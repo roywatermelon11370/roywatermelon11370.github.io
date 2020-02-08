@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,46 +9,45 @@
 </head>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+    * {
+        box-sizing: border-box;
+    }
 
-.square1 {
-    background: rgba(255, 0, 0, 0.4);
-    width: 150px;
-    height: 150px;
-}
+    .square1 {
+        background: rgba(255, 0, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 
-.square2 {
-    background: rgba(0, 255, 255, 0.4);
-    width: 150px;
-    height: 150px;
-}
+    .square2 {
+        background: rgba(0, 255, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 
-.square3 {
-    background: rgba(0, 255, 0, 0.4);
-    width: 150px;
-    height: 150px;
-}
+    .square3 {
+        background: rgba(0, 255, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 
-.square4 {
-    background: rgba(0, 0, 255, 0.4);
-    width: 150px;
-    height: 150px;
-}
+    .square4 {
+        background: rgba(0, 0, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 
-.square5 {
-    background: rgba(255, 255, 0, 0.4);
-    width: 150px;
-    height: 150px;
-}
+    .square5 {
+        background: rgba(255, 255, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 
-.square6 {
-    background: rgba(255, 0, 255, 0.4);
-    width: 150px;
-    height: 150px;
-}
-
+    .square6 {
+        background: rgba(255, 0, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
 </style>
 
 <body>
@@ -62,5 +62,105 @@
             <div class="square6">6</div>
         </div>
     </div>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter">
+        <span class="uil uil-arrow"></span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre><code>
+
+    &lt;!DOCTYPE html>
+    &lt;html lang="en">
+    &lt;head>
+        &lt;meta charset="UTF-8">
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+        &lt;meta http-equiv="X-UA-Compatible" content="ie=edge">
+        &lt;title>例題三&lt;/title>
+    &lt;/head>
+    
+    &lt;style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    .square1 {
+        background: rgba(255, 0, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    .square2 {
+        background: rgba(0, 255, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    .square3 {
+        background: rgba(0, 255, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    .square4 {
+        background: rgba(0, 0, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    .square5 {
+        background: rgba(255, 255, 0, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    .square6 {
+        background: rgba(255, 0, 255, 0.4);
+        width: 150px;
+        height: 150px;
+    }
+    
+    &lt;/style>
+    
+    &lt;body>
+        &lt;a href="index.html">返回&lt;/a>
+        &lt;p>請參考例題三，請讓圖中的六個正方形變成一個六面體(正方體)，並使其旋轉(旋轉方向不限制)。&lt;/p>
+        &lt;div class="sight">
+            &lt;div class="space">
+                &lt;div class="square1">1&lt;/div>
+                &lt;div class="square2">2&lt;/div>
+                &lt;div class="square3">3&lt;/div>
+                &lt;div class="square4">4&lt;/div>
+                &lt;div class="square5">5&lt;/div>
+                &lt;div class="square6">6&lt;/div>
+            &lt;/div>
+        &lt;/div>
+    &lt;/body>
+    &lt;/html>
+                    </code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

@@ -36,6 +36,81 @@
         </div>
         <button type="submit">註冊</button>
     </form>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter">
+        <span class="uil uil-arrow"></span>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <pre><code>
+
+
+    &lt;!DOCTYPE html>
+    &lt;html lang="en">
+    
+    &lt;head>
+        &lt;meta charset="UTF-8">
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+        &lt;meta http-equiv="X-UA-Compatible" content="ie=edge">
+        &lt;title>例題四&lt;/title>
+    &lt;/head>
+    
+    &lt;body>
+        &lt;a href="index.html">返回&lt;/a>
+        &lt;p>例題四是一個沒有美化過的註冊表單，請自行寫css(不要用css framework,像是bootstrap)來美化它。&lt;/p>
+        &lt;h2>註冊&lt;/h2>
+        &lt;form action="">
+            &lt;div>
+                &lt;label for="account">帳號&lt;/label>
+                &lt;input id="account" type="text">
+            &lt;/div>
+            &lt;div>
+                &lt;label for="password">密碼&lt;/label>
+                &lt;input id="password" type="password">
+            &lt;/div>
+            &lt;div>
+                &lt;label for="passwordAgain">確認密碼&lt;/label>
+                &lt;input id="passwordAgain" type="password">
+            &lt;/div>
+            &lt;div>
+                &lt;label for="email">email&lt;/label>
+                &lt;input id="email" type="text">
+            &lt;/div>
+            &lt;div>
+                &lt;label for="gender">性別&lt;/label>
+                &lt;input type="radio" name="gender" value="male"> 男生
+                &lt;input type="radio" name="gender" value="female"> 女生
+                &lt;input type="radio" name="gender" value="other"> 其他
+            &lt;/div>
+            &lt;button type="submit">註冊&lt;/button>
+        &lt;/form>
+    &lt;/body>
+    
+    &lt;/html>
+                    </code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
 
 </html>
