@@ -309,7 +309,7 @@ a:hover {
 /* ==================================
 =                 課程              =
 ===================================== */
-#lesson {
+#course {
     background-position: center;
     background-size: cover;
 }
@@ -320,7 +320,7 @@ a:hover {
     flex-wrap: wrap;
 }
 
-.lesson-card {
+.course-card {
     height: 200px;
     margin: 10px;
     padding: 25px;
@@ -332,20 +332,20 @@ a:hover {
     transition: all 0.3s ease-in-out;
     animation: card 0.5s ease;
     }
-    .lesson-card:hover {
+    .course-card:hover {
         background: rgba(53, 74, 95, 1);
         transform: scale(1.02);
         transition: all 0.3s cubic-bezier(0,.59,.43,.99);
     }
 
 @media (max-width: 1200px) and (min-width: 768px) {
-    .lesson-card {
+    .course-card {
         width: 45%;
     }
 } 
 
 @media (max-width: 768px) {
-    .lesson-card {
+    .course-card {
         width: 95%;
     }
 } 
@@ -361,13 +361,13 @@ a:hover {
     }
 }
 
-.lesson-card-text {
+.course-card-text {
     position: relative;
     margin-top: 40px;
 }
 
 
-.lesson-card .icon {
+.course-card .icon {
     font-size: 30px;
     position: absolute;
     width: 75px;
@@ -377,7 +377,7 @@ a:hover {
     overflow: hidden;
 }
 
-.lesson-btn {
+.course-btn {
     /* 課程卡片上的按鈕 */
     position: absolute;
     bottom: 10px;
@@ -388,7 +388,7 @@ a:hover {
     border: transparent;
     transition: all 0.3s ease-in-out;
     }
-    .lesson-btn:focus {
+    .course-btn:focus {
         box-shadow: 0px 0px 0px transparent;
     }
 

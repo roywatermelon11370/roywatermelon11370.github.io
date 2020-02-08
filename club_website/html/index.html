@@ -136,22 +136,228 @@
   </div>
 
   <!-- 課程介紹 -->
-  <div id="lesson" class="py-5 bg-dark text-center text-white">
+  <div id="course" class="py-5 bg-dark text-center text-white">
     <div class="container">
       <hr class="pb-4">
       <!-- 介紹 -->
       <h3>課程</h3>
       <p>每天放學時間在電教二所提供的免費課程，歡迎所有有興趣的同學來參加!</p><br>
-      <!-- cards -->
-      <div class="card-array" id="lesson_lists">
-        <!-- lessons -->
-      </div>
-      <!-- cards end -->
+    <!-- cards -->
+    <div class="card-array">
+      <!-- course 1 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-web icon text-center text-info"></i>
+        <div class="course-card-text">
+          <h5>Web</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+        <button type="button" class="btn btn-outline-info course-btn" data-toggle="modal"
+          data-target="#course1">了解更多</button>
 
-      <!-- modals -->
-      <div class="text-left" id="modals">
       </div>
-      <!-- modal end -->
+
+
+      <!-- course 2 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-image-filter-drama icon text-center text-warning"></i>
+        <div class="course-card-text">
+          <h5>Python</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+
+        <button type="button" class="btn btn-outline-warning course-btn" data-toggle="modal"
+          data-target="#course2">了解更多</button>
+
+      </div>
+
+      <!-- course 3 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-iframe-outline icon text-center text-danger"></i>
+        <div class="course-card-text">
+          <h5>C++</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+
+        <button type="button" class="btn btn-outline-danger course-btn" data-toggle="modal"
+          data-target="#course3">了解更多</button>
+
+      </div>
+
+      <!-- course 4 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-cube-outline icon text-center text-warning"></i>
+        <div class="course-card-text">
+          <h5>Machine Learning</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+
+        <button type="button" class="btn btn-outline-warning course-btn" data-toggle="modal"
+          data-target="#course4">了解更多</button>
+
+      </div>
+
+      <!-- course 5 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-coffee-outline icon text-center text-danger"></i>
+        <div class="course-card-text">
+          <h5>硬體</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+
+        <button type="button" class="btn btn-outline-danger course-btn" data-toggle="modal"
+          data-target="#course5">了解更多</button>
+
+      </div>
+
+      <!-- course 6 -->
+      <div class="course-card text-left bg-secondary">
+        <i class="mdi mdi-flag-outline icon text-center text-info"></i>
+        <div class="course-card-text">
+          <h5>四校聯課</h5>
+          <p>上課時間: 每週五下午5:00</p>
+        </div>
+
+        <button type="button" class="btn btn-outline-info course-btn" data-toggle="modal"
+          data-target="#course6">了解更多</button>
+
+      </div>
+
+    </div>
+    <!-- cards end -->
+
+    <!-- modals -->
+    <div class="text-left">
+      <!-- modal 1-->
+      <div class="modal fade" id="course1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="">frontend develop</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://uploads.toptal.io/blog/image/125783/toptal-blog-image-1522333595770-14ba14a2f6099482fa9189f8764dd5ad.png" class="modal-img">
+              <p class="text-dark pt-3">想知道網頁是怎麼寫出來的嗎？這個課程會教你如何寫出一個網頁，其中會學到HTML5/CSS和JS。從基本語法一直教到進階的相關應用。學完這個課後相信大家都有能力學會如何製作網站</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- modal 2-->
+      <div class="modal fade" id="course2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="exampleModalCenterTitle">Python</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://www.python.org/static/img/python-logo@2x.png" class="modal-img">
+              <p class="text-dark pt-3">Python是全世界最實用、最好入門的程式語言！讓我們來看看這條蟒蛇有什麼神奇妙用吧 XD<br>1.安裝與環境 -- 工欲善其事，必先利其器。<br>2.基礎語法 -- 循序、選擇、迴圈、函數、物件、一大堆東西。<br>3.模組與套件 -- 前人種樹，後人砍樹。<br>4.數學運算 -- NumPy，一個強大的數學運算工具。<br>5.物理模擬 -- VPython，取代物理引擎的簡易方式。<br>6.網路爬蟲 -- requests，學會發送HTTP請求！</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- modal 3-->
+      <div class="modal fade" id="course3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="exampleModalCenterTitle">C++</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://i.imgur.com/gp3pQz3.png" class="modal-img">
+              <p class="text-dark pt-3">課程中除了會讓大家熟悉C++的指令、語法、STL（標準函式庫），更會帶大家了解演算法到底是什麼樣的東西以及怎麼樣是好的演算法。什麼是演算法呢? 其實它大概像是一個食譜或SOP，我們把清楚的步驟用程式碼讓電腦執行多到無法想像的基本運算，為了分析日常生活中的問題及增快執行的效率，針對不同特定問題的演算法已經被大量發明，我們在課程中會依照同學學習狀況和大家逐步分享。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- modal 4-->
+      <div class="modal fade" id="course4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="exampleModalCenterTitle">Machine learning</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://live.staticflickr.com/1834/42271822770_6d2a1d533f_b.jpg" class="modal-img">
+              <p class="text-dark pt-3">人工智慧、機器學習是現在當紅的話題，alpha GO、影音辨識、自動駕駛等等都可見到它的蹤跡。從最基本的觀念開始，了解類神經網路背後的理論及數學原理，進一步實作自己的人工智慧，甚至學會如何應用在更廣泛未知的領域！</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- modal 5-->
+      <div class="modal fade" id="course5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="exampleModalCenterTitle">硬體</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://farm2.static.flickr.com/1943/31653058398_9de9800cc5.jpg" class="modal-img">
+              <p class="text-dark pt-3">資訊並不只有1與0的傳輸及改變，你是否希望對承載這一切的機器有更進一步的了解呢，你是否會希望能判斷為何一台筆店多了一顆水果就可以售價高昂，抑或是你是否希望能夠知道為何別人的電腦能比自己的更順暢，還是你只是想知道如何省檢測費自行DEBUG電腦的問題以及如何自己維修簡單的硬體故障，這堂課會一步步地帶著你從硬體蒙新變成能理解為何電腦這麼貴、和便宜。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- modal 6-->
+      <div class="modal fade" id="course6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- 視窗標題 -->
+              <h5 class="modal-title text-dark" id="exampleModalCenterTitle">四校聯課</h5>
+            </div>
+            <div class="modal-body">
+              <!-- 視窗內容 -->
+              <img src="https://picsum.photos/id/599/600/300" class="modal-img">
+              <p class="text-dark pt-3">Description.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">關 閉</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal end -->
     </div>
   </div>
 
