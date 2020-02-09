@@ -18,6 +18,10 @@ a:hover {
     text-decoration: none;
 }
 
+.navbar {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
 .main-bg {
     display: grid;
     min-height: 100vh;
@@ -253,5 +257,10 @@ code {
       -webkit-transform: scaleY(1.0);
     }
   }
+
+
+.bg-gredient {
+    background-image: linear-gradient(-225deg, #CBBACC 0%, #2580B3 100%);
+}
 
   
