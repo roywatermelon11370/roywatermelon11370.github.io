@@ -19,7 +19,6 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/arvgta/ajaxify@7.5.4/ajaxify.min.js"></script>
     <script src="../assets/js/main.js"></script>
-    <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"/>
 </head>
 
 <body>
@@ -29,7 +28,9 @@
                 <i class="uil uil-folder h4 mb-0 text-primary"></i>
                 <h5 class="mb-0">相關檔案</h5>
             </div>
-            <a href="examples.zip" class="btn btn-primary" target="_blank" download><span class="uil uil-cloud-download"></span> 全部下載</a>
+            <div>
+                <a href="examples/example4.html" class="btn btn-primary" download target="_blank"><span class="uil uil-cloud-download"></span> 下載</a>
+            </div>
         </div>
     </nav>
 
@@ -37,7 +38,8 @@
     <nav id="breadcrumb" aria-label="breadcrumb" style="background: #E9ECF0;">
         <div class="container">
             <ol class="breadcrumb">
-                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a></li>
+                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a>
+                </li>
                 <li id="breadChild" class="breadcrumb-item">example4.html</li>
             </ol>
         </div>
@@ -45,55 +47,56 @@
 
 
     <div id="content" class="p-1">
-        
-
-<p>例題四是一個沒有美化過的註冊表單，請自行寫css(不要用css framework,像是bootstrap)來美化它，並使用jquery ajax或fetch或是使其可以傳送資料到後端。</p>
-<h2>註冊</h2>
-<form action="">
-    <div>
-        <label for="account">帳號</label>
-        <input id="account" type="text">
-    </div>
-    <div>
-        <label for="password">密碼</label>
-        <input id="password" type="password">
-    </div>
-    <div>
-        <label for="passwordAgain">確認密碼</label>
-        <input id="passwordAgain" type="password">
-    </div>
-    <div>
-        <label for="email">email</label>
-        <input id="email" type="text">
-    </div>
-    <div>
-        <label for="gender">性別</label>
-        <input type="radio" name="gender" value="male"> 男生
-        <input type="radio" name="gender" value="female"> 女生
-        <input type="radio" name="gender" value="other"> 其他
-    </div>
-    <button type="submit">註冊</button>
-</form>
 
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter">
-    <span class="uil uil-arrow"></span>
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <p>例題四是一個沒有美化過的註冊表單，請自行寫css(不要用css framework,像是bootstrap)來美化它，並使用jquery ajax或fetch或是使其可以傳送資料到後端。</p>
+        <h2>註冊</h2>
+        <form action="">
+            <div>
+                <label for="account">帳號</label>
+                <input id="account" type="text">
             </div>
-            <div class="modal-body">
-                <pre><code>
+            <div>
+                <label for="password">密碼</label>
+                <input id="password" type="password">
+            </div>
+            <div>
+                <label for="passwordAgain">確認密碼</label>
+                <input id="passwordAgain" type="password">
+            </div>
+            <div>
+                <label for="email">email</label>
+                <input id="email" type="text">
+            </div>
+            <div>
+                <label for="gender">性別</label>
+                <input type="radio" name="gender" value="male"> 男生
+                <input type="radio" name="gender" value="female"> 女生
+                <input type="radio" name="gender" value="other"> 其他
+            </div>
+            <button type="submit">註冊</button>
+        </form>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary floating-btn" data-toggle="modal"
+            data-target="#exampleModalCenter">
+            <span class="uil uil-arrow"></span>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <pre><code>
 
 
 &lt;!DOCTYPE html>
@@ -139,37 +142,18 @@
 
 &lt;/html>
                 </code></pre>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-        
-        
-        
+
+
+
     </div>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

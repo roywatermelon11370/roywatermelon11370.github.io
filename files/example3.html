@@ -19,7 +19,6 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/gh/arvgta/ajaxify@7.5.4/ajaxify.min.js"></script>
     <script src="../assets/js/main.js"></script>
-    <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"/>
 </head>
 
 <body>
@@ -29,7 +28,9 @@
                 <i class="uil uil-folder h4 mb-0 text-primary"></i>
                 <h5 class="mb-0">相關檔案</h5>
             </div>
-            <a href="examples.zip" class="btn btn-primary" target="_blank" download><span class="uil uil-cloud-download"></span> 全部下載</a>
+            <div>
+                <a href="examples/example3.html" class="btn btn-primary" download target="_blank"><span class="uil uil-cloud-download"></span> 下載</a>
+            </div>
         </div>
     </nav>
 
@@ -37,7 +38,8 @@
     <nav id="breadcrumb" aria-label="breadcrumb" style="background: #E9ECF0;">
         <div class="container">
             <ol class="breadcrumb">
-                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a></li>
+                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a>
+                </li>
                 <li id="breadChild" class="breadcrumb-item">example3.html</li>
             </ol>
         </div>
@@ -49,76 +51,77 @@
             * {
                 box-sizing: border-box;
             }
-        
+
             .square1 {
                 background: rgba(255, 0, 0, 0.4);
                 width: 150px;
                 height: 150px;
             }
-        
+
             .square2 {
                 background: rgba(0, 255, 255, 0.4);
                 width: 150px;
                 height: 150px;
             }
-        
+
             .square3 {
                 background: rgba(0, 255, 0, 0.4);
                 width: 150px;
                 height: 150px;
             }
-        
+
             .square4 {
                 background: rgba(0, 0, 255, 0.4);
                 width: 150px;
                 height: 150px;
             }
-        
+
             .square5 {
                 background: rgba(255, 255, 0, 0.4);
                 width: 150px;
                 height: 150px;
             }
-        
+
             .square6 {
                 background: rgba(255, 0, 255, 0.4);
                 width: 150px;
                 height: 150px;
             }
         </style>
-        
-        
-            <p>請參考例題三，請讓圖中的六個正方形變成一個六面體(正方體)，並使其旋轉(旋轉方向不限制)。</p>
-            <div class="sight">
-                <div class="space">
-                    <div class="square1">1</div>
-                    <div class="square2">2</div>
-                    <div class="square3">3</div>
-                    <div class="square4">4</div>
-                    <div class="square5">5</div>
-                    <div class="square6">6</div>
-                </div>
+
+
+        <p>請參考例題三，請讓圖中的六個正方形變成一個六面體(正方體)，並使其旋轉(旋轉方向不限制)。</p>
+        <div class="sight">
+            <div class="space">
+                <div class="square1">1</div>
+                <div class="square2">2</div>
+                <div class="square3">3</div>
+                <div class="square4">4</div>
+                <div class="square5">5</div>
+                <div class="square6">6</div>
             </div>
-        
-        
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter">
-                <span class="uil uil-arrow"></span>
-            </button>
-        
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <pre><code>
+        </div>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary floating-btn" data-toggle="modal"
+            data-target="#exampleModalCenter">
+            <span class="uil uil-arrow"></span>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <pre><code>
         
             &lt;!DOCTYPE html>
             &lt;html lang="en">
@@ -188,33 +191,19 @@
             &lt;/body>
             &lt;/html>
             </code></pre>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     </div>
                 </div>
             </div>
-        
-        
-        
-        
+        </div>
+
+
+
+
     </div>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
