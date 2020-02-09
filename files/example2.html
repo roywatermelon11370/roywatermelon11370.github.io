@@ -25,23 +25,13 @@
     <nav id="nav" class="navbar navbar-light bg-light sticky-top">
         <div class="container align-items-center">
             <div class="d-flex align-items-center">
-                <i class="uil uil-folder h4 mb-0 text-primary"></i>
-                <h5 class="mb-0">相關檔案</h5>
+                <a href="index.html" class="uil uil-arrow-left h3 mb-0"></a>
+                <h6 class="mb-0">example2.html</h6>
             </div>
             <div>
-                <a href="examples/example2.html" class="btn btn-primary" download target="_blank"><span class="uil uil-cloud-download"></span> 下載</a>
+                <a href="examples/example2.html" class="btn btn-primary" download target="_blank"><span
+                        class="uil uil-cloud-download"></span> 下載</a>
             </div>
-        </div>
-    </nav>
-
-
-    <nav id="breadcrumb" aria-label="breadcrumb" style="background: #E9ECF0;">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a>
-                </li>
-                <li id="breadChild" class="breadcrumb-item">example2.html</li>
-            </ol>
         </div>
     </nav>
 
@@ -76,32 +66,32 @@
             }
         </style>
 
-        <body>
-            <p>請參考例題二，讓圓圈動起來並繞完整個長方形。</p>
-            <div class="outside-box">
-                <div class="inside-box"></div>
-                <div class="ball"></div>
-            </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary floating-btn" data-toggle="modal"
-                data-target="#exampleModalCenter" title="source code">
-                <span class="uil uil-arrow"></span>
-            </button>
+        <p>請參考例題二，讓圓圈動起來並繞完整個長方形。</p>
+        <div class="outside-box">
+            <div class="inside-box"></div>
+            <div class="ball"></div>
+        </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <pre><code>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary floating-btn" data-toggle="modal" data-target="#exampleModalCenter"
+            title="source code">
+            <span class="uil uil-arrow"></span>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Source code</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <pre><code>
                                     
             &lt;!DOCTYPE html>
             &lt;html lang="en">
@@ -151,15 +141,30 @@
             &lt;/body>
             &lt;/html>
                                 </code></pre>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
+
+
+
+    <div id="loading" class="loading">
+        <div class="d-block">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            <p>載入中...</p>
+        </div>
+    </div>
 </body>
 
 </html>

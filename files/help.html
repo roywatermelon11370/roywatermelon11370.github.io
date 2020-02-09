@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/css/bootstrap.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.0.1/css/unicons.css">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Source+Code+Pro&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -25,36 +25,54 @@
     <nav id="nav" class="navbar navbar-light bg-light sticky-top">
         <div class="container align-items-center">
             <div class="d-flex align-items-center">
-                <i class="uil uil-folder h4 mb-0 text-primary"></i>
-                <h5 class="mb-0">相關檔案</h5>
+                <a href="index.html" class="uil uil-arrow-left h3 mb-0"></a>
+                <h6 class="mb-0">說明及相關規則</h6>
             </div>
-            <div></div>
         </div>
     </nav>
-
-
-    <nav id="breadcrumb" aria-label="breadcrumb" style="background: #E9ECF0;">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li id="breadParent" class="breadcrumb-item"><a id="home" href="index.html" value="filelist.html">首頁</a>
-                </li>
-                <li id="breadChild" class="breadcrumb-item">help.html</li>
-            </ol>
-        </div>
-    </nav>
-
 
     <div id="content" class="p-1">
         <div class="d-flex justify-content-center">
             <div class="container p-2 d-inline-block">
                 <h3>說明及相關規則</h3>
-                <ol>
-                    <li>點擊右下角圓形按鈕可察看原始碼。</li>
-                    <li>點擊右上角"下載"按鈕會得到一個html檔案，為該題原始碼。</li>
-                    <li>可以上網找資料，但不要和同屆討論。</li>
-                    <li>所有例題的原始碼皆可拿來修改。</li>
-                </ol>
+
+                <div>
+                    <h5>本網站</h5>
+                    <ol>
+                        <li>點擊右下角圓形按鈕可察看原始碼。</li>
+                        <li>點擊右上角"下載"按鈕會得到一個html檔案，為該題原始碼。</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h5>注意事項</h5>
+                    <ol>
+                        <li>所有例題的原始碼皆可拿來修改。</li>
+                        <li>請將完成的程式碼上傳至 Gist/GitHub/Codepad 並附連結。</li>
+                        <li>有問題可以問學長，沒有方向也可以問。</li>
+                        <li>要考網管記得還要寫網管通識題本喔。</li>
+                        <li>禁止抄襲，查到資料後試著用自己的話說明，不要只會複製貼上。</li>
+                        <li>就算沒有全部答出來也不要灰心，學習的路上總是未知路。</li>
+                        <li>記得，Google 永遠是你的好朋友。</li>
+                        <li>享受這份題本吧！</li>
+                    </ol>
+                </div>
             </div>
+        </div>
+    </div>
+
+
+
+    <div id="loading" class="loading">
+        <div class="d-block">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            <p>載入中...</p>
         </div>
     </div>
 
