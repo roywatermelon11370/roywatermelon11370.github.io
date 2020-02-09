@@ -17,18 +17,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/arvgta/ajaxify@7.5.4/ajaxify.min.js"></script>
     <script src="../assets/js/main.js"></script>
 </head>
 
-<script>
-    $(document).ready(function () {
-        $('#content').load('filelist.html');
-        $('#home').removeAttr('href');
-    });
-</script>
-
 <body>
-    <nav class="navbar navbar-light bg-light sticky-top">
+    <nav id="nav" class="navbar navbar-light bg-light sticky-top">
         <div class="container align-items-center">
             <div class="d-flex align-items-center">
                 <a href="../index.html" class="uil uil-home-alt h4 mb-0"></a>
@@ -42,7 +36,7 @@
     <nav id="breadcrumb" aria-label="breadcrumb" style="background: #E9ECF0;">
         <div class="container">
             <ol class="breadcrumb">
-                <li id="breadParent" class="breadcrumb-item"><a id="home" href="filelist.html">首頁</a></li>
+                <li id="breadParent" class="breadcrumb-item"><a id="home" value="filelist.html">首頁</a></li>
                 <li id="breadChild" class="breadcrumb-item"></li>
             </ol>
         </div>
@@ -50,9 +44,38 @@
 
 
     <div id="content" class="p-1">
+        <div class="d-flex justify-content-center">
+            <div class="container p-2 d-inline-block">
+                <p class="text-secondary text-center">如果想要把範例下載到電腦中修改，請點選"全部下載"</p>
+                <div id="filelist" class="row">
+                    <a href="example2.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3"
+                        value="example2.html">
+                        <span class="uil uil-file display-4 text-warning"></span>
+                        <p class="text-dark">例題二</p>
+                    </a>
 
+                    <a href="example3.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3"
+                        value="example3.html">
+                        <span class="uil uil-file display-4 text-warning"></span>
+                        <p class="text-dark">例題三</p>
+                    </a>
+
+                    <a href="example4.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3"
+                        value="example4.html">
+                        <span class="uil uil-file display-4 text-warning"></span>
+                        <p class="text-dark">例題四</p>
+                    </a>
+
+                    <a href="help.html" class="col-md-2 col-sm-6 file-item d-inline-block text-center py-3"
+                        value="help.html">
+                        <span class="uil uil uil-question-circle display-4 text-info"></span>
+                        <p class="text-dark">說明及相關規則</p>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    
+
 </body>
 
 </html>
