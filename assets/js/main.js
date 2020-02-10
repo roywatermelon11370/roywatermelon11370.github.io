@@ -8,6 +8,8 @@ $(document).ready(function () {
     $(window).on("pronto.render", function() {
         $('#loading').css('display','none');
     });
+
+   
     
 });
 
