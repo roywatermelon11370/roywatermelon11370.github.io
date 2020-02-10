@@ -328,4 +328,6 @@ code {
   
 .btn-transparent {
     opacity: 0;
-}
+    } .btn-transparent:hover {
+        cursor: default;
+    }
