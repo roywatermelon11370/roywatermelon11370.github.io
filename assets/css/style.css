@@ -331,3 +331,8 @@ code {
     } .btn-transparent:hover {
         cursor: default;
     }
+    @media(max-width:679px) {
+        .btn-transparent {
+            display: none;
+        }
+    }

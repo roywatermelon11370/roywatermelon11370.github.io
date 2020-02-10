@@ -20,7 +20,7 @@ $(document).ready(function () {
         var val = $('#number').val();
         if(val == '99747') {
             $('#number').addClass('is-valid').removeClass('is-invalid');
-            $('#msg').text('其實你就算答對了有不會怎樣。');
+            $('#msg').text('恭喜答對。');
         } else {
             $('#number').addClass('is-invalid');
             $('#msg').text('');
