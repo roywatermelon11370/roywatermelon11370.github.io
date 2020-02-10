@@ -313,7 +313,11 @@ code {
         }
     }
     .bg-beer::after {
-        content: "";
+        content: "7122";
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        color: rgba(0,0,0,0.1);
         position: absolute;
         top: 0;
         left: 0;
