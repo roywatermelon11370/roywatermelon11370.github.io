@@ -296,4 +296,32 @@ code {
         height: 100%;
         background-color: rgba(255,255,255,0.4);
     }
+
+
+.bg-beer {
+    background-image: url(../img/beer.svg);
+    background-size: 75vw;
+    min-height: calc(100vh - 50px);
+    background-repeat: no-repeat;
+    background-position: 25vw 5vh;
+    position: relative;
+    z-index: 0;
+    }
+    @media(max-width:576px) {
+        .bg-beer {
+            background-position: 25vw 50vh;
+        }
+    }
+    .bg-beer::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255,255,255,0.4);
+    }
   
+.btn-transparent {
+    opacity: 0;
+}

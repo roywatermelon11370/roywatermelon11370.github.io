@@ -9,7 +9,9 @@ $(document).ready(function () {
         $('#loading').css('display','none');
     });
 
-   
+   chbg = function() {
+       $('#content').toggleClass('bg-beer');
+   }
     
 });
 
