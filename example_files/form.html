@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,15 @@
     }
 
     body {
-        padding: 20px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .form-bg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
 
     .input-item {
@@ -64,26 +73,27 @@
     .button:focus {
         outline: none;
     }
-
-    
 </style>
 
-<body>
-    <h1>登入</h1>
-    <form action="">
-        <div class="input-item">
-            <p class="input-title">帳號</p>
-            <input type="text" name="" id="" class="input">
-        </div>
-        <div class="input-item">
-            <p class="input-title">密碼</p>
-            <input type="password" name="" id="" class="input">
-        </div>
-        <div class="input-item">
-            <input type="checkbox" name="" id="remember">
-            <label for="remember">記住帳號</label>
-        </div>
-        <button type="submit" class="button">登入</button>
-    </form>
+<body class="form-bg">
+    <div class="form-container">
+        <h1>登入</h1>
+        <form action="">
+            <div class="input-item">
+                <p class="input-title">帳號</p>
+                <input type="text" name="" id="" class="input">
+            </div>
+            <div class="input-item">
+                <p class="input-title">密碼</p>
+                <input type="password" name="" id="" class="input">
+            </div>
+            <div class="input-item">
+                <input type="checkbox" name="" id="remember">
+                <label for="remember">記住帳號</label>
+            </div>
+            <button type="submit" class="button">登入</button>
+        </form>
+    </div>
 </body>
+
 </html>
