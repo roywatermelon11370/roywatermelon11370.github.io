@@ -1,17 +1,17 @@
 {
-  "name": "profile",
+  "name": "roywatermelon11370.github.io",
   "version": "1.0.0",
-  "description": "A personal profolio  website",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "tailwindcss build -i assets/src/style.css -o assets/css/style.css"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roywatermelon11370/roywatermelon11370.github.io.git"
   },
-  "author": "Roy Huang",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/roywatermelon11370/roywatermelon11370.github.io/issues"
