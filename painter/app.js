@@ -510,6 +510,13 @@ function chooseColor(c) {
         }
         else colorChoices[i].className = 'color-selection';
     }
+    
+    try {
+        document.getElementById('tmp-text-input').style.color = color;
+    }
+    catch(e) {
+        console.log('Hello ^_^');
+    }
 }
 
 function addColor() {
