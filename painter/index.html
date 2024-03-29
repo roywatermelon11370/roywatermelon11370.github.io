@@ -180,8 +180,14 @@
                             <span class="material-symbols-rounded">add_circle</span>
                         </button>
                     </div>
-                    <canvas id="color-block" width="175px" height="175px"></canvas>
-                    <canvas id="color-hue" width="40px" height="175px"></canvas>
+                    <div id="color-block-container" style="width: 175px; height: 175px; position: relative;">
+                        <canvas id="color-block" width="175px" height="175px"></canvas>
+                        <span id="color-block-indicator" style="top: -2px; left: 173px;"></span>
+                    </div>
+                    <div id="color-hue-container" style="width: 40px; height: 175px; position: relative;">
+                        <canvas id="color-hue" width="40px" height="175px"></canvas>
+                        <span id="color-hue-indicator" style="top: 0px; left: 0px;"></span>
+                    </div>
                 </div>
             </div>
         </section>

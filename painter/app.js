@@ -23,6 +23,8 @@ var maxIndex;
 // color picker
 var cursorStat2 = 0;
 var colorBlock;
+var colorBlockContainer;
+var colorHueContainer;
 var colorBlockWidth;
 var colorBlockHeight;
 var colorHue;
@@ -54,13 +56,13 @@ var textY;
 function init() {
     // canvas
     canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
+    ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     canvasPre = document.getElementById("canvas-preview");
-    ctxpre = canvasPre.getContext("2d");
+    ctxpre = canvasPre.getContext("2d", { willReadFrequently: true });
 
     canvasBg = document.getElementById("canvas-bg");
-    ctxbg = canvasBg.getContext("2d");
+    ctxbg = canvasBg.getContext("2d", { willReadFrequently: true });
 
     canvasContainer = document.getElementById('canvas-container');
 
@@ -157,8 +159,11 @@ function init() {
     colorHueWidth = colorHue.offsetWidth;
     colorHueHeight = colorHue.offsetHeight;
     colorLabel = document.getElementById('color-label');
-    ctx1 = colorBlock.getContext("2d");
-    ctx2 = colorHue.getContext("2d");
+    ctx1 = colorBlock.getContext("2d", { willReadFrequently: true });
+    ctx2 = colorHue.getContext("2d", { willReadFrequently: true });
+
+    colorHueContainer = document.getElementById('color-hue-container');
+    colorBlockContainer = document.getElementById('color-block-container');
 
     colorLabel.style.backgroundColor = "rgba(255, 0, 0, 1)";
 
@@ -176,23 +181,34 @@ function init() {
 
     fillColorBlock();
 
-    colorHue.addEventListener('mousedown', (e) => {
+    colorHueContainer.addEventListener('mousedown', (e) => {
+        cursorStat2 = 1;
+        changeHue(e);
+    });
+    colorHueContainer.addEventListener('mouseup', (e) => {
+        cursorStat2 = 0;
+        changeHue(e);
+    });
+    colorHueContainer.addEventListener('mousemove', (e) => {
+        changeHue(e);
+    });
+    colorHueContainer.addEventListener('mouseout', (e) => {
+        cursorStat2 = 0;
         changeHue(e);
     });
 
-    colorBlock.addEventListener('mousedown', (e) => {
+    colorBlockContainer.addEventListener('mousedown', (e) => {
         cursorStat2 = 1;
         chooseColorFromBlock(e);
     });
-    colorBlock.addEventListener('mouseup', (e) => {
+    colorBlockContainer.addEventListener('mouseup', (e) => {
         cursorStat2 = 0;
-        // ctx.restore();
         chooseColorFromBlock(e);
     });
-    colorBlock.addEventListener('mousemove', (e) => {
+    colorBlockContainer.addEventListener('mousemove', (e) => {
         chooseColorFromBlock(e);
     });
-    colorBlock.addEventListener('mouseout', (e) => {
+    colorBlockContainer.addEventListener('mouseout', (e) => {
         cursorStat2 = 0;
         chooseColorFromBlock(e);
     });
@@ -463,10 +479,15 @@ function clearCanvas() {
 function changeHue(e) {
     var cX = e.offsetX;
     var cY = e.offsetY;
+    var cYF = parseFloat(e.offsetY) - 2.5;
 
-    var imageData = ctx2.getImageData(cX, cY, 1, 1).data;
-    hue = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-    fillColorBlock();
+    if (cursorStat2) {
+        // console.log('hue changing');
+        var imageData = ctx2.getImageData(cX, cY, 1, 1).data;
+        hue = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
+        document.getElementById('color-hue-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: 0px;');
+        fillColorBlock();
+    }
 }
 
 function fillColorBlock() {
@@ -489,11 +510,14 @@ function fillColorBlock() {
 function chooseColorFromBlock(e) {
     var cX = e.offsetX;
     var cY = e.offsetY;
+    var cXF = parseFloat(e.offsetX) - 2.5;
+    var cYF = parseFloat(e.offsetY) - 2.5;
 
     if (cursorStat2) {
         var imageData = ctx1.getImageData(cX, cY, 1, 1).data;
         var tmpColor = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
         colorLabel.style.backgroundColor = tmpColor;
+        document.getElementById('color-block-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: ' + cXF + 'px;');
         chooseColor(tmpColor);
         document.getElementById('color-label').classList.add('color-selection-active');
     }
@@ -510,11 +534,11 @@ function chooseColor(c) {
         }
         else colorChoices[i].className = 'color-selection';
     }
-    
+
     try {
         document.getElementById('tmp-text-input').style.color = color;
     }
-    catch(e) {
+    catch (e) {
         console.log('Hello ^_^');
     }
 }
