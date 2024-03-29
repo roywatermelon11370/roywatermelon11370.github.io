@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painter</title>
+    <link rel="stylesheet" href="bootstrap2.css">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</head>
+
+<script src="app.js"></script>
+
+<body class="bg-light" onload="init()">
+    <div class="d-flex" style="height: 100vh;">
+        <!-- tool area -->
+        <section class="col-4 col-lg-3 p-4 overflow-scroll">
+            <!-- title bar -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <h2 class="mb-0">Painter</h2>
+                <div>
+                    <button id="undo-btn" class="btn btn-icon" onclick="canvasUndo()">
+                        <span class="material-symbols-rounded">undo</span>
+                    </button>
+                    <button id="redo-btn" class="btn btn-icon" onclick="canvasRedo()">
+                        <span class="material-symbols-rounded">redo</span>
+                    </button>
+                    <button class="btn btn-icon" data-bs-toggle="modal" data-bs-target="#ResetModal">
+                        <span class="material-symbols-rounded">delete</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- upload download -->
+            <div class="d-flex mt-4 gap-2">
+                <label for="file-upload" class="col-6 btn btn-dark w-full">
+                    <input type="file" id="file-upload" class="btn-check">
+
+                    <span class="material-symbols-rounded">image</span>
+                    Upload
+
+                </label>
+                <button class="btn btn-primary col-6" onclick="download()">
+                    <span class="material-symbols-rounded">download</span>
+                    Download
+                </button>
+            </div>
+
+            <!-- pen selector -->
+            <div class="mt-4 d-flex flex-wrap gap-2">
+                <label for="tool-draw" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-draw" value="draw" checked>
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">edit</span>
+                    </div>
+                </label>
+                <label for="tool-erase" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-erase" value="erase">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">ink_eraser</span>
+                    </div>
+                </label>
+                <label for="tool-text" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-text" value="text">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">format_shapes</span>
+                    </div>
+                </label>
+                <label for="tool-circle" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-circle" value="circle">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">circle</span>
+                    </div>
+                </label>
+                <label for="tool-rect" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-rect" value="rect">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">square</span>
+                    </div>
+                </label>
+                <label for="tool-triangle" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-triangle" value="triangle">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">change_history</span>
+                    </div>
+                </label>
+                <label for="tool-line" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-line" value="line">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">pen_size_2</span>
+                    </div>
+                </label>
+                <label for="tool-rainbow" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-rainbow" value="rainbow">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">looks</span>
+                    </div>
+                </label>
+                <!-- <label for="tool-smile" class="btn-tool-group">
+                    <input type="radio" name="tool" class="btn-check" id="tool-smile" value="smile">
+                    <div class="btn btn-tool">
+                        <span class="material-symbols-rounded">sticker</span>
+                    </div>
+                </label> -->
+            </div>
+
+            <!-- font selector -->
+            <div id="font-area" class="d-flex mt-4 gap-2">
+                <select class="form-select" id="font-style" style="width: 65%;">
+                    <option value="serif">Serif</option>
+                    <option value="sans-serif">Sans-serif</option>
+                    <option value="monospace">Monospace</option>
+                    <option value="Arial">Arial</option>
+                    <option value="微軟正黑體">微軟正黑體</option>
+                    <option value="標楷體">標楷體</option>
+                    <option value="新細明體">新細明體</option>
+                </select>
+                <select class="form-select" id="font-size" style="width: 35%;">
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                    <option value="14">14</option>
+                    <option value="18">18</option>
+                    <option value="26" selected>26</option>
+                    <option value="38">38</option>
+                    <option value="46">46</option>
+                    <option value="64">64</option>
+                    <option value="72">72</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
+            <!-- type -->
+            <div id="fill-type-area" class="mt-4 text-center">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="fill-type" id="stroke" autocomplete="off" checked
+                        value="0">
+                    <label class="btn btn-outline-primary" for="stroke">Stroke</label>
+                    <input type="radio" class="btn-check" name="fill-type" id="filled" autocomplete="off" value="1">
+                    <label class="btn btn-outline-primary" for="filled">Solid</label>
+                </div>
+            </div>
+
+            <!-- thickness -->
+            <div id="thickness-area" class="mt-4 d-flex align-items-center">
+                <span class="material-symbols-rounded text-muted me-3">line_weight</span>
+                <input type="range" class="form-range" id="thickness" oninput="changeThickness(this.value)" min="1"
+                    max="100" value="25">
+            </div>
+
+            <!-- color selection -->
+            <div id="color-selection-area">
+                <div id="color-choices" class="d-flex flex-wrap gap-3 mt-4 justify-content-center">
+                    <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
+                        onclick="chooseColor('rgb(0, 0, 0)')"></button>
+                    <button class="color-selection" style="background: rgb(244, 67, 54);"
+                        onclick="chooseColor('rgb(244, 67, 54)')"></button>
+                    <button class="color-selection" style="background: rgb(255, 152, 0);"
+                        onclick="chooseColor('rgb(255, 152, 0)')"></button>
+                    <button class="color-selection" style="background: rgb(76, 175, 80)"
+                        onclick="chooseColor('rgb(76, 175, 80)')"></button>
+                    <button class="color-selection" style="background: rgb(33, 150, 243);"
+                        onclick="chooseColor('rgb(33, 150, 243)')"></button>
+                    <button class="color-selection" style="background: rgb(103, 58, 183);"
+                        onclick="chooseColor('rgb(103, 58, 183)')"></button>
+                </div>
+                <div class="d-flex mt-4 justify-content-center gap-2">
+                    <div class="d-flex flex-wrap justify-content-center p-2" style="width: 50px; height: 175px;">
+                        <span id="color-label" class="color-selection" style="background: salmon;"></span>
+                        <button class="btn btn-icon" onclick="addColor();">
+                            <span class="material-symbols-rounded">add_circle</span>
+                        </button>
+                    </div>
+                    <canvas id="color-block" width="175px" height="175px"></canvas>
+                    <canvas id="color-hue" width="40px" height="175px"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- draw area -->
+        <section id="draw-area" class="col-8 col-lg-9 p-4 text-center overflow-scroll" style="height: 100vh;">
+            <div id="canvas-container" class="draw">
+                <canvas id="canvas-bg" width="1000px" height="700px">OUO</canvas>
+                <canvas id="canvas" width="1000px" height="700px">OWO</canvas>
+                <canvas id="canvas-preview" width="1000px" height="700px">OAO</canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- Reset Dialog -->
+    <div class="modal fade" id="ResetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset</h5>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="clearCanvas()"
+                        data-bs-dismiss="modal">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
