@@ -9,7 +9,7 @@
 | Basic control tools                              | 30%       | Y         |
 | Text input                                       | 10%       | Y         |
 | Cursor icon                                      | 10%       | Y         |
-| Refresh button                                   | 5%        | Y         |
+| Refresh button                                   | 5%       | Y         |
 
 | **Advanced tools**                               | **Score** | **Check** |
 | :----------------------------------------------- | :-------: | :-------: |
@@ -20,8 +20,7 @@
 
 | **Other useful widgets**                         | **Score** | **Check** |
 | :----------------------------------------------- | :-------: | :-------: |
-| Color quick access                               | 1~5%      | Y         |
-| Rainbow Brush                                    |           |           |
+| Name of widgets                                  | 1~5%     | N         |
 
 
 ---

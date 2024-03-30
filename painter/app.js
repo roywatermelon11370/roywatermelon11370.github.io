@@ -672,15 +672,21 @@ function canvasRedo() {
     else document.getElementById('undo-btn').disabled = false;
 }
 
+var tmpTextInput;
+
 function writeText(e) {
     if (isEditingText) {
         var newTextInput = document.createElement('input');
         newTextInput.setAttribute('id', 'tmp-text-input');
         newTextInput.setAttribute('style', 'top: ' + oriCursorY + 'px; left: ' + oriCursorX + 'px; font-size: ' + fontSize + 'px; font-family: ' + fontStyle + ', sans-serif; color:' + color + ';');
         canvasContainer.appendChild(newTextInput);
-        document.getElementById('tmp-text-input').autofocus = true;
+        tmpTextInput = document.getElementById('tmp-text-input');
+        tmpTextInput.autofocus = true;
         textX = oriCursorX;
         textY = oriCursorY;
+
+        tmpTextInput.addEventListener('input', resizeInput);
+        resizeInput.call(tmpTextInput);
     }
     else {
         var tmpTextInput = document.getElementById('tmp-text-input');
@@ -710,4 +716,8 @@ function changeFont() {
     catch (e) {
         console.log('No tmp-text-input on screen');
     }
+}
+
+function resizeInput() {
+    this.style.width = this.value.length + 'ch';
 }
