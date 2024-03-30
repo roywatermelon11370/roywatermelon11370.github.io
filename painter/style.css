@@ -4,6 +4,23 @@
     --image-height: 700px;
 }
 
+/* 
+* {
+    font-family: "Rubik", sans-serif;
+} */
+
+/* h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 600;
+} */
+
+body {
+    background-color: #f3f4f6;
+}
+
 .material-symbols-rounded {
     font-variation-settings:
         'FILL' 0,
@@ -26,6 +43,7 @@
 }
 
 .btn {
+    /* font-family: "Rubik", sans-serif !important; */
     display: inline-flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -198,11 +216,16 @@
 }
 
 *::-webkit-scrollbar {
-    background: var(--bs-light);
+    background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
+    border-radius: 100px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 100px;
 }
 

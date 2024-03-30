@@ -461,6 +461,16 @@ function clearCanvas() {
     document.documentElement.style.setProperty('--image-width', '1000px');
     document.documentElement.style.setProperty('--image-height', '700px');
 
+    try {
+        var tmpTextInput = document.getElementById('tmp-text-input');
+        tmpTextInput.remove();
+    }
+    catch (e) {
+        console.log('^-^');
+    }
+
+    isEditingText = 0;
+
     canvasHistory = [];
     currIndex = 0;
     maxIndex = 0;
