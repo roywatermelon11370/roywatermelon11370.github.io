@@ -127,7 +127,7 @@
     height: var(--image-height);
     box-shadow: var(--bs-box-shadow-sm);
     border-radius: var(--bs-border-radius-lg);
-    overflow: hidden;
+    overflow: clip;
     margin: auto;
 }
 
