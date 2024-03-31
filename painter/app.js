@@ -145,7 +145,7 @@ function init() {
     fillTypeChange(fillType);
 
     // slider
-    
+
     scaleContainer = document.getElementById('scale-slider');
     scaleValue = document.getElementById('scale-value');
     changeThickness(25);
@@ -572,6 +572,8 @@ function resetCanvas() {
 
     isEditingText = 0;
 
+    resetScale(100);
+
     canvasHistory = [];
     currIndex = 0;
     maxIndex = 0;
@@ -705,6 +707,8 @@ function handleImage(e) {
             document.documentElement.style.setProperty('--image-height', img.height + 'px');
 
             canvasHistory[0] = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+            resetScale(100);
         }
         img.src = event.target.result;
         closeModal('new-dialog');
