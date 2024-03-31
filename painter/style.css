@@ -1198,7 +1198,7 @@ body {
 
 .modal-foot {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
   padding: 1.25rem;

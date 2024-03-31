@@ -526,7 +526,7 @@ body {
 }
 
 .modal-foot {
-    @apply p-5 flex gap-4 bg-slate-100;
+    @apply p-5 flex gap-5 bg-slate-100;
 }
 
 .modal-foot button {
