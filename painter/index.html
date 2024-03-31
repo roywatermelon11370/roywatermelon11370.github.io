@@ -270,16 +270,18 @@
                     </div>
                 </section>
                 <section id="new-blank" class="hidden">
+
                     <div class="modal-body">
                         <div class="mt-5">
                             <h5 class="text-slate-500 mb-1">Dimension</h5>
                             <div class="flex items-center gap-2">
                                 <input type="number" id="new-width" name="new-width" min="10" max="10000"
-                                    class="form-input w-1/2" value="1000">
+                                    class="form-input w-1/2" value="1000" placeholder="1000">
                                 <span class="material-symbols-rounded text-base text-slate-500">close</span>
                                 <input type="number" id="new-height" name="new-height" min="10" max="10000"
-                                    class="form-input w-1/2" value="700">
+                                    class="form-input w-1/2" value="700" placeholder="700">
                             </div>
+                            <p id="err-msg" class="mt-1"></p>
                         </div>
                         <div class="mt-5">
                             <h5 class="text-slate-500 mb-1">Background Color</h5>
@@ -289,8 +291,10 @@
 
                     <div class="modal-foot">
                         <button class="btn btn-secondary" onclick="closeModal('new-dialog')">Cancel</button>
-                        <button class="btn btn-primary" onclick="newCanvas();closeModal('new-dialog');">Create</button>
+                        <button type="submit" id="new-blank-btn" class="btn btn-primary"
+                            onclick="newCanvas();closeModal('new-dialog');">Create</button>
                     </div>
+
                 </section>
             </div>
         </div>

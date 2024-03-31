@@ -57,6 +57,9 @@ var textY;
 var newBgColor;
 var newWidth;
 var newHeight;
+var newWidthContainer;
+var newHeightContainer;
+var newBgColorContainer;
 
 function init() {
     // canvas
@@ -239,17 +242,34 @@ function init() {
     }
     else document.getElementById('undo-btn').disabled = false;
 
-    newWidth = document.getElementById('new-width').value;
-    newHeight = document.getElementById('new-height').value;
-    newBgColor = document.getElementById('new-bg-color').value;
+    newWidthContainer = document.getElementById('new-width');
+    newHeightContainer = document.getElementById('new-height');
+    newBgColorContainer = document.getElementById('new-bg-color');
+    newWidth = newWidthContainer.value;
+    newHeight = newHeightContainer.value;
+    newBgColor = newBgColorContainer.value;
+
+    errMsg = document.getElementById('err-msg');
 
     document.getElementById('new-width').addEventListener('change', (e) => {
         newWidth = document.getElementById('new-width').value;
-        if (newWidth > 10000) newWidth = 10000;
+        newWidthContainer.classList.remove('form-input-error');
+        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
+        if (newWidth > 10000 || newWidth < 10) {
+            newWidthContainer.classList.add('form-input-error');
+            errMsg.innerHTML = '10000 > value > 10'
+            document.getElementById('new-blank-btn').disabled = true;
+        }
     });
     document.getElementById('new-height').addEventListener('change', (e) => {
         newHeight = document.getElementById('new-height').value;
-        if (newHeight > 10000) newHeight = 10000;
+        newHeightContainer.classList.remove('form-input-error');
+        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
+        if (newHeight > 10000 || newWidth < 10) {
+            newHeightContainer.classList.add('form-input-error');
+            errMsg.innerHTML = '10000 > value > 10'
+            document.getElementById('new-blank-btn').disabled = true;
+        }
     });
     document.getElementById('new-bg-color').addEventListener('change', (e) => {
         newBgColor = document.getElementById('new-bg-color').value;

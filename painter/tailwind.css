@@ -434,6 +434,14 @@ body {
     @apply border-blue-600 outline-none;
 }
 
+.form-input-error {
+    @apply p-2 rounded-md border-2 border-red-500;
+}
+
+#err-msg {
+    @apply text-red-500 text-sm;
+}
+
 .modal-container {
     @apply fixed w-screen h-screen top-0 left-0 flex justify-center items-center;
     background: rgba(0, 0, 0, 0.2);
