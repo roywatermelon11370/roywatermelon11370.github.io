@@ -971,13 +971,25 @@ body {
 }
 
 .form-range:hover::-moz-range-thumb {
-  transform: scale(1.2);
+  transform: scale(1.35);
   -moz-transition: all .1s ease-out;
   transition: all .1s ease-out;
 }
 
 .form-range:hover::-webkit-slider-thumb {
-  transform: scale(1.2);
+  transform: scale(1.35);
+  -webkit-transition: all .1s ease-out;
+  transition: all .1s ease-out;
+}
+
+.form-range:active::-moz-range-thumb {
+  transform: scale(0.8);
+  -moz-transition: all .1s ease-out;
+  transition: all .1s ease-out;
+}
+
+.form-range:active::-webkit-slider-thumb {
+  transform: scale(0.8);
   -webkit-transition: all .1s ease-out;
   transition: all .1s ease-out;
 }
