@@ -484,6 +484,15 @@ function toolChange() {
 }
 
 function newCanvas() {
+    // if (newWidth > 10000 || newWidth < 10) {
+    //     newWidthContainer.value = 1000;
+    //     newWidth = 1000;
+    // }
+    // if (newHeight > 10000 || newHeight < 10) {
+    //     newHeightContainer.value = 700;
+    //     newHeight = 700;
+    // }
+
     canvas.width = newWidth;
     canvas.height = newHeight;
 
@@ -778,6 +787,19 @@ function openModal(id) {
     let modal = document.getElementById(id);
     modal.classList.remove('hidden');
     // modal.addEventListener('onmousedown', closeModal(id));
+
+    if (newWidth > 10000 || newWidth < 10) {
+        newWidthContainer.value = 1000;
+        newWidth = 1000;
+    }
+    if (newHeight > 10000 || newHeight < 10) {
+        newHeightContainer.value = 700;
+        newHeight = 700;
+    }
+
+    newWidthContainer.classList.remove('form-input-error');
+    errMsg.innerHTML = '';
+    document.getElementById('new-blank-btn').disabled = false;
 }
 
 function closeModal(id) {
