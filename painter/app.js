@@ -849,6 +849,7 @@ function resetDimension() {
     newHeightContainer.value = 700;
     newHeight = 700;
     newBgColorContainer.value = '#FFFFFF';
+    newBgColor = "#FFFFFF";
 
     newWidthContainer.classList.remove('form-input-error');
     newHeightContainer.classList.remove('form-input-error');

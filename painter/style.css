@@ -1162,12 +1162,12 @@ body {
 }
 
 .modal-head {
-  padding: 1rem;
+  padding: 1.25rem;
   padding-bottom: 0.5rem;
 }
 
 .modal-body {
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .modal-foot {
@@ -1175,7 +1175,7 @@ body {
   gap: 1rem;
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
-  padding: 1rem;
+  padding: 1.25rem;
 }
 
 .modal-foot button {

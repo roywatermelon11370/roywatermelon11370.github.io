@@ -34,7 +34,6 @@ body {
 }
 
 .material-symbols-rounded {
-    cursor: default;
     font-variation-settings:
         'FILL' 0,
         'wght' 300,
@@ -43,7 +42,6 @@ body {
 }
 
 .ms-rounded-filled {
-    cursor: default;
     font-variation-settings:
         'FILL' 1,
         'wght' 300,
@@ -496,15 +494,15 @@ body {
 }
 
 .modal-head {
-    @apply p-4 pb-2;
+    @apply p-5 pb-2;
 }
 
 .modal-body {
-    @apply p-4;
+    @apply p-5;
 }
 
 .modal-foot {
-    @apply p-4 flex gap-4 bg-slate-100;
+    @apply p-5 flex gap-4 bg-slate-100;
 }
 
 .modal-foot button {
