@@ -22,6 +22,7 @@ var maxIndex;
 
 // color picker
 var cursorStat2 = 0;
+var cursorStat3 = 0;
 var colorBlock;
 var colorBlockContainer;
 var colorHueContainer;
@@ -206,18 +207,18 @@ function init() {
     });
 
     colorBlockContainer.addEventListener('mousedown', (e) => {
-        cursorStat2 = 1;
+        cursorStat3 = 1;
         chooseColorFromBlock(e);
     });
     colorBlockContainer.addEventListener('mouseup', (e) => {
-        cursorStat2 = 0;
+        cursorStat3 = 0;
         chooseColorFromBlock(e);
     });
     colorBlockContainer.addEventListener('mousemove', (e) => {
         chooseColorFromBlock(e);
     });
     colorBlockContainer.addEventListener('mouseout', (e) => {
-        cursorStat2 = 0;
+        cursorStat3 = 0;
         chooseColorFromBlock(e);
     });
 
@@ -573,7 +574,7 @@ function chooseColorFromBlock(e) {
     var cXF = parseFloat(e.offsetX) - 2.5;
     var cYF = parseFloat(e.offsetY) - 2.5;
 
-    if (cursorStat2) {
+    if (cursorStat3) {
         var imageData = ctx1.getImageData(cX, cY, 1, 1).data;
         var tmpColor = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
         colorLabel.style.backgroundColor = tmpColor;
