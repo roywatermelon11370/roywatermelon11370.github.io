@@ -265,7 +265,7 @@ function init() {
         newHeight = document.getElementById('new-height').value;
         newHeightContainer.classList.remove('form-input-error');
         if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
-        if (newHeight > 10000 || newWidth < 10) {
+        if (newHeight > 10000 || newHeight < 10) {
             newHeightContainer.classList.add('form-input-error');
             errMsg.innerHTML = '10000 > value > 10'
             document.getElementById('new-blank-btn').disabled = true;
