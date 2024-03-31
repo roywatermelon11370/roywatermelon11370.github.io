@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painter</title>
-    <link rel="stylesheet" href="bootstrap2.css">
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet"
@@ -24,11 +24,11 @@
 <script src="app.js"></script>
 
 <body class="" onload="init()">
-    <div class="d-flex" style="height: 100vh;">
+    <div class="flex" style="height: 100vh;">
         <!-- tool area -->
-        <section class="col-4 col-lg-3 p-4 overflow-scroll">
+        <section class="w-1/3 md:w-1/4 p-5 overflow-scroll">
             <!-- title bar -->
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="flex flex-wrap justify-between items-center">
                 <h2 class="mb-0 font-bold">Painter</h2>
                 <div>
                     <button id="undo-btn" class="btn btn-icon" onclick="canvasUndo()">
@@ -37,79 +37,79 @@
                     <button id="redo-btn" class="btn btn-icon" onclick="canvasRedo()">
                         <span class="material-symbols-rounded">redo</span>
                     </button>
-                    <button class="btn btn-icon" data-bs-toggle="modal" data-bs-target="#ResetModal">
+                    <button class="btn btn-icon" onclick="openModal('reset-dialog')">
                         <span class="material-symbols-rounded">delete</span>
                     </button>
                 </div>
             </div>
 
             <!-- upload download -->
-            <div class="d-flex mt-4 gap-2">
-                <label for="file-upload" class="col-6 btn btn-dark w-full">
-                    <input type="file" id="file-upload" class="btn-check">
+            <div class="flex mt-5 gap-2">
+                <label for="file-upload" class="w-1/2 btn btn-dark">
+                    <input type="file" id="file-upload" class="form-hidden">
 
                     <span class="material-symbols-rounded">image</span>
                     Upload
 
                 </label>
-                <button class="btn btn-primary col-6" onclick="download()">
+                <button class="btn btn-primary w-1/2" onclick="download()">
                     <span class="material-symbols-rounded">download</span>
                     Download
                 </button>
             </div>
 
             <!-- pen selector -->
-            <div class="mt-4 d-flex flex-wrap gap-2">
+            <div class="mt-5 flex flex-wrap gap-2">
                 <label for="tool-draw" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-draw" value="draw" checked>
+                    <input type="radio" name="tool" class="form-hidden" id="tool-draw" value="draw" checked>
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">edit</span>
                     </div>
                 </label>
                 <label for="tool-erase" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-erase" value="erase">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-erase" value="erase">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">ink_eraser</span>
                     </div>
                 </label>
                 <label for="tool-text" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-text" value="text">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-text" value="text">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">format_shapes</span>
                     </div>
                 </label>
                 <label for="tool-circle" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-circle" value="circle">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-circle" value="circle">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">circle</span>
                     </div>
                 </label>
                 <label for="tool-rect" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-rect" value="rect">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-rect" value="rect">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">square</span>
                     </div>
                 </label>
                 <label for="tool-triangle" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-triangle" value="triangle">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-triangle" value="triangle">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">change_history</span>
                     </div>
                 </label>
                 <label for="tool-line" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-line" value="line">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-line" value="line">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">pen_size_2</span>
                     </div>
                 </label>
                 <label for="tool-rainbow" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-rainbow" value="rainbow">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-rainbow" value="rainbow">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">looks</span>
                     </div>
                 </label>
                 <!-- <label for="tool-smile" class="btn-tool-group">
-                    <input type="radio" name="tool" class="btn-check" id="tool-smile" value="smile">
+                    <input type="radio" name="tool" class="form-hidden" id="tool-smile" value="smile">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">sticker</span>
                     </div>
@@ -117,17 +117,19 @@
             </div>
 
             <!-- font selector -->
-            <div id="font-area" class="d-flex mt-4 gap-2">
-                <select class="form-select" id="font-style" style="width: 65%;">
+            <div id="font-area" class="flex mt-5 gap-2">
+                <select class="form-input" id="font-style" style="width: 65%;">
                     <option value="serif">Serif</option>
                     <option value="sans-serif">Sans-serif</option>
                     <option value="monospace">Monospace</option>
                     <option value="Arial">Arial</option>
+                    <option value="Inter">Inter</option>
                     <option value="微軟正黑體">微軟正黑體</option>
                     <option value="標楷體">標楷體</option>
                     <option value="新細明體">新細明體</option>
+                    <option value="Noto Sans Tc">思源黑體</option>
                 </select>
-                <select class="form-select" id="font-size" style="width: 35%;">
+                <select class="form-input" id="font-size" style="width: 35%;">
                     <option value="8">8</option>
                     <option value="10">10</option>
                     <option value="12">12</option>
@@ -143,18 +145,23 @@
             </div>
 
             <!-- type -->
-            <div id="fill-type-area" class="mt-4 text-center">
+            <div id="fill-type-area" class="mt-5 text-center">
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="fill-type" id="stroke" autocomplete="off" checked
-                        value="0">
-                    <label class="btn btn-outline-primary" for="stroke">Stroke</label>
-                    <input type="radio" class="btn-check" name="fill-type" id="filled" autocomplete="off" value="1">
-                    <label class="btn btn-outline-primary" for="filled">Solid</label>
+                    <label class="btn-tab-container" for="stroke">
+                        <input type="radio" class="form-hidden" name="fill-type" id="stroke" autocomplete="off" checked
+                            value="0">
+                        <div class="btn btn-tab">Stroke</div>
+                    </label>
+                    <label class="btn-tab-container" class="btn btn-tab" for="filled">
+                        <input type="radio" class="form-hidden" name="fill-type" id="filled" autocomplete="off"
+                            value="1">
+                        <div class="btn btn-tab">Fill</div>
+                    </label>
                 </div>
             </div>
 
             <!-- thickness -->
-            <div id="thickness-area" class="mt-4 d-flex align-items-center">
+            <div id="thickness-area" class="mt-5 flex items-center">
                 <span class="material-symbols-rounded text-muted me-3">line_weight</span>
                 <input type="range" class="form-range" id="thickness" oninput="changeThickness(this.value)" min="1"
                     max="100" value="25">
@@ -162,7 +169,7 @@
 
             <!-- color selection -->
             <div id="color-selection-area">
-                <div id="color-choices" class="d-flex flex-wrap gap-3 mt-4 justify-content-center">
+                <div id="color-choices" class="flex flex-wrap gap-3 mt-5 justify-center">
                     <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
                         onclick="chooseColor('rgb(0, 0, 0)')"></button>
                     <button class="color-selection" style="background: rgb(244, 67, 54);"
@@ -176,10 +183,10 @@
                     <button class="color-selection" style="background: rgb(103, 58, 183);"
                         onclick="chooseColor('rgb(103, 58, 183)')"></button>
                 </div>
-                <div class="d-flex mt-4 justify-content-center gap-2">
-                    <div class="d-flex flex-wrap justify-content-center p-2" style="width: 50px; height: 175px;">
-                        <span id="color-label" class="color-selection" style="background: salmon;"></span>
-                        <button class="btn btn-icon" onclick="addColor();">
+                <div class="flex mt-5 justify-center gap-2">
+                    <div class="p-2" style="width: 50px; height: 175px;">
+                        <span id="color-label" class="color-selection m-1" style="background: salmon;"></span>
+                        <button class="btn btn-icon m-auto" onclick="addColor();">
                             <span class="material-symbols-rounded">add_circle</span>
                         </button>
                     </div>
@@ -196,7 +203,7 @@
         </section>
 
         <!-- draw area -->
-        <section id="draw-area" class="col-8 col-lg-9 p-4 text-center overflow-scroll" style="height: 100vh;">
+        <section id="draw-area" class="w-2/3 md:w-3/4 p-5 text-center overflow-scroll" style="height: 100vh;">
             <div id="canvas-container" class="draw">
                 <canvas id="canvas-bg" width="1000px" height="700px">OUO</canvas>
                 <canvas id="canvas" width="1000px" height="700px">OWO</canvas>
@@ -206,20 +213,18 @@
     </div>
 
     <!-- Reset Dialog -->
-    <div class="modal fade" id="ResetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Reset</h5>
-                </div>
-                <div class="modal-body">
-                    Are you sure?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="clearCanvas()"
-                        data-bs-dismiss="modal">Reset</button>
-                </div>
+    <div id="reset-dialog" class="hidden modal-container">
+        <!-- <span class="modal-bg"></span> -->
+        <div class="modal">
+            <div class="modal-head">
+                <h3>Reset</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeModal('reset-dialog')">Cancel</button>
+                <button class="btn btn-primary" onclick="clearCanvas();closeModal('reset-dialog');">Reset</button>
             </div>
         </div>
     </div>

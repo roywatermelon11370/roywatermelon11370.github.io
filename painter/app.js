@@ -731,3 +731,14 @@ function changeFont() {
 function resizeInput() {
     this.style.width = this.value.length + 'ch';
 }
+
+function openModal(id) {
+    let modal = document.getElementById(id);
+    modal.classList.remove('hidden');
+    // modal.addEventListener('onmousedown', closeModal(id));
+}
+
+function closeModal(id) {
+    let modal = document.getElementById(id);
+    modal.classList.add('hidden');
+}

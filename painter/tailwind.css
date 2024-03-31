@@ -1,0 +1,482 @@
+@tailwind base;
+@tailwind components;
+
+:root {
+    --thickness-width: 50px;
+    --image-width: 1000px;
+    --image-height: 700px;
+}
+
+
+* {
+    font-family: "Inter", "Noto Sans Tc", sans-serif;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply text-slate-900;
+    font-weight: 600;
+}
+
+h2 {
+    @apply text-3xl;
+}
+
+h3 {
+    @apply text-2xl;
+}
+
+body {
+    @apply bg-slate-100;
+}
+
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.ms-rounded-filled {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.btn .material-symbols-rounded-filled,
+.btn .material-symbols-rounded {
+    font-size: inherit;
+}
+
+.btn {
+    /* font-family: "Rubik", sans-serif !important; */
+    @apply inline-flex flex-wrap rounded-md items-center justify-center py-2 px-4 cursor-pointer;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: all .15s ease-in-out;
+}
+
+.btn::selection,
+.material-symbols-rounded::selection {
+    background: transparent;
+    color: inherit;
+}
+
+.btn:disabled {
+    filter: grayscale(1);
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.btn:disabled:hover {
+    background: transparent !important;
+}
+
+.btn:disabled:active {
+    transform: scale(1) !important;
+}
+
+.btn-primary {
+    @apply bg-blue-600 text-white shadow;
+}
+
+.btn-primary:hover {
+    @apply bg-blue-700;
+}
+
+.btn-secondary {
+    @apply bg-white text-slate-900 shadow;
+}
+
+.btn-secondary:hover {
+    @apply bg-slate-200;
+}
+
+.btn-dark {
+    @apply bg-slate-800 text-white shadow;
+}
+
+.btn-dark:hover {
+    @apply bg-slate-900;
+}
+
+.btn:active {
+    transform: scale(0.9);
+    transition: all .15s ease-out;
+}
+
+.btn-icon {
+    @apply text-blue-500;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    box-shadow: 0px 0px 0px #000;
+}
+
+.btn-icon:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-icon:active {
+    background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-tool {
+    @apply text-slate-600;
+    font-size: 2.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0;
+    box-shadow: 0px 0px 0px #000;
+    background: transparent;
+}
+
+.btn-tool:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-tool:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-group {
+    @apply bg-slate-200 p-1 rounded-lg inline-flex gap-1;
+}
+
+.btn-tab {
+    @apply text-slate-700;
+    font-weight: 400;
+    background: transparent;
+}
+
+.btn-tab-container input:checked+.btn-tab {
+    @apply bg-white text-slate-900 shadow;
+    font-weight: 500;
+}
+
+.form-hidden {
+    @apply hidden;
+    clip: rect(0, 0, 0, 0) !important;
+}
+
+.btn-tool-group input:checked+.btn-tool {
+    @apply text-blue-600 bg-blue-600/25;
+}
+
+.btn-tool-group input:checked+.btn-tool span {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.btn-tool-group input:checked+.btn-tool:hover {
+    @apply bg-blue-700/25;
+}
+
+.btn-tool-group input:checked+.btn-tool:active {
+    @apply bg-blue-700/25;
+}
+
+.color-selection {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+.color-selection-active::after {
+    content: "";
+    background: transparent;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.2rem solid #FFF;
+    position: absolute;
+    border-radius: 100%;
+    top: 0.25rem;
+    left: 0.25rem;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+#canvas-container {
+    @apply shadow rounded-lg relative;
+    width: var(--image-width);
+    height: var(--image-height);
+    overflow: clip;
+    margin: auto;
+}
+
+#canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    background-color: transparent;
+}
+
+#canvas-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    background-color: transparent;
+}
+
+#canvas-bg {
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#color-block {
+    background: blue;
+    cursor: crosshair;
+}
+
+#color-hue {
+    background: purple;
+    cursor: crosshair;
+}
+
+.draw {
+    cursor: url("images/pencil_tiny.png"), pointer;
+}
+
+.erase {
+    cursor: url("images/eraser_tiny.png"), pointer;
+}
+
+.text {
+    cursor: url("images/text_tiny.png"), pointer;
+}
+
+.triangle {
+    cursor: url("images/triangle_tiny.png"), pointer;
+}
+
+.rect {
+    cursor: url("images/rect_tiny.png"), pointer;
+}
+
+.circle {
+    cursor: url("images/circle_tiny.png"), pointer;
+}
+
+.rainbow {
+    cursor: url("images/rainbow_tiny.png"), pointer;
+}
+
+.line {
+    cursor: crosshair;
+}
+
+*::-webkit-scrollbar {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 100px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 100px;
+}
+
+.form-range {
+    @apply relative w-full p-0;
+    height: 1.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+}
+
+.form-range::-moz-focus-outer {
+    border: 0;
+}
+
+.form-range::after {
+    content: "";
+    @apply bg-blue-600;
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: var(--thickness-width);
+    height: 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.form-range::-webkit-slider-thumb {
+    @apply bg-blue-600 rounded-full shadow;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.25rem;
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+
+.form-range::-moz-range-thumb {
+    @apply bg-blue-600 rounded-full;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.25rem;
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+
+.form-range:hover::-moz-range-thumb {
+    transform: scale(1.2);
+    transition: all .1s ease-out;
+}
+
+.form-range:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+    transition: all .1s ease-out;
+}
+
+.form-range::-webkit-slider-runnable-track {
+    @apply bg-slate-200 rounded-full;
+    width: 100%;
+    height: 0.5rem;
+    cursor: pointer;
+}
+
+.form-range::-moz-range-track {
+    @apply bg-slate-200 rounded-full;
+    width: 100%;
+    height: 0.5rem;
+    cursor: pointer;
+}
+
+.form-range:focus {
+    outline: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#tmp-text-input {
+    background: transparent;
+    position: absolute;
+    z-index: 100;
+    text-wrap: wrap;
+    padding: 0;
+    min-width: 15ch;
+    line-height: 1.3;
+    border: 1px dashed rgba(0, 0, 0, 1);
+}
+
+#tmp-text-input:focus {
+    background: transparent;
+    position: absolute;
+    z-index: 100;
+    border: 1px dotted rgba(0, 0, 0, 1);
+    outline: none;
+}
+
+#color-hue-indicator {
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: crosshair;
+}
+
+#color-block-indicator {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border: 1px solid black;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: crosshair;
+}
+
+.form-input {
+    @apply p-2 rounded-md border-2 border-slate-200;
+}
+
+.modal-container {
+    @apply fixed w-screen h-screen top-0 left-0 flex justify-center items-center;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    backdrop-filter: blur(7px);
+    animation: modal-container-animation .2s ease-out;
+}
+
+@keyframes modal-contaier-animation {
+    from {
+        background: transparent;
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(7px);
+    }
+}
+
+/* .modal-bg {
+    @apply absolute top-0 left-0 bg-blue-500;
+} */
+
+.modal {
+    @apply bg-white rounded-lg overflow-hidden shadow-lg;
+    width: 100%;
+    max-width: 400px;
+    animation: modal-animation .3s cubic-bezier(0, .7, .08, .99);
+}
+
+@keyframes modal-animation {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-head {
+    @apply p-4 pb-2;
+}
+
+.modal-body {
+    @apply p-4;
+}
+
+.modal-foot {
+    @apply p-4 flex gap-4 bg-slate-100;
+}
+
+.modal-foot button {
+    @apply w-full;
+}
+
+@tailwind utilities;
