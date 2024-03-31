@@ -20,7 +20,8 @@
 
 | **Other useful widgets**                         | **Score** | **Check** |
 | :----------------------------------------------- | :-------: | :-------: |
-| Color quick access                               | 1~5%      | Y         |
+| 顏色暫存、快速存取                                | 1~5%      | Y         |
+| 改變Canvas的高度、寬度、背景顏色                   | 1~5%      | Y         |
 
 
 ---
@@ -30,8 +31,8 @@
     
 
 ### Bonus Function description
-
-    Decribe your bonus function and how to use it.
+    ![alt text](image.png)
+    
 
 ### Web page link
 

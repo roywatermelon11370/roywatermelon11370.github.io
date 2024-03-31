@@ -34,6 +34,7 @@ body {
 }
 
 .material-symbols-rounded {
+    cursor: default;
     font-variation-settings:
         'FILL' 0,
         'wght' 300,
@@ -42,6 +43,7 @@ body {
 }
 
 .ms-rounded-filled {
+    cursor: default;
     font-variation-settings:
         'FILL' 1,
         'wght' 300,
@@ -109,6 +111,14 @@ body {
 .btn:active {
     transform: scale(0.9);
     transition: all .15s ease-out;
+}
+
+.btn-link {
+    @apply bg-transparent text-blue-600;
+}
+
+.btn-link:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .btn-icon {
@@ -427,7 +437,7 @@ body {
 }
 
 .form-input {
-    @apply p-2 rounded-md border-2 border-slate-200;
+    @apply p-2 bg-white rounded-md border-2 border-slate-200;
 }
 
 .form-input:focus {
