@@ -53,6 +53,11 @@ var fontSize;
 var textX;
 var textY;
 
+// new 
+var newBgColor;
+var newWidth;
+var newHeight;
+
 function init() {
     // canvas
     canvas = document.getElementById("canvas");
@@ -233,6 +238,22 @@ function init() {
         document.getElementById('undo-btn').disabled = true;
     }
     else document.getElementById('undo-btn').disabled = false;
+
+    newWidth = document.getElementById('new-width').value;
+    newHeight = document.getElementById('new-height').value;
+    newBgColor = document.getElementById('new-bg-color').value;
+
+    document.getElementById('new-width').addEventListener('change', (e) => {
+        newWidth = document.getElementById('new-width').value;
+        if (newWidth > 10000) newWidth = 10000;
+    });
+    document.getElementById('new-height').addEventListener('change', (e) => {
+        newHeight = document.getElementById('new-height').value;
+        if (newHeight > 10000) newHeight = 10000;
+    });
+    document.getElementById('new-bg-color').addEventListener('change', (e) => {
+        newBgColor = document.getElementById('new-bg-color').value;
+    });
 }
 
 function draw(event) {
@@ -442,24 +463,24 @@ function toolChange() {
     else colorSelectionArea.classList.remove('hidden');
 }
 
-function clearCanvas() {
-    canvas.width = 1000;
-    canvas.height = 700;
+function newCanvas() {
+    canvas.width = newWidth;
+    canvas.height = newHeight;
 
-    canvasPre.width = 1000;
-    canvasPre.height = 700;
+    canvasPre.width = newWidth;
+    canvasPre.height = newHeight;
 
-    canvasBg.width = 1000;
-    canvasBg.height = 700;
+    canvasBg.width = newWidth;
+    canvasBg.height = newHeight;
 
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     ctxbg.clearRect(0, 0, canvasBg.offsetWidth, canvasBg.offsetHeight);
 
-    ctxbg.fillStyle = "white";
+    ctxbg.fillStyle = newBgColor;
     ctxbg.fillRect(0, 0, canvasBg.width, canvasBg.height);
 
-    document.documentElement.style.setProperty('--image-width', '1000px');
-    document.documentElement.style.setProperty('--image-height', '700px');
+    document.documentElement.style.setProperty('--image-width', newWidth + 'px');
+    document.documentElement.style.setProperty('--image-height', newHeight + 'px');
 
     try {
         var tmpTextInput = document.getElementById('tmp-text-input');
@@ -585,7 +606,7 @@ function saveCanvas() {
 }
 
 function handleImage(e) {
-    clearCanvas();
+    newCanvas();
     var reader = new FileReader();
     reader.onload = function (event) {
         var img = new Image();
@@ -606,6 +627,7 @@ function handleImage(e) {
             canvasHistory[0] = ctx.getImageData(0, 0, canvas.width, canvas.height);
         }
         img.src = event.target.result;
+        closeModal('new-dialog');
     }
     reader.readAsDataURL(e.target.files[0]);
 }
@@ -741,4 +763,15 @@ function openModal(id) {
 function closeModal(id) {
     let modal = document.getElementById(id);
     modal.classList.add('hidden');
+}
+
+function switchTab(id, show, tabid) {
+
+    var allItems = document.getElementById(id).children;
+    for (let i = 0; i < allItems.length; i++) {
+        if (allItems[i].id == show) allItems[i].classList.remove('hidden');
+        else allItems[i].classList.add('hidden');
+    }
+
+    document.getElementById(tabid).checked = true;
 }

@@ -45,13 +45,10 @@
 
             <!-- upload download -->
             <div class="flex mt-5 gap-2">
-                <label for="file-upload" class="w-1/2 btn btn-dark">
-                    <input type="file" id="file-upload" class="form-hidden">
-
-                    <span class="material-symbols-rounded">image</span>
-                    Upload
-
-                </label>
+                <button onClick="openModal('new-dialog')" class="btn btn-dark w-1/2">
+                    <span class="material-symbols-rounded">draft</span>
+                    New
+                </button>
                 <button class="btn btn-primary w-1/2" onclick="download()">
                     <span class="material-symbols-rounded">download</span>
                     Download
@@ -119,15 +116,15 @@
             <!-- font selector -->
             <div id="font-area" class="flex mt-5 gap-2 hidden">
                 <select class="form-input" id="font-style" style="width: 65%;">
-                    <option value="serif">Serif</option>
-                    <option value="sans-serif">Sans-serif</option>
-                    <option value="monospace">Monospace</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Inter">Inter</option>
-                    <option value="微軟正黑體">微軟正黑體</option>
-                    <option value="標楷體">標楷體</option>
-                    <option value="新細明體">新細明體</option>
-                    <option value="Noto Sans Tc">思源黑體</option>
+                    <option style="font-family: serif;" value="serif">Serif</option>
+                    <option style="font-family: sans-serif;" value="sans-serif">Sans-serif</option>
+                    <option style="font-family: monospace;" value="monospace">Monospace</option>
+                    <option style="font-family: Arial;" value="Arial">Arial</option>
+                    <option style="font-family: Inter;" value="Inter">Inter</option>
+                    <option style="font-family: 微軟正黑體;" value="微軟正黑體">微軟正黑體</option>
+                    <option style="font-family: 標楷體;" value="標楷體">標楷體</option>
+                    <option style="font-family: 新細明體;" value="新細明體">新細明體</option>
+                    <option style="font-family: 思源黑體;" value="Noto Sans Tc">思源黑體</option>
                 </select>
                 <select class="form-input" id="font-size" style="width: 35%;">
                     <option value="8">8</option>
@@ -224,7 +221,77 @@
             </div>
             <div class="modal-foot">
                 <button class="btn btn-secondary" onclick="closeModal('reset-dialog')">Cancel</button>
-                <button class="btn btn-primary" onclick="clearCanvas();closeModal('reset-dialog');">Reset</button>
+                <button class="btn btn-primary" onclick="newCanvas();closeModal('reset-dialog');">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Dialog -->
+    <div id="new-dialog" class="hidden modal-container">
+        <!-- <span class="modal-bg"></span> -->
+        <div class="modal">
+            <div class="modal-head">
+                <h3>Create new canvas</h3>
+            </div>
+            <div class="modal-body">
+                <div class="w-full text-center">
+                    <div class="btn-group">
+                        <label class="btn-tab-container" for="photo-option"
+                            onclick="switchTab('new-type', 'new-photo', 'photo-option')">
+                            <input type="radio" class="form-hidden" name="new-type" id="photo-option" autocomplete="off"
+                                checked>
+                            <div class="btn btn-tab">Photo</div>
+                        </label>
+                        <label class="btn-tab-container" class="btn btn-tab" for="blank-option"
+                            onclick="switchTab('new-type', 'new-blank', 'blank-option')">
+                            <input type="radio" class="form-hidden" name="new-type" id="blank-option"
+                                autocomplete="off">
+                            <div class="btn btn-tab">Blank</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="new-type">
+                <section id="new-photo">
+                    <div class="modal-body text-center">
+                        <span class="material-symbols-rounded text-slate-500" style="font-size: 100px;">landscape</span>
+                        <p class="text-slate-500">Upload your photo to continue</p>
+                    </div>
+                    <div class="modal-foot">
+                        <button class="btn btn-secondary w-full" onclick="closeModal('new-dialog')">Cancel</button>
+                        <label for="file-upload" class="w-full btn btn-primary">
+                            <input type="file" id="file-upload" class="form-hidden">
+
+                            <!-- <span class="material-symbols-rounded">image</span> -->
+                            Upload
+
+                        </label>
+                    </div>
+                </section>
+                <section id="new-blank" class="hidden">
+                    <div class="modal-body">
+                        <div class="mt-5">
+                            <h5 class="text-slate-500 mb-1">Dimension</h5>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="new-width" name="new-width" min="10" max="10000"
+                                    class="form-input w-1/2" value="1000">
+                                <span class="material-symbols-rounded text-base text-slate-500">close</span>
+                                <input type="number" id="new-height" name="new-height" min="10" max="10000"
+                                    class="form-input w-1/2" value="700">
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <h5 class="text-slate-500 mb-1">Background Color</h5>
+                        </div>
+                        <input type="color" name="new-bg-color" id="new-bg-color" value="#FFFFFF">
+                    </div>
+
+                    <div class="modal-foot">
+                        <button class="btn btn-secondary" onclick="closeModal('new-dialog')">Cancel</button>
+                        <button class="btn btn-primary" onclick="newCanvas();closeModal('new-dialog');">Create</button>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
