@@ -558,6 +558,7 @@ video {
   --thickness-width: 50px;
   --image-width: 1000px;
   --image-height: 700px;
+  --scale-width: 50px;
 }
 
 * {
@@ -840,6 +841,7 @@ body {
   height: var(--image-height);
   overflow: clip;
   margin: auto;
+  transform-origin: 0 0;
 }
 
 #canvas {
@@ -864,6 +866,17 @@ body {
   top: 0;
   left: 0;
   z-index: 10;
+}
+
+#scale-area {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
+#tool-area {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 #color-block {
@@ -937,7 +950,7 @@ body {
   border: 0;
 }
 
-.form-range::after {
+.value-thickness::after {
   content: "";
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
@@ -945,6 +958,19 @@ body {
   left: 0;
   top: 0.5rem;
   width: var(--thickness-width);
+  height: 0.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.value-scale::after {
+  content: "";
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: var(--scale-width);
   height: 0.5rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -1299,6 +1325,11 @@ input[type=color]::-webkit-color-swatch {
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-bold {

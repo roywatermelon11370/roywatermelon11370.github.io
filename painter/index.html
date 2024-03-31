@@ -26,176 +26,189 @@
 <body class="" onload="init()">
     <div class="flex" style="height: 100vh;">
         <!-- tool area -->
-        <section class="w-1/3 md:w-1/4 p-5 overflow-scroll">
-            <!-- title bar -->
-            <div class="flex flex-wrap justify-between items-center">
-                <h2 class="mb-0 font-bold">Painter</h2>
-                <div>
-                    <button id="undo-btn" class="btn btn-icon" onclick="canvasUndo()">
-                        <span class="material-symbols-rounded">undo</span>
+        <section id="tool-area" class="w-1/3 md:w-1/4 p-5 overflow-scroll relative">
+            <div>
+                <!-- title bar -->
+                <div class="flex flex-wrap justify-between items-center">
+                    <h2 class="mb-0 font-bold">Painter</h2>
+                    <div>
+                        <button id="undo-btn" class="btn btn-icon" onclick="canvasUndo()">
+                            <span class="material-symbols-rounded">undo</span>
+                        </button>
+                        <button id="redo-btn" class="btn btn-icon" onclick="canvasRedo()">
+                            <span class="material-symbols-rounded">redo</span>
+                        </button>
+                        <button class="btn btn-icon" onclick="openModal('reset-dialog')">
+                            <span class="material-symbols-rounded">delete</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- upload download -->
+                <div class="flex mt-5 gap-2">
+                    <button onClick="openModal('new-dialog')" class="btn btn-dark w-1/2">
+                        <span class="material-symbols-rounded">draft</span>
+                        New
                     </button>
-                    <button id="redo-btn" class="btn btn-icon" onclick="canvasRedo()">
-                        <span class="material-symbols-rounded">redo</span>
-                    </button>
-                    <button class="btn btn-icon" onclick="openModal('reset-dialog')">
-                        <span class="material-symbols-rounded">delete</span>
+                    <button class="btn btn-primary w-1/2" onclick="download()">
+                        <span class="material-symbols-rounded">download</span>
+                        Download
                     </button>
                 </div>
-            </div>
 
-            <!-- upload download -->
-            <div class="flex mt-5 gap-2">
-                <button onClick="openModal('new-dialog')" class="btn btn-dark w-1/2">
-                    <span class="material-symbols-rounded">draft</span>
-                    New
-                </button>
-                <button class="btn btn-primary w-1/2" onclick="download()">
-                    <span class="material-symbols-rounded">download</span>
-                    Download
-                </button>
-            </div>
-
-            <!-- pen selector -->
-            <div class="mt-5 flex flex-wrap gap-2">
-                <label for="tool-draw" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-draw" value="draw" checked>
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">edit</span>
-                    </div>
-                </label>
-                <label for="tool-erase" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-erase" value="erase">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">ink_eraser</span>
-                    </div>
-                </label>
-                <label for="tool-text" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-text" value="text">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">format_shapes</span>
-                    </div>
-                </label>
-                <label for="tool-circle" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-circle" value="circle">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">circle</span>
-                    </div>
-                </label>
-                <label for="tool-rect" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-rect" value="rect">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">square</span>
-                    </div>
-                </label>
-                <label for="tool-triangle" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-triangle" value="triangle">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">change_history</span>
-                    </div>
-                </label>
-                <label for="tool-line" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-line" value="line">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">pen_size_2</span>
-                    </div>
-                </label>
-                <label for="tool-rainbow" class="btn-tool-group">
-                    <input type="radio" name="tool" class="form-hidden" id="tool-rainbow" value="rainbow">
-                    <div class="btn btn-tool">
-                        <span class="material-symbols-rounded">looks</span>
-                    </div>
-                </label>
-                <!-- <label for="tool-smile" class="btn-tool-group">
+                <!-- pen selector -->
+                <div class="mt-5 flex flex-wrap gap-2">
+                    <label for="tool-draw" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-draw" value="draw" checked>
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">edit</span>
+                        </div>
+                    </label>
+                    <label for="tool-erase" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-erase" value="erase">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">ink_eraser</span>
+                        </div>
+                    </label>
+                    <label for="tool-text" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-text" value="text">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">format_shapes</span>
+                        </div>
+                    </label>
+                    <label for="tool-circle" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-circle" value="circle">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">circle</span>
+                        </div>
+                    </label>
+                    <label for="tool-rect" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-rect" value="rect">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">square</span>
+                        </div>
+                    </label>
+                    <label for="tool-triangle" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-triangle" value="triangle">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">change_history</span>
+                        </div>
+                    </label>
+                    <label for="tool-line" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-line" value="line">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">pen_size_2</span>
+                        </div>
+                    </label>
+                    <label for="tool-rainbow" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-rainbow" value="rainbow">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">looks</span>
+                        </div>
+                    </label>
+                    <!-- <label for="tool-smile" class="btn-tool-group">
                     <input type="radio" name="tool" class="form-hidden" id="tool-smile" value="smile">
                     <div class="btn btn-tool">
                         <span class="material-symbols-rounded">sticker</span>
                     </div>
                 </label> -->
-            </div>
+                </div>
 
-            <!-- font selector -->
-            <div id="font-area" class="flex mt-5 gap-2 hidden">
-                <select class="form-input" id="font-style" style="width: 65%;">
-                    <option style="font-family: serif;" value="serif">Serif</option>
-                    <option style="font-family: sans-serif;" value="sans-serif">Sans-serif</option>
-                    <option style="font-family: monospace;" value="monospace">Monospace</option>
-                    <option style="font-family: Arial;" value="Arial">Arial</option>
-                    <option style="font-family: Inter;" value="Inter">Inter</option>
-                    <option style="font-family: 微軟正黑體;" value="微軟正黑體">微軟正黑體</option>
-                    <option style="font-family: 標楷體;" value="標楷體">標楷體</option>
-                    <option style="font-family: 新細明體;" value="新細明體">新細明體</option>
-                    <option style="font-family: 思源黑體;" value="Noto Sans Tc">思源黑體</option>
-                </select>
-                <select class="form-input" id="font-size" style="width: 35%;">
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                    <option value="12">12</option>
-                    <option value="14">14</option>
-                    <option value="18">18</option>
-                    <option value="26" selected>26</option>
-                    <option value="38">38</option>
-                    <option value="46">46</option>
-                    <option value="64">64</option>
-                    <option value="72">72</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
+                <!-- font selector -->
+                <div id="font-area" class="flex mt-5 gap-2 hidden">
+                    <select class="form-input" id="font-style" style="width: 65%;">
+                        <option style="font-family: serif;" value="serif">Serif</option>
+                        <option style="font-family: sans-serif;" value="sans-serif">Sans-serif</option>
+                        <option style="font-family: monospace;" value="monospace">Monospace</option>
+                        <option style="font-family: Arial;" value="Arial">Arial</option>
+                        <option style="font-family: Inter;" value="Inter">Inter</option>
+                        <option style="font-family: 微軟正黑體;" value="微軟正黑體">微軟正黑體</option>
+                        <option style="font-family: 標楷體;" value="標楷體">標楷體</option>
+                        <option style="font-family: 新細明體;" value="新細明體">新細明體</option>
+                        <option style="font-family: 思源黑體;" value="Noto Sans Tc">思源黑體</option>
+                    </select>
+                    <select class="form-input" id="font-size" style="width: 35%;">
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="12">12</option>
+                        <option value="14">14</option>
+                        <option value="18">18</option>
+                        <option value="26" selected>26</option>
+                        <option value="38">38</option>
+                        <option value="46">46</option>
+                        <option value="64">64</option>
+                        <option value="72">72</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
 
-            <!-- type -->
-            <div id="fill-type-area" class="mt-5 text-center hidden">
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <label class="btn-tab-container" for="stroke">
-                        <input type="radio" class="form-hidden" name="fill-type" id="stroke" autocomplete="off" checked
-                            value="0">
-                        <div class="btn btn-tab">Stroke</div>
-                    </label>
-                    <label class="btn-tab-container" class="btn btn-tab" for="filled">
-                        <input type="radio" class="form-hidden" name="fill-type" id="filled" autocomplete="off"
-                            value="1">
-                        <div class="btn btn-tab">Fill</div>
-                    </label>
+                <!-- type -->
+                <div id="fill-type-area" class="mt-5 text-center hidden">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <label class="btn-tab-container" for="stroke">
+                            <input type="radio" class="form-hidden" name="fill-type" id="stroke" autocomplete="off"
+                                checked value="0">
+                            <div class="btn btn-tab">Stroke</div>
+                        </label>
+                        <label class="btn-tab-container" class="btn btn-tab" for="filled">
+                            <input type="radio" class="form-hidden" name="fill-type" id="filled" autocomplete="off"
+                                value="1">
+                            <div class="btn btn-tab">Fill</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- thickness -->
+                <div id="thickness-area" class="mt-5 flex items-center">
+                    <span class="material-symbols-rounded text-slate-500 me-3">line_weight</span>
+                    <input type="range" class="form-range value-thickness" id="thickness"
+                        oninput="changeThickness(this.value)" min="1" max="100" value="25">
+                </div>
+
+                <!-- color selection -->
+                <div id="color-selection-area">
+                    <div id="color-choices" class="flex flex-wrap gap-3 mt-5 justify-center">
+                        <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
+                            onclick="chooseColor('rgb(0, 0, 0)')"></button>
+                        <button class="color-selection" style="background: rgb(244, 67, 54);"
+                            onclick="chooseColor('rgb(244, 67, 54)')"></button>
+                        <button class="color-selection" style="background: rgb(255, 152, 0);"
+                            onclick="chooseColor('rgb(255, 152, 0)')"></button>
+                        <button class="color-selection" style="background: rgb(76, 175, 80)"
+                            onclick="chooseColor('rgb(76, 175, 80)')"></button>
+                        <button class="color-selection" style="background: rgb(33, 150, 243);"
+                            onclick="chooseColor('rgb(33, 150, 243)')"></button>
+                        <button class="color-selection" style="background: rgb(103, 58, 183);"
+                            onclick="chooseColor('rgb(103, 58, 183)')"></button>
+                    </div>
+                    <div class="flex mt-5 justify-center gap-2">
+                        <div class="p-2" style="width: 50px; height: 175px;">
+                            <span id="color-label" class="color-selection m-1" style="background: salmon;"></span>
+                            <button class="btn btn-icon m-auto" onclick="addColor();">
+                                <span class="material-symbols-rounded">add_circle</span>
+                            </button>
+                        </div>
+                        <div id="color-block-container" style="width: 175px; height: 175px; position: relative;">
+                            <canvas id="color-block" width="175px" height="175px"></canvas>
+                            <span id="color-block-indicator" style="top: -2px; left: 173px;"></span>
+                        </div>
+                        <div id="color-hue-container" style="width: 40px; height: 175px; position: relative;">
+                            <canvas id="color-hue" width="40px" height="175px"></canvas>
+                            <span id="color-hue-indicator" style="top: 0px; left: 0px;"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- thickness -->
-            <div id="thickness-area" class="mt-5 flex items-center">
-                <span class="material-symbols-rounded text-slate-500 me-3">line_weight</span>
-                <input type="range" class="form-range" id="thickness" oninput="changeThickness(this.value)" min="1"
-                    max="100" value="25">
-            </div>
-
-            <!-- color selection -->
-            <div id="color-selection-area">
-                <div id="color-choices" class="flex flex-wrap gap-3 mt-5 justify-center">
-                    <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
-                        onclick="chooseColor('rgb(0, 0, 0)')"></button>
-                    <button class="color-selection" style="background: rgb(244, 67, 54);"
-                        onclick="chooseColor('rgb(244, 67, 54)')"></button>
-                    <button class="color-selection" style="background: rgb(255, 152, 0);"
-                        onclick="chooseColor('rgb(255, 152, 0)')"></button>
-                    <button class="color-selection" style="background: rgb(76, 175, 80)"
-                        onclick="chooseColor('rgb(76, 175, 80)')"></button>
-                    <button class="color-selection" style="background: rgb(33, 150, 243);"
-                        onclick="chooseColor('rgb(33, 150, 243)')"></button>
-                    <button class="color-selection" style="background: rgb(103, 58, 183);"
-                        onclick="chooseColor('rgb(103, 58, 183)')"></button>
-                </div>
-                <div class="flex mt-5 justify-center gap-2">
-                    <div class="p-2" style="width: 50px; height: 175px;">
-                        <span id="color-label" class="color-selection m-1" style="background: salmon;"></span>
-                        <button class="btn btn-icon m-auto" onclick="addColor();">
-                            <span class="material-symbols-rounded">add_circle</span>
-                        </button>
-                    </div>
-                    <div id="color-block-container" style="width: 175px; height: 175px; position: relative;">
-                        <canvas id="color-block" width="175px" height="175px"></canvas>
-                        <span id="color-block-indicator" style="top: -2px; left: 173px;"></span>
-                    </div>
-                    <div id="color-hue-container" style="width: 40px; height: 175px; position: relative;">
-                        <canvas id="color-hue" width="40px" height="175px"></canvas>
-                        <span id="color-hue-indicator" style="top: 0px; left: 0px;"></span>
-                    </div>
-                </div>
+            <!-- scale area -->
+            <div id="scale-area" class="mt-5 flex items-center">
+                <span class="material-symbols-rounded text-slate-500 me-3">search</span>
+                <p id="scale-value" class="text-sm text-slate-500 me-3">100%</p>
+                <input type="range" class="form-range value-scale me-3" step="10" oninput="changeScale(this.value)"
+                    id="scale" min="10" max="250" value="100">
+                <button class="btn btn-icon" onclick="resetScale()">
+                    <span class="material-symbols-rounded">refresh</span>
+                </button>
             </div>
         </section>
 

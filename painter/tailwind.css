@@ -5,6 +5,8 @@
     --thickness-width: 50px;
     --image-width: 1000px;
     --image-height: 700px;
+
+    --scale-width: 50px;
 }
 
 
@@ -225,6 +227,7 @@ body {
     height: var(--image-height);
     overflow: clip;
     margin: auto;
+    transform-origin: 0 0;
 }
 
 #canvas {
@@ -249,6 +252,15 @@ body {
     top: 0;
     left: 0;
     z-index: 10;
+}
+
+#scale-area {
+    @apply bg-slate-100;
+}
+
+#tool-area {
+    @apply flex justify-between;
+    flex-direction: column;
 }
 
 #color-block {
@@ -320,13 +332,25 @@ body {
     border: 0;
 }
 
-.form-range::after {
+.value-thickness::after {
     content: "";
     @apply bg-blue-600;
     position: absolute;
     left: 0;
     top: 0.5rem;
     width: var(--thickness-width);
+    height: 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.value-scale::after {
+    content: "";
+    @apply bg-blue-600;
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: var(--scale-width);
     height: 0.5rem;
     border-radius: 1rem;
     cursor: pointer;

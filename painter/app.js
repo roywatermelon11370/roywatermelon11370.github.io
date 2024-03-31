@@ -14,6 +14,7 @@ var thicknesSlider;
 var thickness;
 var mode;
 var textMode;
+var scale;
 
 // history
 var canvasHistory = [];
@@ -61,6 +62,8 @@ var newHeight;
 var newWidthContainer;
 var newHeightContainer;
 var newBgColorContainer;
+var scaleSlider;
+var scaleValue;
 
 function init() {
     // canvas
@@ -95,6 +98,7 @@ function init() {
     ctxbg.fillRect(0, 0, canvasBg.width, canvasBg.height);
 
     thicknesSlider = document.getElementById("thickness");
+    scaleSlider = document.getElementById("scale");
 
     canvasPre.addEventListener('mousemove', (e) => {
         draw(e);
@@ -141,9 +145,17 @@ function init() {
     fillTypeChange(fillType);
 
     // slider
+    
+    scaleContainer = document.getElementById('scale-slider');
+    scaleValue = document.getElementById('scale-value');
     changeThickness(25);
     window.addEventListener('resize', function (event) {
         changeThickness(thickness);
+    }, true);
+
+    changeScale(100);
+    window.addEventListener('resize', function (event) {
+        changeScale(scale);
     }, true);
 
     // text
@@ -435,6 +447,21 @@ function draw(event) {
 function changeThickness(e) {
     thickness = e;
     document.documentElement.style.setProperty('--thickness-width', thicknesSlider.offsetWidth * thickness * 0.01 + 'px');
+}
+
+function changeScale(e) {
+    scale = e;
+    scaleValue.innerHTML = scale + '%';
+    document.documentElement.style.setProperty('--scale-width', scaleSlider.offsetWidth * scale * 0.004 + 'px');
+    canvasContainer.setAttribute('style', 'transform: scale(' + scale / 100 + ');');
+}
+
+function resetScale() {
+    scale = 100;
+    scaleValue.innerHTML = scale + '%';
+    scaleSlider.value = 100;
+    document.documentElement.style.setProperty('--scale-width', scaleSlider.offsetWidth * scale * 0.004 + 'px');
+    canvasContainer.setAttribute('style', 'transform: scale(' + scale / 100 + ');');
 }
 
 function fillTypeChange() {
