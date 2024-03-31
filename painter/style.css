@@ -710,7 +710,7 @@ body {
 }
 
 .btn-link:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background-color: rgb(148 163 184 / 0.25);
 }
 
 .btn-icon {
@@ -724,11 +724,11 @@ body {
 }
 
 .btn-icon:hover {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgb(148 163 184 / 0.25) !important;
 }
 
 .btn-icon:active {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgb(148 163 184 / 0.25) !important;
 }
 
 .btn-tool {
@@ -743,11 +743,11 @@ body {
 }
 
 .btn-tool:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background-color: rgb(148 163 184 / 0.25);
 }
 
 .btn-tool:active {
-  background: rgba(0, 0, 0, 0.1);
+  background-color: rgb(148 163 184 / 0.25);
 }
 
 .btn-group {
