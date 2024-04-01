@@ -450,16 +450,11 @@ function changeThickness(e) {
 }
 
 function changeScale(e) {
-    scale = e;
+    if(e > 250) scale = 250;
+    else if(e < 10) scale = 10;
+    else scale = e;
     scaleValue.innerHTML = scale + '%';
-    document.documentElement.style.setProperty('--scale-width', scaleSlider.offsetWidth * scale * 0.004 + 'px');
-    canvasContainer.setAttribute('style', 'transform: scale(' + scale / 100 + ');');
-}
-
-function resetScale() {
-    scale = 100;
-    scaleValue.innerHTML = scale + '%';
-    scaleSlider.value = 100;
+    scaleSlider.value = scale;
     document.documentElement.style.setProperty('--scale-width', scaleSlider.offsetWidth * scale * 0.004 + 'px');
     canvasContainer.setAttribute('style', 'transform: scale(' + scale / 100 + ');');
 }
@@ -572,7 +567,7 @@ function resetCanvas() {
 
     isEditingText = 0;
 
-    resetScale(100);
+    changeScale(100);
 
     canvasHistory = [];
     currIndex = 0;
@@ -708,7 +703,7 @@ function handleImage(e) {
 
             canvasHistory[0] = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-            resetScale(100);
+            changeScale(100);
         }
         img.src = event.target.result;
         closeModal('new-dialog');

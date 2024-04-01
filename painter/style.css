@@ -842,6 +842,7 @@ body {
   overflow: clip;
   margin: auto;
   transform-origin: 0 0;
+  transition: all .2s cubic-bezier(0, .7, .08, .99);
 }
 
 #canvas {
