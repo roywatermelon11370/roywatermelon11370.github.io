@@ -15,6 +15,7 @@ var thickness;
 var mode;
 var textMode;
 var scale;
+var isEditingPhoto;
 
 // history
 var canvasHistory = [];
@@ -145,7 +146,6 @@ function init() {
     fillTypeChange(fillType);
 
     // slider
-
     scaleContainer = document.getElementById('scale-slider');
     scaleValue = document.getElementById('scale-value');
     changeThickness(25);
@@ -188,17 +188,16 @@ function init() {
 
     colorLabel.style.backgroundColor = "rgba(255, 0, 0, 1)";
 
-    ctx2.rect(0, 0, colorHueWidth, colorHueHeight);
     var grad2 = ctx2.createLinearGradient(0, 0, 0, colorHueHeight);
-    grad2.addColorStop(0, 'rgba(255, 0, 0, 1)');
-    grad2.addColorStop(0.166, 'rgba(255, 255, 0, 1)');
-    grad2.addColorStop(0.333, 'rgba(0, 255, 0, 1)');
-    grad2.addColorStop(0.5, 'rgba(0, 255, 255, 1)');
-    grad2.addColorStop(0.667, 'rgba(0, 0, 255, 1)');
-    grad2.addColorStop(0.833, 'rgba(255, 0, 255, 1)');
-    grad2.addColorStop(1, 'rgba(255, 0, 0, 1)');
+    grad2.addColorStop(0, '#FF0000');
+    grad2.addColorStop(0.16666, '#FFFF00');
+    grad2.addColorStop(0.33333, '#00FF00');
+    grad2.addColorStop(0.5, '#00FFFF');
+    grad2.addColorStop(0.66667, '#0000FF');
+    grad2.addColorStop(0.83333, '#FF00FF');
+    grad2.addColorStop(1, '#FF0000');
     ctx2.fillStyle = grad2;
-    ctx2.fill();
+    ctx2.fillRect(0, 0, colorHueWidth, colorHueHeight);
 
     fillColorBlock();
 
@@ -220,10 +219,12 @@ function init() {
 
     colorBlockContainer.addEventListener('mousedown', (e) => {
         cursorStat3 = 1;
+        console.log('color block clicked');
         chooseColorFromBlock(e);
     });
     colorBlockContainer.addEventListener('mouseup', (e) => {
         cursorStat3 = 0;
+        console.log('color block unclicked up');
         chooseColorFromBlock(e);
     });
     colorBlockContainer.addEventListener('mousemove', (e) => {
@@ -231,6 +232,7 @@ function init() {
     });
     colorBlockContainer.addEventListener('mouseout', (e) => {
         cursorStat3 = 0;
+        console.log('color block unclicked out');
         chooseColorFromBlock(e);
     });
 
@@ -450,8 +452,8 @@ function changeThickness(e) {
 }
 
 function changeScale(e) {
-    if(e > 250) scale = 250;
-    else if(e < 10) scale = 10;
+    if (e > 250) scale = 250;
+    else if (e < 10) scale = 10;
     else scale = e;
     scaleValue.innerHTML = scale + '%';
     scaleSlider.value = scale;
@@ -554,6 +556,21 @@ function resetCanvas() {
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     ctxbg.clearRect(0, 0, canvasBg.offsetWidth, canvasBg.offsetHeight);
 
+    if (isEditingPhoto) {
+        newWidth = 1000;
+        newWidthContainer.value = 1000;
+
+        newHeight = 700;
+        newHeightContainer = 700;
+
+        newBgColor = '#FFFFFF';
+        newBgColorContainer.value = '#FFFFFF';
+
+        newCanvas();
+
+        isEditingPhoto = 0;
+    }
+
     ctxbg.fillStyle = newBgColor;
     ctxbg.fillRect(0, 0, canvasBg.width, canvasBg.height);
 
@@ -602,16 +619,16 @@ function fillColorBlock() {
     ctx1.fillStyle = hue;
     ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
 
-    var grad1 = ctx1.createLinearGradient(0, 0, colorBlockWidth, 0);
-    grad1.addColorStop(0, 'rgba(255,255,255,1)');
-    grad1.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx1.fillStyle = grad1;
+    var whiteTrans = ctx1.createLinearGradient(0, 0, colorBlockWidth, 0);
+    whiteTrans.addColorStop(0, '#FFFFFFFF');
+    whiteTrans.addColorStop(1, '#FFFFFF00');
+    ctx1.fillStyle = whiteTrans;
     ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
 
-    var grad2 = ctx1.createLinearGradient(0, 0, 0, colorBlockHeight);
-    grad2.addColorStop(0, 'rgba(0,0,0,0)');
-    grad2.addColorStop(1, 'rgba(0,0,0,1)');
-    ctx1.fillStyle = grad2;
+    var blackTrans = ctx1.createLinearGradient(0, 0, 0, colorBlockHeight);
+    blackTrans.addColorStop(0, '#00000000');
+    blackTrans.addColorStop(1, '#000000FF');
+    ctx1.fillStyle = blackTrans;
     ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
 }
 
@@ -704,6 +721,7 @@ function handleImage(e) {
             canvasHistory[0] = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
             changeScale(100);
+            isEditingPhoto = 1;
         }
         img.src = event.target.result;
         closeModal('new-dialog');

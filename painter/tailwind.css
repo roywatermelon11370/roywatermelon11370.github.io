@@ -485,13 +485,11 @@ body {
 
 @keyframes modal-contaier-animation {
     from {
-        background: transparent;
-        backdrop-filter: blur(0px);
+        background: rgba(0, 0, 0, 0);
     }
 
     to {
         background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(7px);
     }
 }
 
