@@ -204,12 +204,12 @@
             <div id="scale-area" class="mt-5 flex items-center gap-3">
                 <!-- <span class="material-symbols-rounded text-slate-500">search</span> -->
                 <p id="scale-value" class="text-sm text-slate-500">100%</p>
-                <button class="btn btn-icon" onclick="changeScale(scale - 10)">
+                <button class="btn btn-icon" onclick="changeScale(parseFloat(scale) - 10)">
                     <span class="material-symbols-rounded">zoom_out</span>
                 </button>
                 <input type="range" class="form-range value-scale" step="10" oninput="changeScale(this.value)"
                     id="scale" min="10" max="250" value="100">
-                <button class="btn btn-icon" onclick="changeScale(scale + 10)">
+                <button class="btn btn-icon" onclick="changeScale(parseFloat(scale) + 10)">
                     <span class="material-symbols-rounded">zoom_in</span>
                 </button>
                 <button class="btn btn-icon" onclick="changeScale(100)">
