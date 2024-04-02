@@ -806,6 +806,28 @@ body {
   background-color: rgb(29 78 216 / 0.25);
 }
 
+.btn-icon-group input:checked+.btn-icon {
+  background-color: rgb(37 99 235 / 0.25);
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.btn-icon-group input:checked+.btn-icon span {
+  font-variation-settings:
+        'FILL' 1,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.btn-icon-group input:checked+.btn-icon:hover {
+  background-color: rgb(29 78 216 / 0.25);
+}
+
+.btn-icon-group input:checked+.btn-icon:active {
+  background-color: rgb(29 78 216 / 0.25);
+}
+
 .color-selection {
   width: 2rem;
   height: 2rem;
@@ -869,6 +891,11 @@ body {
   z-index: 10;
 }
 
+#canvas-pseudo {
+  background-color: transparent;
+  display: none;
+}
+
 #scale-area {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
@@ -883,6 +910,7 @@ body {
 #color-block {
   background: blue;
   cursor: crosshair;
+  position: relative;
 }
 
 #color-hue {
@@ -916,6 +944,10 @@ body {
 
 .rainbow {
   cursor: url("images/rainbow_tiny.png"), pointer;
+}
+
+.colorize {
+  cursor: url("images/colorize_tiny.png"), pointer;
 }
 
 .line {
@@ -1142,12 +1174,12 @@ body {
   z-index: 1000;
   -webkit-backdrop-filter: blur(7px);
           backdrop-filter: blur(7px);
-  animation: modal-container-animation .2s ease-out;
+  animation: modal-container-animation .1s ease-out;
 }
 
-@keyframes modal-contaier-animation {
+@keyframes modal-container-animation {
   from {
-    background: transparent;
+    background: rgba(0, 0, 0, 0);
     -webkit-backdrop-filter: blur(0px);
             backdrop-filter: blur(0px);
   }
@@ -1173,13 +1205,13 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   width: 100%;
   max-width: 400px;
-  animation: modal-animation .3s cubic-bezier(0, .7, .08, .99);
+  animation: modal-animation .25s cubic-bezier(0, .7, .08, .99);
 }
 
 @keyframes modal-animation {
   from {
     opacity: 0;
-    transform: scale(0.5);
+    transform: scale(0.25);
   }
 
   to {
@@ -1249,6 +1281,10 @@ input[type=color]::-webkit-color-swatch {
 
 .me-3 {
   margin-inline-end: 0.75rem;
+}
+
+.ms-2 {
+  margin-inline-start: 0.5rem;
 }
 
 .mt-1 {
@@ -1321,6 +1357,11 @@ input[type=color]::-webkit-color-swatch {
 
 .text-center {
   text-align: center;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-base {

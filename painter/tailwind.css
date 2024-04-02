@@ -196,6 +196,26 @@ body {
     @apply bg-blue-700/25;
 }
 
+.btn-icon-group input:checked+.btn-icon {
+    @apply text-blue-600 bg-blue-600/25;
+}
+
+.btn-icon-group input:checked+.btn-icon span {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 24
+}
+
+.btn-icon-group input:checked+.btn-icon:hover {
+    @apply bg-blue-700/25;
+}
+
+.btn-icon-group input:checked+.btn-icon:active {
+    @apply bg-blue-700/25;
+}
+
 .color-selection {
     width: 2rem;
     height: 2rem;
@@ -255,6 +275,11 @@ body {
     z-index: 10;
 }
 
+#canvas-pseudo {
+    background-color: transparent;
+    display: none;
+}
+
 #scale-area {
     @apply bg-slate-100;
 }
@@ -267,6 +292,7 @@ body {
 #color-block {
     background: blue;
     cursor: crosshair;
+    position: relative;
 }
 
 #color-hue {
@@ -300,6 +326,10 @@ body {
 
 .rainbow {
     cursor: url("images/rainbow_tiny.png"), pointer;
+}
+
+.colorize {
+    cursor: url("images/colorize_tiny.png"), pointer;
 }
 
 .line {
@@ -480,16 +510,18 @@ body {
     background: rgba(0, 0, 0, 0.2);
     z-index: 1000;
     backdrop-filter: blur(7px);
-    animation: modal-container-animation .2s ease-out;
+    animation: modal-container-animation .1s ease-out;
 }
 
-@keyframes modal-contaier-animation {
+@keyframes modal-container-animation {
     from {
         background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
     }
 
     to {
         background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(7px);
     }
 }
 
@@ -501,13 +533,13 @@ body {
     @apply bg-white rounded-lg overflow-hidden shadow-lg;
     width: 100%;
     max-width: 400px;
-    animation: modal-animation .3s cubic-bezier(0, .7, .08, .99);
+    animation: modal-animation .25s cubic-bezier(0, .7, .08, .99);
 }
 
 @keyframes modal-animation {
     from {
         opacity: 0;
-        transform: scale(0.5);
+        transform: scale(0.25);
     }
 
     to {

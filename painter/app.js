@@ -3,6 +3,7 @@ var canvas;
 var canvasContainer;
 var canvasBg;
 var canvasPre;
+var canvasPseudo;
 var cursorX;
 var cursorY;
 var oriCursorX = 0;
@@ -10,6 +11,7 @@ var oriCursorY = 0;
 var ctx;
 var ctxpre;
 var ctxbg
+var ctxpse;
 var thicknesSlider;
 var thickness;
 var mode;
@@ -77,6 +79,9 @@ function init() {
     canvasBg = document.getElementById("canvas-bg");
     ctxbg = canvasBg.getContext("2d", { willReadFrequently: true });
 
+    canvasPseudo = document.getElementById("canvas-pseudo");
+    ctxpse = canvasPseudo.getContext("2d", { willReadFrequently: true });
+
     canvasContainer = document.getElementById('canvas-container');
 
     ctxpre.lineJoin = 'round';
@@ -95,8 +100,15 @@ function init() {
     ctxbg.strokeStyle = color;
     ctxbg.lineWidth = thickness;
 
+    ctxpse.lineJoin = 'round';
+    ctxpse.lineCap = 'round';
+    ctxpse.strokeStyle = color;
+    ctxpse.lineWidth = thickness;
+
     ctxbg.fillStyle = "white";
     ctxbg.fillRect(0, 0, canvasBg.width, canvasBg.height);
+
+    ctxpse.drawImage(canvasBg, 0, 0);
 
     thicknesSlider = document.getElementById("thickness");
     scaleSlider = document.getElementById("scale");
@@ -122,14 +134,14 @@ function init() {
     });
     canvasPre.addEventListener('mouseup', (e) => {
         saveCanvas();
-        if (mode != 'text') {
+        if (mode != 'text' && mode != 'colorize') {
             if (cursorStat) saveHistory();
         }
         cursorStat = false;
     });
     canvasPre.addEventListener('mouseout', (e) => {
         saveCanvas();
-        if (mode != 'text') {
+        if (mode != 'text' && mode != 'colorize') {
             if (cursorStat) saveHistory();
         }
         cursorStat = false;
@@ -444,6 +456,10 @@ function draw(event) {
         ctxpre.stroke();
         [cursorX, cursorY] = [event.offsetX, event.offsetY];
     }
+    else if (mode == 'colorize') {
+        var imageData = ctxpse.getImageData(cursorX, cursorY, 1, 1).data;
+        updateColorInfo(imageData[0], imageData[1], imageData[2]);
+    }
 }
 
 function changeThickness(e) {
@@ -495,7 +511,7 @@ function toolChange() {
 
     // thickness-area
     var thicknessArea = document.getElementById('thickness-area');
-    if (mode == 'text' || mode == 'fill') {
+    if (mode == 'text' || mode == 'fill' || mode == 'colorize') {
         thicknessArea.classList.add('hidden');
     }
     else thicknessArea.classList.remove('hidden');
@@ -506,6 +522,13 @@ function toolChange() {
         colorSelectionArea.classList.add('hidden');
     }
     else colorSelectionArea.classList.remove('hidden');
+
+    // colorize area
+    var colorizeArea = document.getElementById('colorize-area');
+    if (mode == 'colorize') {
+        colorizeArea.classList.remove('hidden');
+    }
+    else colorizeArea.classList.add('hidden');
 }
 
 function newCanvas() {
@@ -518,11 +541,17 @@ function newCanvas() {
     canvasBg.width = newWidth;
     canvasBg.height = newHeight;
 
+    canvasPseudo.width = newWidth;
+    canvasPseudo.height = newHeight;
+
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     ctxbg.clearRect(0, 0, canvasBg.offsetWidth, canvasBg.offsetHeight);
+    ctxpse.clearRect(0, 0, canvasPseudo.offsetWidth, canvasPseudo.offsetHeight);
 
     ctxbg.fillStyle = newBgColor;
     ctxbg.fillRect(0, 0, canvasBg.width, canvasBg.height);
+
+    ctxpse.drawImage(canvasBg, 0, 0);
 
     document.documentElement.style.setProperty('--image-width', newWidth + 'px');
     document.documentElement.style.setProperty('--image-height', newHeight + 'px');
@@ -555,6 +584,7 @@ function newCanvas() {
 function resetCanvas() {
     ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
     ctxbg.clearRect(0, 0, canvasBg.offsetWidth, canvasBg.offsetHeight);
+    ctxpse.clearRect(0, 0, canvasPseudo.offsetWidth, canvasPseudo.offsetHeight);
 
     if (isEditingPhoto) {
         newWidth = 1000;
@@ -633,13 +663,13 @@ function fillColorBlock() {
 }
 
 function chooseColorFromBlock(e) {
-    var cX = e.offsetX;
-    var cY = e.offsetY;
+    var cursorX = e.offsetX;
+    var cursorY = e.offsetY;
     var cXF = parseFloat(e.offsetX) - 2.5;
     var cYF = parseFloat(e.offsetY) - 2.5;
 
     if (cursorStat3) {
-        var imageData = ctx1.getImageData(cX, cY, 1, 1).data;
+        var imageData = ctx1.getImageData(cursorX, cursorY, 1, 1).data;
         var tmpColor = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
         colorLabel.style.backgroundColor = tmpColor;
         document.getElementById('color-block-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: ' + cXF + 'px;');
@@ -668,6 +698,34 @@ function chooseColor(c) {
     }
 }
 
+function elementToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + elementToHex(r).toUpperCase() + elementToHex(g).toUpperCase() + elementToHex(b).toUpperCase();
+}
+
+function updateColorInfo(r, g, b) {
+    document.getElementById('color-info').classList.remove('hidden');
+    document.getElementById('color-info-unknown').classList.add('hidden');
+    var hex = rgbToHex(r, g, b);
+    var rgb = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+
+    document.getElementById('color-info').innerHTML = `<div id="color-info" class="flex items-center gap-3">
+    <span class="color-selection ms-2" style="background: ` + rgb + `;"></span>
+    <div>
+        <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+    </div>
+</div>
+<button class="btn btn-link" onclick="addColorManual('`+ rgb + `');">
+    <span class="material-symbols-rounded">add_circle</span>
+    Add Color
+</button>`;
+}
+
 function addColor() {
     var newColor = colorLabel.style.backgroundColor;
     var htmlCode = '<button class="color-selection" style="background: ' + newColor + '"onclick="chooseColor(\'' + newColor + '\')"></button>';
@@ -680,10 +738,23 @@ function addColor() {
     document.getElementById('color-choices').innerHTML += (htmlCode);
 }
 
+function addColorManual(hex) {
+    var newColor = hex;
+    var htmlCode = '<button class="color-selection" style="background: ' + newColor + '"onclick="chooseColor(\'' + newColor + '\')"></button>';
+    var colorChoices = document.getElementById('color-choices').children;
+    for (var i = 0; i < colorChoices.length; i++) {
+        console.log(colorChoices[i].style.backgroundColor);
+        if (newColor == colorChoices[i].style.backgroundColor) {
+            return;
+        }
+    }
+    document.getElementById('color-choices').innerHTML += (htmlCode);
+}
+
 function download() {
-    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    ctxbg.drawImage(canvas, 0, 0);
-    var canvasUrl = canvasBg.toDataURL("image/png");
+    // var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // ctxbg.drawImage(canvas, 0, 0);
+    var canvasUrl = canvasPseudo.toDataURL("image/png");
     const createEl = document.createElement('a');
     createEl.href = canvasUrl;
     createEl.download = "canvas";
@@ -697,6 +768,9 @@ function saveCanvas() {
     var imageData = ctxpre.getImageData(0, 0, canvasPre.width, canvasPre.height);
     ctx.drawImage(canvasPre, 0, 0);
     ctxpre.clearRect(0, 0, canvasPre.offsetWidth, canvasPre.offsetHeight);
+
+    ctxpse.drawImage(canvasBg, 0, 0);
+    ctxpse.drawImage(canvas, 0, 0);
 }
 
 function handleImage(e) {
@@ -715,11 +789,15 @@ function handleImage(e) {
             canvasPre.width = img.width;
             canvasPre.height = img.height;
 
+            canvasPseudo.width = img.width;
+            canvasPseudo.height = img.height;
+
             document.documentElement.style.setProperty('--image-width', img.width + 'px');
             document.documentElement.style.setProperty('--image-height', img.height + 'px');
 
             canvasHistory[0] = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
+            ctxpse.drawImage(img, 0, 0);
             changeScale(100);
             isEditingPhoto = 1;
         }

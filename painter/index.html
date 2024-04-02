@@ -106,6 +106,12 @@
                             <span class="material-symbols-rounded">looks</span>
                         </div>
                     </label>
+                    <label for="tool-colorize" class="btn-tool-group">
+                        <input type="radio" name="tool" class="form-hidden" id="tool-colorize" value="colorize">
+                        <div class="btn btn-tool">
+                            <span class="material-symbols-rounded">colorize</span>
+                        </div>
+                    </label>
                     <!-- <label for="tool-smile" class="btn-tool-group">
                     <input type="radio" name="tool" class="form-hidden" id="tool-smile" value="smile">
                     <div class="btn btn-tool">
@@ -165,8 +171,19 @@
                         oninput="changeThickness(this.value)" min="1" max="100" value="25">
                 </div>
 
+                <!-- colorize area -->
+                <div id="colorize-area" class="mt-5">
+                    <div id="color-info" class="flex justify-between items-center hidden">
+
+                    </div>
+                    <div id="color-info-unknown" class="flex justify-center items-center">
+                        <span class="material-symbols-rounded text-slate-500 text-2xl">colorize</span>
+                        <p class="text-slate-500 ms-2">Choose a color from canvas</p>
+                    </div>
+                </div>
+
                 <!-- color selection -->
-                <div id="color-selection-area">
+                <div id="color-selection-area" class="mt-5">
                     <div id="color-choices" class="flex flex-wrap gap-3 mt-5 justify-center">
                         <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
                             onclick="chooseColor('rgb(0, 0, 0)')"></button>
@@ -201,7 +218,7 @@
             </div>
 
             <!-- scale area -->
-            <div id="scale-area" class="mt-5 flex items-center gap-3">
+            <div id="scale-area" class="mt-5 flex items-center gap-2">
                 <!-- <span class="material-symbols-rounded text-slate-500">search</span> -->
                 <p id="scale-value" class="text-sm text-slate-500">100%</p>
                 <button class="btn btn-icon" onclick="changeScale(parseFloat(scale) - 10)">
@@ -221,6 +238,7 @@
         <!-- draw area -->
         <section id="draw-area" class="w-2/3 md:w-3/4 p-5 text-center overflow-scroll" style="height: 100vh;">
             <div id="canvas-container" class="draw">
+                <canvas id="canvas-pseudo" width="1000px" height="700px">OZO</canvas>
                 <canvas id="canvas-bg" width="1000px" height="700px">OUO</canvas>
                 <canvas id="canvas" width="1000px" height="700px">OWO</canvas>
                 <canvas id="canvas-preview" width="1000px" height="700px">OAO</canvas>
