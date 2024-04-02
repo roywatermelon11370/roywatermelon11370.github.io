@@ -611,4 +611,8 @@ input[type=color]::-webkit-color-swatch {
     @apply rounded-md border-2 border-slate-200;
 }
 
+input[type=color]::-moz-color-swatch {
+    @apply rounded-md border-2 border-slate-200;
+}
+
 @tailwind utilities;
