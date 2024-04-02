@@ -665,7 +665,7 @@ body {
 
 .btn-primary:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity));
 }
 
 .btn-secondary {
@@ -799,11 +799,11 @@ body {
 }
 
 .btn-tool-group input:checked+.btn-tool:hover {
-  background-color: rgb(29 78 216 / 0.25);
+  background-color: rgb(30 64 175 / 0.25);
 }
 
 .btn-tool-group input:checked+.btn-tool:active {
-  background-color: rgb(29 78 216 / 0.25);
+  background-color: rgb(30 64 175 / 0.25);
 }
 
 .btn-icon-group input:checked+.btn-icon {
@@ -821,11 +821,11 @@ body {
 }
 
 .btn-icon-group input:checked+.btn-icon:hover {
-  background-color: rgb(29 78 216 / 0.25);
+  background-color: rgb(30 64 175 / 0.25);
 }
 
 .btn-icon-group input:checked+.btn-icon:active {
-  background-color: rgb(29 78 216 / 0.25);
+  background-color: rgb(30 64 175 / 0.25);
 }
 
 .color-selection {
@@ -873,6 +873,7 @@ body {
   left: 0;
   z-index: 20;
   background-color: transparent;
+  transition: all .2s cubic-bezier(0, .7, .08, .99);
 }
 
 #canvas-preview {
@@ -881,6 +882,7 @@ body {
   left: 0;
   z-index: 30;
   background-color: transparent;
+  transition: all .2s cubic-bezier(0, .7, .08, .99);
 }
 
 #canvas-bg {
@@ -889,11 +891,13 @@ body {
   top: 0;
   left: 0;
   z-index: 10;
+  transition: all .2s cubic-bezier(0, .7, .08, .99);
 }
 
 #canvas-pseudo {
   background-color: transparent;
   display: none;
+  clip: rect(0, 0, 0, 0) !important;
 }
 
 #scale-area {
@@ -1170,14 +1174,15 @@ body {
   width: 100vw;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.2);
+  display: none;
+  background: rgba(0, 0, 0, 0.125);
   z-index: 1000;
   -webkit-backdrop-filter: blur(7px);
           backdrop-filter: blur(7px);
-  animation: modal-container-animation .1s ease-out;
+  animation: modal-container-in-animation .25s ease-out;
 }
 
-@keyframes modal-container-animation {
+@keyframes modal-container-in-animation {
   from {
     background: rgba(0, 0, 0, 0);
     -webkit-backdrop-filter: blur(0px);
@@ -1185,15 +1190,29 @@ body {
   }
 
   to {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.125);
     -webkit-backdrop-filter: blur(7px);
             backdrop-filter: blur(7px);
   }
 }
 
-/* .modal-bg {
-    @apply absolute top-0 left-0 bg-blue-500;
-} */
+.modal-container-hidden {
+  animation: modal-container-out-animation .25s ease-out;
+}
+
+@keyframes modal-container-out-animation {
+  from {
+    background: rgba(0, 0, 0, 0.125);
+    -webkit-backdrop-filter: blur(7px);
+            backdrop-filter: blur(7px);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0);
+    -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+  }
+}
 
 .modal {
   overflow: hidden;
@@ -1203,12 +1222,13 @@ body {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  display: none;
   width: 100%;
   max-width: 400px;
-  animation: modal-animation .25s cubic-bezier(0, .7, .08, .99);
+  animation: modal-in-animation .25s cubic-bezier(0, .7, .08, .99);
 }
 
-@keyframes modal-animation {
+@keyframes modal-in-animation {
   from {
     opacity: 0;
     transform: scale(0.25);
@@ -1217,6 +1237,22 @@ body {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.modal-hidden {
+  animation: modal-out-animation .1s cubic-bezier(.58, 0, .99, .62);
+}
+
+@keyframes modal-out-animation {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.25);
   }
 }
 

@@ -280,7 +280,7 @@ function init() {
 
     document.getElementById('new-width').addEventListener('input', (e) => {
         newWidth = document.getElementById('new-width').value;
-        newWidthContainer.classList.remove('form-input-error');
+        try { newWidthContainer.classList.remove('form-input-error'); } catch (e) { };
         if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
         if (newWidth > 10000 || newWidth < 10) {
             newWidthContainer.classList.add('form-input-error');
@@ -290,7 +290,7 @@ function init() {
     });
     document.getElementById('new-height').addEventListener('input', (e) => {
         newHeight = document.getElementById('new-height').value;
-        newHeightContainer.classList.remove('form-input-error');
+        try { newHeightContainer.classList.remove('form-input-error'); } catch (e) { };
         if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
         if (newHeight > 10000 || newHeight < 10) {
             newHeightContainer.classList.add('form-input-error');
@@ -301,6 +301,15 @@ function init() {
     document.getElementById('new-bg-color').addEventListener('change', (e) => {
         newBgColor = document.getElementById('new-bg-color').value;
     });
+
+    document.onclick = function (event) {
+        if (event.target.matches('#new-dialog')) {
+            closeModal('new-dialog');
+        }
+        else if (event.target.matches('#reset-dialog')) {
+            closeModal('reset-dialog');
+        }
+    };
 }
 
 function draw(event) {
@@ -322,7 +331,8 @@ function draw(event) {
         ctxpre.moveTo(cursorX, cursorY);
         ctxpre.lineTo(event.offsetX, event.offsetY);
         ctxpre.stroke();
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'erase') {
         ctxpre.globalCompositeOperation = "destination-out";
@@ -340,7 +350,8 @@ function draw(event) {
         ctx.moveTo(cursorX, cursorY);
         ctx.lineTo(event.offsetX, event.offsetY);
         ctx.stroke();
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'rainbow') {
         ctxpre.globalCompositeOperation = "source-over";
@@ -358,7 +369,8 @@ function draw(event) {
         ctxpre.moveTo(cursorX, cursorY);
         ctxpre.lineTo(event.offsetX, event.offsetY);
         ctxpre.stroke();
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
         adaptiveColor = (adaptiveColor + 1) % 360;
     }
     else if (mode == 'rect') {
@@ -383,7 +395,8 @@ function draw(event) {
             ctxpre.rect(oriCursorX, oriCursorY, cursorX - oriCursorX, cursorY - oriCursorY);
             ctxpre.fill();
         }
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'triangle') {
         ctxpre.clearRect(0, 0, canvasPre.offsetWidth, canvasPre.offsetHeight);
@@ -413,7 +426,8 @@ function draw(event) {
             ctxpre.lineTo(oriCursorX, cursorY);
             ctxpre.fill();
         }
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'circle') {
         ctxpre.clearRect(0, 0, canvasPre.offsetWidth, canvasPre.offsetHeight);
@@ -437,7 +451,8 @@ function draw(event) {
             ctxpre.arc((oriCursorX + cursorX) / 2, (oriCursorY + cursorY) / 2, Math.sqrt(((oriCursorX - cursorX) * 0.5) ** 2 + ((oriCursorY - cursorY) * 0.5) ** 2), 0, 2 * Math.PI, false);
             ctxpre.fill();
         }
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'line') {
         ctxpre.clearRect(0, 0, canvasPre.offsetWidth, canvasPre.offsetHeight);
@@ -454,7 +469,8 @@ function draw(event) {
         ctxpre.moveTo(oriCursorX, oriCursorY);
         ctxpre.lineTo(cursorX, cursorY);
         ctxpre.stroke();
-        [cursorX, cursorY] = [event.offsetX, event.offsetY];
+        cursorX = event.offsetX;
+        cursorY = event.offsetY;
     }
     else if (mode == 'colorize') {
         var imageData = ctxpse.getImageData(cursorX, cursorY, 1, 1).data;
@@ -556,6 +572,8 @@ function newCanvas() {
     document.documentElement.style.setProperty('--image-width', newWidth + 'px');
     document.documentElement.style.setProperty('--image-height', newHeight + 'px');
 
+    isEditingPhoto = 0;
+
     try {
         var tmpTextInput = document.getElementById('tmp-text-input');
         tmpTextInput.remove();
@@ -570,6 +588,7 @@ function newCanvas() {
     currIndex = 0;
     maxIndex = 0;
     canvasHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+    changeScale(100);
     if (currIndex == maxIndex) {
         document.getElementById('redo-btn').disabled = true;
     }
@@ -931,7 +950,14 @@ function resizeInput() {
 
 function openModal(id) {
     let modal = document.getElementById(id);
-    modal.classList.remove('hidden');
+    modal.style.display = "flex";
+
+    let modalInside = document.getElementById(id + '-modal');
+    modalInside.style.display = "block";
+
+    newWidthContainer = document.getElementById('new-width');
+    newHeightContainer = document.getElementById('new-height');
+    newBgColorContainer = document.getElementById('new-bg-color');
     // modal.addEventListener('onmousedown', closeModal(id));
 
     if (newWidth > 10000 || newWidth < 10) {
@@ -951,7 +977,15 @@ function openModal(id) {
 
 function closeModal(id) {
     let modal = document.getElementById(id);
-    modal.classList.add('hidden');
+    let modalInside = document.getElementById(id + '-modal');
+    modal.classList.add('modal-container-hidden');
+    modalInside.classList.add('modal-hidden');
+
+    modal.addEventListener('animationend', function () {
+        modal.style.display = "none";
+        modal.classList.remove('modal-container-hidden');
+        modalInside.classList.remove('modal-hidden');
+    }, { once: true });
 }
 
 function switchTab(id, show, tabid) {
@@ -966,6 +1000,10 @@ function switchTab(id, show, tabid) {
 }
 
 function resetDimension() {
+    newWidthContainer = document.getElementById('new-width');
+    newHeightContainer = document.getElementById('new-height');
+    newBgColorContainer = document.getElementById('new-bg-color');
+
     newWidthContainer.value = 1000;
     newWidth = 1000;
     newHeightContainer.value = 700;
