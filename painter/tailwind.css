@@ -555,7 +555,7 @@ body {
 @keyframes modal-in-animation {
     from {
         opacity: 0;
-        transform: scale(0.25);
+        transform: scale(0.5);
     }
 
     to {
@@ -576,7 +576,7 @@ body {
 
     to {
         opacity: 0;
-        transform: scale(0.25);
+        transform: scale(0.5);
     }
 }
 
