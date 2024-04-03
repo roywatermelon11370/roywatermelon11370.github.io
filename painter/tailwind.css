@@ -228,6 +228,36 @@ body {
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 }
 
+.color-selection-del-btn {
+    @apply absolute rounded-full flex justify-center items-center;
+    top: 0;
+    right: 0;
+    width: 1rem;
+    height: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.color-selection-del-btn span {
+    @apply text-white;
+    font-size: 0.7rem;
+}
+
+.color-selection-del-btn:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.color-selection-alt {
+    width: 2rem;
+    height: 2rem;
+    @apply rounded-md;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
 .color-selection-active::after {
     content: "";
     background: transparent;
@@ -293,16 +323,27 @@ body {
     flex-direction: column;
 }
 
+#color-choices {
+    @apply inline-flex flex-wrap gap-3 mt-5 justify-center;
+    column-count: 6;
+}
+
 #color-block {
     background: blue;
     cursor: crosshair;
     position: relative;
+    @apply rounded-lg border-2 border-slate-200 overflow-hidden;
 }
 
-#color-hue {
+/* #color-block-container {} */
+
+#color-bar {
     background: purple;
-    cursor: crosshair;
+    position: relative;
+    @apply rounded-lg border-2 border-slate-200 overflow-hidden;
 }
+
+/* #color-bar-container {} */
 
 .draw {
     cursor: url("images/pencil_tiny.png"), pointer;
@@ -474,22 +515,24 @@ body {
     outline: none;
 }
 
-#color-hue-indicator {
+#color-bar-indicator {
+    @apply absolute rounded-md bg-white border-2 border-slate-200;
+    pointer-events: none;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     position: absolute;
-    width: 40px;
-    height: 3px;
-    border: 1px solid black;
-    background-color: rgba(255, 255, 255, 0.5);
-    cursor: crosshair;
+    width: 50px;
+    height: 20px;
+    cursor: pointer;
 }
 
 #color-block-indicator {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border: 1px solid black;
+    @apply absolute shadow-xl;
+    pointer-events: none;
+    width: 15px;
+    height: 15px;
+    border: 2.5px solid rgba(125, 125, 125, 255);
     border-radius: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
     cursor: crosshair;
 }
 
@@ -510,7 +553,7 @@ body {
 }
 
 .modal-container {
-    @apply fixed w-screen h-screen top-0 left-0 flex justify-center items-center hidden;
+    @apply fixed w-screen h-screen top-0 p-5 left-0 flex justify-center items-center hidden;
     background: rgba(0, 0, 0, 0.125);
     z-index: 1000;
     backdrop-filter: blur(7px);
@@ -546,10 +589,14 @@ body {
 }
 
 .modal {
-    @apply bg-white rounded-lg overflow-hidden shadow-lg hidden;
+    @apply bg-white rounded-lg overflow-hidden shadow-lg hidden max-h-screen;
     width: 100%;
     max-width: 400px;
     animation: modal-in-animation .25s cubic-bezier(0, .7, .08, .99);
+}
+
+.modal-wide {
+    max-width: 500px;
 }
 
 @keyframes modal-in-animation {

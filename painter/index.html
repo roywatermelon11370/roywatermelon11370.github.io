@@ -46,7 +46,8 @@
 
                 <!-- upload download -->
                 <div class="flex mt-5 gap-2">
-                    <button onClick="openModal('new-dialog')" class="btn btn-dark w-1/2">
+                    <button onClick="openModal('new-dialog'); loadNewBlankInfo(); loadFileSelector()"
+                        class="btn btn-dark w-1/2">
                         <span class="material-symbols-rounded">draft</span>
                         New
                     </button>
@@ -183,36 +184,14 @@
                 </div>
 
                 <!-- color selection -->
-                <div id="color-selection-area" class="mt-5">
-                    <div id="color-choices" class="flex flex-wrap gap-3 mt-5 justify-center">
-                        <button class="color-selection color-selection-active" style="background: rgb(0, 0, 0);"
-                            onclick="chooseColor('rgb(0, 0, 0)')"></button>
-                        <button class="color-selection" style="background: rgb(244, 67, 54);"
-                            onclick="chooseColor('rgb(244, 67, 54)')"></button>
-                        <button class="color-selection" style="background: rgb(255, 152, 0);"
-                            onclick="chooseColor('rgb(255, 152, 0)')"></button>
-                        <button class="color-selection" style="background: rgb(76, 175, 80)"
-                            onclick="chooseColor('rgb(76, 175, 80)')"></button>
-                        <button class="color-selection" style="background: rgb(33, 150, 243);"
-                            onclick="chooseColor('rgb(33, 150, 243)')"></button>
-                        <button class="color-selection" style="background: rgb(103, 58, 183);"
-                            onclick="chooseColor('rgb(103, 58, 183)')"></button>
-                    </div>
-                    <div class="flex mt-5 justify-center gap-2">
-                        <div class="p-2" style="width: 50px; height: 175px;">
-                            <span id="color-label" class="color-selection m-1" style="background: salmon;"></span>
-                            <button class="btn btn-icon m-auto" onclick="addColor();">
-                                <span class="material-symbols-rounded">add_circle</span>
-                            </button>
-                        </div>
-                        <div id="color-block-container" style="width: 175px; height: 175px; position: relative;">
-                            <canvas id="color-block" width="175px" height="175px"></canvas>
-                            <span id="color-block-indicator" style="top: -2px; left: 173px;"></span>
-                        </div>
-                        <div id="color-hue-container" style="width: 40px; height: 175px; position: relative;">
-                            <canvas id="color-hue" width="40px" height="175px"></canvas>
-                            <span id="color-hue-indicator" style="top: 0px; left: 0px;"></span>
-                        </div>
+                <div id="color-selection-area" class="mt-5 text-center">
+                    <div id="color-choices" class=""></div>
+                    <div class="mt-5">
+                        <button onclick="openModal('edit-color-dialog'); loadEditColorChoices(); loadColorPicker();"
+                            class="btn btn-link">
+                            <span class="material-symbols-rounded">palette</span>
+                            Edit Colors
+                        </button>
                     </div>
                 </div>
             </div>
@@ -322,8 +301,11 @@
                         </div>
                         <div class="mt-5">
                             <h5 class="text-slate-500 mb-1">Background Color</h5>
+                            <input type="color" name="new-bg-color" id="new-bg-color" value="#FFFFFF">
                         </div>
-                        <input type="color" name="new-bg-color" id="new-bg-color" value="#FFFFFF">
+                        <!-- <div class="mt-5">
+                            <h5 class="text-slate-500 mb-1">Background Pattern</h5>
+                        </div> -->
                         <div class="mt-5 text-center">
                             <button class="btn btn-link" onclick="resetDimension()">
                                 <span class="material-symbols-rounded">restart_alt</span>
@@ -339,6 +321,58 @@
                     </div>
 
                 </section>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Color Dialog -->
+    <div id="edit-color-dialog" class="modal-container">
+        <!-- <span class="modal-bg"></span> -->
+        <div id="edit-color-dialog-modal" class="modal">
+            <div class="modal-head">
+                <h3>Edit Colors</h3>
+            </div>
+            <div class="modal-body">
+                <div class="flex gap-10 justify-center">
+                    <div id="color-block-container" style="width: 250px; height: 250px; position: relative;">
+                        <canvas id="color-block" width="250px" height="250px"></canvas>
+                        <span id="color-block-indicator" style="top: -2px; left: 248px;"></span>
+                    </div>
+                    <div id="color-bar-container" style="width: 40px; height: 250px; position: relative;">
+                        <canvas id="color-bar" width="40px" height="250px"></canvas>
+                        <span id="color-bar-indicator" style="top: -7.5px; left: -4px;"></span>
+                    </div>
+                </div>
+                <div id="edit-color-info" class="mt-5 p-2 flex items-center justify-between">
+                    <!-- <div class="flex items-center gap-3">
+                        <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
+                        <div>
+                            <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
+                            <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-link" onclick="addColor('rgb(255, 0, 0)');">
+                        <span class="material-symbols-rounded">add_circle</span>
+                        Add Color
+                    </button> -->
+                </div>
+                <div class="mt-5 p-2">
+                    <div class="flex items-center justify-between">
+                        <h5 class="text-slate-500">Saved Colors</h5>
+                        <button id="btn-color-edit" class="btn btn-link" onclick="toggleColorEditMode()">
+                            <span class="material-symbols-rounded">edit</span>
+                            Edit
+                        </button>
+                    </div>
+                    
+                    <div id="edit-color-choices" class="flex gap-3 flex-wrap my-2"></div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn btn-secondary" onclick="closeModal('edit-color-dialog')">Cancel</button>
+                <button class="btn btn-primary" onclick="closeModal('edit-color-dialog');">OK</button>
             </div>
         </div>
     </div>

@@ -840,6 +840,41 @@ body {
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 }
 
+.color-selection-del-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  top: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.color-selection-del-btn span {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  font-size: 0.7rem;
+}
+
+.color-selection-del-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.color-selection-alt {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
 .color-selection-active::after {
   content: "";
   background: transparent;
@@ -911,16 +946,40 @@ body {
   flex-direction: column;
 }
 
+#color-choices {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  -moz-column-count: 6;
+       column-count: 6;
+}
+
 #color-block {
   background: blue;
   cursor: crosshair;
   position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
 }
 
-#color-hue {
+/* #color-block-container {} */
+
+#color-bar {
   background: purple;
-  cursor: crosshair;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
 }
+
+/* #color-bar-container {} */
 
 .draw {
   cursor: url("images/pencil_tiny.png"), pointer;
@@ -1114,22 +1173,32 @@ body {
   outline: none;
 }
 
-#color-hue-indicator {
+#color-bar-indicator {
+  border-radius: 0.375rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  pointer-events: none;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   position: absolute;
-  width: 40px;
-  height: 3px;
-  border: 1px solid black;
-  background-color: rgba(255, 255, 255, 0.5);
-  cursor: crosshair;
+  width: 50px;
+  height: 20px;
+  cursor: pointer;
 }
 
 #color-block-indicator {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  border: 1px solid black;
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  pointer-events: none;
+  width: 15px;
+  height: 15px;
+  border: 2.5px solid rgba(125, 125, 125, 255);
   border-radius: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
   cursor: crosshair;
 }
 
@@ -1174,6 +1243,7 @@ body {
   width: 100vw;
   align-items: center;
   justify-content: center;
+  padding: 1.25rem;
   display: none;
   background: rgba(0, 0, 0, 0.125);
   z-index: 1000;
@@ -1215,6 +1285,7 @@ body {
 }
 
 .modal {
+  max-height: 100vh;
   overflow: hidden;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
@@ -1226,6 +1297,10 @@ body {
   width: 100%;
   max-width: 400px;
   animation: modal-in-animation .25s cubic-bezier(0, .7, .08, .99);
+}
+
+.modal-wide {
+  max-width: 500px;
 }
 
 @keyframes modal-in-animation {
@@ -1306,12 +1381,9 @@ input[type=color]::-moz-color-swatch {
   position: relative;
 }
 
-.m-1 {
-  margin: 0.25rem;
-}
-
-.m-auto {
-  margin: auto;
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .mb-0 {
@@ -1378,6 +1450,10 @@ input[type=color]::-moz-color-swatch {
   justify-content: space-between;
 }
 
+.gap-10 {
+  gap: 2.5rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -1388,6 +1464,11 @@ input[type=color]::-moz-color-swatch {
 
 .overflow-scroll {
   overflow: scroll;
+}
+
+.bg-blue-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
 
 .p-2 {

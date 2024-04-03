@@ -18,6 +18,7 @@ var mode;
 var textMode;
 var scale;
 var isEditingPhoto;
+var isEditingColor = 0;
 
 // history
 var canvasHistory = [];
@@ -29,18 +30,20 @@ var cursorStat2 = 0;
 var cursorStat3 = 0;
 var colorBlock;
 var colorBlockContainer;
-var colorHueContainer;
+var colorBarContainer;
 var colorBlockWidth;
 var colorBlockHeight;
-var colorHue;
-var colorHueWidth;
-var colorHueHeight;
+var colorBar;
+var colorBarWidth;
+var colorBarHeight;
 var ctx1;
 var ctx2;
 var colorLabel;
 var hue = 'rgba(255, 0, 0, 1)';
 var color = 'rgba(0, 0, 0, 1)';
 var adaptiveColor = 0;
+
+var colorSelectionSet = new Set(['rgb(0, 0, 0)', 'rgb(255, 255, 255)', 'rgb(244, 67, 54)', 'rgb(255, 152, 0)', 'rgb(255, 235, 59)', 'rgb(76, 175, 80)', 'rgb(0, 150, 136)', 'rgb(0, 188, 212)', 'rgb(33, 150, 243)', 'rgb(103, 58, 183)', 'rgb(233, 30, 99)', 'rgb(96, 125, 139)']);
 
 // shape
 var fillType;
@@ -83,6 +86,8 @@ function init() {
     ctxpse = canvasPseudo.getContext("2d", { willReadFrequently: true });
 
     canvasContainer = document.getElementById('canvas-container');
+
+    color = 'rgb(0, 0, 0)'
 
     ctxpre.lineJoin = 'round';
     ctxpre.lineCap = 'round';
@@ -185,75 +190,7 @@ function init() {
     });
 
     // color picker
-    colorBlock = document.getElementById('color-block');
-    colorHue = document.getElementById('color-hue');
-    colorBlockWidth = colorBlock.offsetWidth;
-    colorBlockHeight = colorBlock.offsetHeight;
-    colorHueWidth = colorHue.offsetWidth;
-    colorHueHeight = colorHue.offsetHeight;
-    colorLabel = document.getElementById('color-label');
-    ctx1 = colorBlock.getContext("2d", { willReadFrequently: true });
-    ctx2 = colorHue.getContext("2d", { willReadFrequently: true });
-
-    colorHueContainer = document.getElementById('color-hue-container');
-    colorBlockContainer = document.getElementById('color-block-container');
-
-    colorLabel.style.backgroundColor = "rgba(255, 0, 0, 1)";
-
-    var grad2 = ctx2.createLinearGradient(0, 0, 0, colorHueHeight);
-    grad2.addColorStop(0, '#FF0000');
-    grad2.addColorStop(0.16666, '#FFFF00');
-    grad2.addColorStop(0.33333, '#00FF00');
-    grad2.addColorStop(0.5, '#00FFFF');
-    grad2.addColorStop(0.66667, '#0000FF');
-    grad2.addColorStop(0.83333, '#FF00FF');
-    grad2.addColorStop(1, '#FF0000');
-    ctx2.fillStyle = grad2;
-    ctx2.fillRect(0, 0, colorHueWidth, colorHueHeight);
-
-    fillColorBlock();
-
-    colorHueContainer.addEventListener('mousedown', (e) => {
-        cursorStat2 = 1;
-        changeHue(e);
-    });
-    colorHueContainer.addEventListener('mouseup', (e) => {
-        cursorStat2 = 0;
-        changeHue(e);
-    });
-    colorHueContainer.addEventListener('mousemove', (e) => {
-        changeHue(e);
-    });
-    colorHueContainer.addEventListener('mouseout', (e) => {
-        cursorStat2 = 0;
-        changeHue(e);
-    });
-
-    colorBlockContainer.addEventListener('mousedown', (e) => {
-        cursorStat3 = 1;
-        console.log('color block clicked');
-        chooseColorFromBlock(e);
-    });
-    colorBlockContainer.addEventListener('mouseup', (e) => {
-        cursorStat3 = 0;
-        console.log('color block unclicked up');
-        chooseColorFromBlock(e);
-    });
-    colorBlockContainer.addEventListener('mousemove', (e) => {
-        chooseColorFromBlock(e);
-    });
-    colorBlockContainer.addEventListener('mouseout', (e) => {
-        cursorStat3 = 0;
-        console.log('color block unclicked out');
-        chooseColorFromBlock(e);
-    });
-
-    // file selector
-    fileSelector = document.getElementById('file-upload');
-    fileSelector.addEventListener('change', (event) => {
-        fileUploaded = event.target.files;
-        handleImage(event);
-    });
+    loadColorChoices();
 
     // history
     canvasHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
@@ -269,45 +206,18 @@ function init() {
     }
     else document.getElementById('undo-btn').disabled = false;
 
-    newWidthContainer = document.getElementById('new-width');
-    newHeightContainer = document.getElementById('new-height');
-    newBgColorContainer = document.getElementById('new-bg-color');
-    newWidth = newWidthContainer.value;
-    newHeight = newHeightContainer.value;
-    newBgColor = newBgColorContainer.value;
-
-    errMsg = document.getElementById('err-msg');
-
-    document.getElementById('new-width').addEventListener('input', (e) => {
-        newWidth = document.getElementById('new-width').value;
-        try { newWidthContainer.classList.remove('form-input-error'); } catch (e) { };
-        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
-        if (newWidth > 10000 || newWidth < 10) {
-            newWidthContainer.classList.add('form-input-error');
-            errMsg.innerHTML = '10000 > value > 10'
-            document.getElementById('new-blank-btn').disabled = true;
-        }
-    });
-    document.getElementById('new-height').addEventListener('input', (e) => {
-        newHeight = document.getElementById('new-height').value;
-        try { newHeightContainer.classList.remove('form-input-error'); } catch (e) { };
-        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
-        if (newHeight > 10000 || newHeight < 10) {
-            newHeightContainer.classList.add('form-input-error');
-            errMsg.innerHTML = '10000 > value > 10'
-            document.getElementById('new-blank-btn').disabled = true;
-        }
-    });
-    document.getElementById('new-bg-color').addEventListener('change', (e) => {
-        newBgColor = document.getElementById('new-bg-color').value;
-    });
+    // new Blank
+    newWidth = 1000;
+    newHeight = 700;
+    newBgColor = '#FFFFFF';
 
     document.onclick = function (event) {
-        if (event.target.matches('#new-dialog')) {
-            closeModal('new-dialog');
-        }
-        else if (event.target.matches('#reset-dialog')) {
-            closeModal('reset-dialog');
+        let modalList = document.getElementsByClassName('modal-container');
+        for (let i = 0; i < modalList.length; i++) {
+            // console.log(modalList[i].id);
+            if (event.target.matches('#' + modalList[i].id)) {
+                closeModal(modalList[i].id);
+            }
         }
     };
 }
@@ -650,57 +560,208 @@ function resetCanvas() {
     else document.getElementById('undo-btn').disabled = false;
 }
 
-function changeHue(e) {
-    var cX = e.offsetX;
-    var cY = e.offsetY;
-    var cYF = parseFloat(e.offsetY) - 2.5;
-
-    if (cursorStat2) {
-        // console.log('hue changing');
-        var imageData = ctx2.getImageData(cX, cY, 1, 1).data;
-        hue = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-        document.getElementById('color-hue-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: 0px;');
-        fillColorBlock();
+function loadColorChoices() {
+    var colorChoices = document.getElementById('color-choices');
+    colorChoices.innerHTML = '';
+    for (let item of colorSelectionSet) {
+        if (color == item) {
+            colorChoices.innerHTML += '<button class="color-selection color-selection-active" style="background: ' + item + '"onclick="chooseColor(\'' + item + '\')"></button>';
+        }
+        else {
+            colorChoices.innerHTML += '<button class="color-selection" style="background: ' + item + '"onclick="chooseColor(\'' + item + '\')"></button>';
+        }
     }
 }
 
-function fillColorBlock() {
-    ctx1.fillStyle = hue;
-    ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
+function loadEditColorChoices() {
+    var editColorChoices = document.getElementById('edit-color-choices');
+    editColorChoices.innerHTML = '';
+    if (isEditingColor == 0) {
+        for (let item of colorSelectionSet) {
+            editColorChoices.innerHTML += '<span class="color-selection" style="background: ' + item + '"></span>';
+        }
+    }
+    else {
+        for (let item of colorSelectionSet) {
+            if (item == 'rgb(0, 0, 0)') {
+                editColorChoices.innerHTML += '<span class="color-selection" style="background: ' + item + '"></span>';
+            }
+            else {
+                editColorChoices.innerHTML += `<div class="color-selection" style="background: ` + item + `;">
+            <button class="color-selection-del-btn" onclick="removeColorChoice('` + item + `')">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+            </div>`;
+            }
+        }
+    }
+}
 
-    var whiteTrans = ctx1.createLinearGradient(0, 0, colorBlockWidth, 0);
-    whiteTrans.addColorStop(0, '#FFFFFFFF');
-    whiteTrans.addColorStop(1, '#FFFFFF00');
-    ctx1.fillStyle = whiteTrans;
-    ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
+function removeColorChoice(rgb) {
+    colorSelectionSet.delete(rgb);
+    loadColorChoices();
+    loadEditColorChoices();
+}
 
-    var blackTrans = ctx1.createLinearGradient(0, 0, 0, colorBlockHeight);
-    blackTrans.addColorStop(0, '#00000000');
-    blackTrans.addColorStop(1, '#000000FF');
-    ctx1.fillStyle = blackTrans;
-    ctx1.fillRect(0, 0, colorBlockWidth, colorBlockHeight);
+function toggleColorEditMode() {
+    isEditingColor = !isEditingColor;
+    loadEditColorChoices();
+    let btnColorEdit = document.getElementById('btn-color-edit');
+    if (isEditingColor) {
+        btnColorEdit.innerHTML = '<span class="material-symbols-rounded">done</span>Done';
+    }
+    else {
+        btnColorEdit.innerHTML = '<span class="material-symbols-rounded">edit</span>Edit';
+    }
+}
+
+var colorHS;
+
+function loadColorPicker() {
+    colorHS = 'rgb(255, 0, 0)'
+    document.getElementById('color-block-indicator').setAttribute('style', 'top: -2px; left: -2px;');
+    document.getElementById('color-bar-indicator').setAttribute('style', 'top: -7.5px; left: -4px;');
+    document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+    <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
+    <div>
+        <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
+    </div>
+</div>
+<button class="btn btn-link" onclick="addColor('rgb(255, 0, 0)');">
+    <span class="material-symbols-rounded">add_circle</span>
+    Add Color
+</button>`;
+
+    isEditingColor = 0;
+    document.getElementById('btn-color-edit').innerHTML = '<span class="material-symbols-rounded">edit</span>Edit';
+
+    loadEditColorChoices();
+
+    colorBlock = document.getElementById('color-block');
+    colorBar = document.getElementById('color-bar');
+
+    colorLabel = document.getElementById('color-label');
+    ctx1 = colorBlock.getContext("2d", { willReadFrequently: true });
+    ctx2 = colorBar.getContext("2d", { willReadFrequently: true });
+
+    colorBarContainer = document.getElementById('color-bar-container');
+    colorBlockContainer = document.getElementById('color-block-container');
+
+    // colorLabel.style.backgroundColor = "rgba(255, 0, 0, 1)";
+
+    // draw color block
+    const colorBlockGradient = ctx1.createLinearGradient(0, 0, colorBlock.offsetWidth, 0);
+    colorBlockGradient.addColorStop(0, 'rgba(255, 0, 0, 1)');
+    colorBlockGradient.addColorStop(0.16667, 'rgba(255, 255, 0, 1)');
+    colorBlockGradient.addColorStop(0.33333, 'rgba(0, 255, 0, 1)');
+    colorBlockGradient.addColorStop(0.5, 'rgba(0, 255, 255, 1)');
+    colorBlockGradient.addColorStop(0.66667, 'rgba(0, 0, 255, 1)');
+    colorBlockGradient.addColorStop(0.86666, 'rgba(255, 0, 255, 1)');
+    colorBlockGradient.addColorStop(1, 'rgba(255, 0, 0, 1)');
+    ctx1.fillStyle = colorBlockGradient;
+    ctx1.fillRect(0, 0, colorBlock.offsetWidth, colorBlock.offsetHeight);
+
+    const colorBlockGradient2 = ctx.createLinearGradient(0, 0, 0, colorBlock.offsetHeight);
+    colorBlockGradient2.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    colorBlockGradient2.addColorStop(1, 'rgba(255, 255, 255, 1)');
+    ctx1.fillStyle = colorBlockGradient2;
+    ctx1.fillRect(0, 0, colorBlock.offsetWidth, colorBlock.offsetHeight);
+
+    // draw color bar
+    drawColorBar();
+
+    // event
+    colorBlockContainer.addEventListener('mousedown', (e) => {
+        cursorStat2 = 1;
+        chooseColorFromBlock(e);
+    });
+    colorBlockContainer.addEventListener('mousemove', (e) => {
+        chooseColorFromBlock(e);
+    });
+    colorBlockContainer.addEventListener('mouseup', (e) => {
+        cursorStat2 = 0;
+        chooseColorFromBlock(e);
+    });
+    colorBlockContainer.addEventListener('mouseout', (e) => {
+        cursorStat2 = 0;
+        chooseColorFromBlock(e);
+    });
+
+    colorBarContainer.addEventListener('mousedown', (e) => {
+        cursorStat3 = 1;
+        chooseColorFromBar(e);
+    });
+    colorBarContainer.addEventListener('mousemove', (e) => {
+        chooseColorFromBar(e);
+    });
+    colorBarContainer.addEventListener('mouseup', (e) => {
+        cursorStat3 = 0;
+        chooseColorFromBar(e);
+    });
+    colorBarContainer.addEventListener('mouseout', (e) => {
+        cursorStat3 = 0;
+        chooseColorFromBar(e);
+    });
 }
 
 function chooseColorFromBlock(e) {
-    var cursorX = e.offsetX;
-    var cursorY = e.offsetY;
-    var cXF = parseFloat(e.offsetX) - 2.5;
-    var cYF = parseFloat(e.offsetY) - 2.5;
+    if (cursorStat2) {
+        let cursorX = e.offsetX;
+        let cursorY = e.offsetY;
+        let cXF = parseFloat(e.offsetX) - 5;
+        let cYF = parseFloat(e.offsetY) - 5;
 
-    if (cursorStat3) {
-        var imageData = ctx1.getImageData(cursorX, cursorY, 1, 1).data;
-        var tmpColor = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
-        colorLabel.style.backgroundColor = tmpColor;
+        let imageData = ctx1.getImageData(cursorX, cursorY, 1, 1).data;
+        colorHS = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
         document.getElementById('color-block-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: ' + cXF + 'px;');
-        chooseColor(tmpColor);
-        document.getElementById('color-label').classList.add('color-selection-active');
+        console.log(cXF + ' // ' + cYF);
+
+        drawColorBar();
     }
+}
+
+function chooseColorFromBar(e) {
+    if (cursorStat3) {
+        let cursorX = e.offsetX;
+        let cursorY = e.offsetY;
+        let cYF = parseFloat(e.offsetY) - 7.5;
+
+        let imageData = ctx2.getImageData(cursorX, cursorY, 1, 1).data;
+        let rgb = 'rgb(' + imageData[0] + ', ' + imageData[1] + ', ' + imageData[2] + ')';
+        let hex = rgbToHex(imageData[0], imageData[1], imageData[2]);
+
+        document.getElementById('color-bar-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: -4px');
+
+        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
+        <div>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+        </div>
+    </div>
+    <button class="btn btn-link" onclick="addColor('`+ rgb + `');">
+        <span class="material-symbols-rounded">add_circle</span>
+        Add Color
+    </button>`;
+    }
+}
+
+function drawColorBar() {
+    ctx2.fillStyle = colorHS;
+    ctx2.fillRect(0, 0, colorBar.offsetWidth, colorBar.offsetHeight);
+
+    const grad = ctx2.createLinearGradient(0, 0, 0, colorBar.offsetHeight);
+    grad.addColorStop(0, 'rgba(0, 0, 0, 0');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 1');
+    ctx2.fillStyle = grad;
+    ctx2.fillRect(0, 0, colorBar.offsetWidth, colorBar.offsetHeight);
 }
 
 function chooseColor(c) {
     color = c;
     ctxpre.strokeStyle = color;
-    document.getElementById('color-label').classList.remove('color-selection-active');
+
     var colorChoices = document.getElementById('color-choices').children;
     for (var i = 0; i < colorChoices.length; i++) {
         if (color == colorChoices[i].style.backgroundColor) {
@@ -739,35 +800,16 @@ function updateColorInfo(r, g, b) {
         <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
     </div>
 </div>
-<button class="btn btn-link" onclick="addColorManual('`+ rgb + `');">
+<button class="btn btn-link" onclick="addColor('`+ rgb + `');">
     <span class="material-symbols-rounded">add_circle</span>
     Add Color
 </button>`;
 }
 
-function addColor() {
-    var newColor = colorLabel.style.backgroundColor;
-    var htmlCode = '<button class="color-selection" style="background: ' + newColor + '"onclick="chooseColor(\'' + newColor + '\')"></button>';
-    var colorChoices = document.getElementById('color-choices').children;
-    for (var i = 0; i < colorChoices.length; i++) {
-        if (newColor == colorChoices[i].style.backgroundColor) {
-            return;
-        }
-    }
-    document.getElementById('color-choices').innerHTML += (htmlCode);
-}
-
-function addColorManual(hex) {
-    var newColor = hex;
-    var htmlCode = '<button class="color-selection" style="background: ' + newColor + '"onclick="chooseColor(\'' + newColor + '\')"></button>';
-    var colorChoices = document.getElementById('color-choices').children;
-    for (var i = 0; i < colorChoices.length; i++) {
-        console.log(colorChoices[i].style.backgroundColor);
-        if (newColor == colorChoices[i].style.backgroundColor) {
-            return;
-        }
-    }
-    document.getElementById('color-choices').innerHTML += (htmlCode);
+function addColor(rgb) {
+    colorSelectionSet.add(rgb);
+    loadColorChoices();
+    loadEditColorChoices();
 }
 
 function download() {
@@ -792,7 +834,7 @@ function saveCanvas() {
     ctxpse.drawImage(canvas, 0, 0);
 }
 
-function handleImage(e) {
+function handlePhoto(e) {
     newCanvas();
     var reader = new FileReader();
     reader.onload = function (event) {
@@ -954,7 +996,53 @@ function openModal(id) {
 
     let modalInside = document.getElementById(id + '-modal');
     modalInside.style.display = "block";
+}
 
+function loadNewBlankInfo() {
+    newWidthContainer = document.getElementById('new-width');
+    newHeightContainer = document.getElementById('new-height');
+    newBgColorContainer = document.getElementById('new-bg-color');
+    newWidth = newWidthContainer.value;
+    newHeight = newHeightContainer.value;
+    newBgColor = newBgColorContainer.value;
+
+    errMsg = document.getElementById('err-msg');
+
+    document.getElementById('new-width').addEventListener('input', (e) => {
+        newWidth = document.getElementById('new-width').value;
+        try { newWidthContainer.classList.remove('form-input-error'); } catch (e) { };
+        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
+        if (newWidth > 10000 || newWidth < 10) {
+            newWidthContainer.classList.add('form-input-error');
+            errMsg.innerHTML = '10000 > value > 10'
+            document.getElementById('new-blank-btn').disabled = true;
+        }
+    });
+    document.getElementById('new-height').addEventListener('input', (e) => {
+        newHeight = document.getElementById('new-height').value;
+        try { newHeightContainer.classList.remove('form-input-error'); } catch (e) { };
+        if (newHeight <= 10000 && newHeight >= 10 && newWidth <= 10000 && newWidth >= 10) { errMsg.innerHTML = ''; document.getElementById('new-blank-btn').disabled = false; }
+        if (newHeight > 10000 || newHeight < 10) {
+            newHeightContainer.classList.add('form-input-error');
+            errMsg.innerHTML = '10000 > value > 10'
+            document.getElementById('new-blank-btn').disabled = true;
+        }
+    });
+    document.getElementById('new-bg-color').addEventListener('change', (e) => {
+        newBgColor = document.getElementById('new-bg-color').value;
+    });
+}
+
+function loadFileSelector() {
+    // file selector
+    fileSelector = document.getElementById('file-upload');
+    fileSelector.addEventListener('change', (event) => {
+        fileUploaded = event.target.files;
+        handlePhoto(event);
+    });
+}
+
+function fixNewBlankError() {
     newWidthContainer = document.getElementById('new-width');
     newHeightContainer = document.getElementById('new-height');
     newBgColorContainer = document.getElementById('new-bg-color');
