@@ -794,7 +794,7 @@ function updateColorInfo(r, g, b) {
     var rgb = 'rgb(' + r + ', ' + g + ', ' + b + ')';
 
     document.getElementById('color-info').innerHTML = `<div id="color-info" class="flex items-center gap-3">
-    <span class="color-selection ms-2" style="background: ` + rgb + `;"></span>
+    <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
     <div>
         <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
         <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
