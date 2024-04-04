@@ -841,11 +841,11 @@ function download() {
     // var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // ctxbg.drawImage(canvas, 0, 0);
     var canvasUrl = canvasPseudo.toDataURL("image/png");
-    const createEl = document.createElement('a');
-    createEl.href = canvasUrl;
-    createEl.download = "canvas";
-    createEl.click();
-    createEl.remove();
+    const linkElement = document.createElement('a');
+    linkElement.href = canvasUrl;
+    linkElement.download = "canvas";
+    linkElement.click();
+    linkElement.remove();
 }
 
 function saveCanvas() {

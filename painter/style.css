@@ -1192,6 +1192,7 @@ body {
   width: 50px;
   height: 20px;
   cursor: pointer;
+  /* transition: all .2s cubic-bezier(0, .7, .08, .99); */
 }
 
 #color-block-indicator {
