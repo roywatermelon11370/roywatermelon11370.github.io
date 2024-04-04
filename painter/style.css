@@ -699,7 +699,7 @@ body {
 }
 
 .btn:active {
-  transform: scale(0.9);
+  transform: scale(0.925);
   transition: all .15s ease-out;
 }
 
@@ -882,7 +882,7 @@ body {
   border-radius: 100%;
   top: 0.25rem;
   left: 0.25rem;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
 }
 
 #draw-area {
@@ -958,7 +958,7 @@ body {
 }
 
 #color-choices {
-  margin-top: 1.25rem;
+  margin-top: 0.75rem;
   display: inline-flex;
   width: 100%;
   flex-wrap: wrap;
@@ -967,29 +967,25 @@ body {
 }
 
 #color-block {
-  background: blue;
+  background: transparent;
   cursor: crosshair;
   position: relative;
   overflow: hidden;
   border-radius: 0.5rem;
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
 
-/* #color-block-container {} */
-
 #color-bar {
-  background: purple;
+  background: transparent;
   position: relative;
   overflow: hidden;
   border-radius: 0.5rem;
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
-
-/* #color-bar-container {} */
 
 .draw {
   cursor: url("images/pencil_tiny.png"), pointer;
@@ -1187,7 +1183,7 @@ body {
   border-radius: 0.375rem;
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   pointer-events: none;

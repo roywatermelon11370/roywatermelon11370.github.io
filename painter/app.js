@@ -43,7 +43,7 @@ var hue = 'rgba(255, 0, 0, 1)';
 var color = 'rgba(0, 0, 0, 1)';
 var adaptiveColor = 0;
 
-var colorSelectionSet = new Set(['rgb(0, 0, 0)', 'rgb(255, 255, 255)', 'rgb(244, 67, 54)', 'rgb(255, 152, 0)', 'rgb(255, 235, 59)', 'rgb(76, 175, 80)', 'rgb(0, 150, 136)', 'rgb(0, 188, 212)', 'rgb(33, 150, 243)', 'rgb(103, 58, 183)', 'rgb(233, 30, 99)', 'rgb(96, 125, 139)']);
+var colorSelectionSet = new Set(['rgb(0, 0, 0)', 'rgb(244, 67, 54)', 'rgb(255, 152, 0)', 'rgb(255, 235, 59)', 'rgb(76, 175, 80)', 'rgb(0, 150, 136)', 'rgb(0, 188, 212)', 'rgb(33, 150, 243)', 'rgb(63, 81, 181)', 'rgb(103, 58, 183)', 'rgb(156, 39, 176)', 'rgb(96, 125, 139)', 'rgb(121, 85, 72)', 'rgb(158, 158, 158)', 'rgb(255, 255, 255)']);
 
 // shape
 var fillType;
@@ -515,18 +515,18 @@ function resetCanvas() {
     ctxbg.clearRect(0, 0, canvasBg.offsetWidth, canvasBg.offsetHeight);
     ctxpse.clearRect(0, 0, canvasPseudo.offsetWidth, canvasPseudo.offsetHeight);
 
+    newWidth = 1000;
+    newWidthContainer.value = 1000;
+
+    newHeight = 700;
+    newHeightContainer = 700;
+
+    newBgColor = '#FFFFFF';
+    newBgColorContainer.value = '#FFFFFF';
+
+    newCanvas();
+
     if (isEditingPhoto) {
-        newWidth = 1000;
-        newWidthContainer.value = 1000;
-
-        newHeight = 700;
-        newHeightContainer = 700;
-
-        newBgColor = '#FFFFFF';
-        newBgColorContainer.value = '#FFFFFF';
-
-        newCanvas();
-
         isEditingPhoto = 0;
     }
 
@@ -620,7 +620,7 @@ var colorHS;
 function loadColorPicker() {
     colorHS = 'rgb(255, 0, 0)'
     document.getElementById('color-block-indicator').setAttribute('style', 'top: -2px; left: -2px;');
-    document.getElementById('color-bar-indicator').setAttribute('style', 'top: -7.5px; left: -4px;');
+    document.getElementById('color-bar-indicator').setAttribute('style', 'top: -7.5px; left: -3.5px;');
     document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
     <div>
@@ -697,11 +697,9 @@ function loadColorPicker() {
     });
     colorBarContainer.addEventListener('mouseup', (e) => {
         cursorStat3 = 0;
-        chooseColorFromBar(e);
     });
     colorBarContainer.addEventListener('mouseout', (e) => {
         cursorStat3 = 0;
-        chooseColorFromBar(e);
     });
 }
 
@@ -709,29 +707,59 @@ function chooseColorFromBlock(e) {
     if (cursorStat2) {
         let cursorX = e.offsetX;
         let cursorY = e.offsetY;
-        let cXF = parseFloat(e.offsetX) - 5;
-        let cYF = parseFloat(e.offsetY) - 5;
+        if (cursorX < 0) cursorX = 0;
+        else if (cursorX > colorBlock.offsetWidth - 3) cursorX = colorBlock.offsetWidth - 3;
+
+        if (cursorY < 0) cursorY = 0;
+        else if (cursorY > colorBlock.offsetHeight - 3) cursorY = colorBlock.offsetHeight - 3;
+
+        let cXF = parseFloat(e.offsetX) - 6;
+        let cYF = parseFloat(e.offsetY) - 6;
 
         let imageData = ctx1.getImageData(cursorX, cursorY, 1, 1).data;
         colorHS = 'rgb(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ')';
         document.getElementById('color-block-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: ' + cXF + 'px;');
-        console.log(cXF + ' // ' + cYF);
+        // console.log(cXF + ' // ' + cYF);
 
         drawColorBar();
+        chooseColorFromBar();
     }
 }
 
 function chooseColorFromBar(e) {
     if (cursorStat3) {
-        let cursorX = e.offsetX;
+        // let cursorX = e.offsetX;
         let cursorY = e.offsetY;
-        let cYF = parseFloat(e.offsetY) - 7.5;
+        if (cursorY < 0) cursorY = 0;
+        else if (cursorY > colorBar.offsetHeight) cursorY = colorBar.offsetHeight;
 
-        let imageData = ctx2.getImageData(cursorX, cursorY, 1, 1).data;
+        // console.log(cursorY);
+
+        let cYF = cursorY - 7;
+
+        let imageData = ctx2.getImageData(5, cursorY, 1, 1).data;
         let rgb = 'rgb(' + imageData[0] + ', ' + imageData[1] + ', ' + imageData[2] + ')';
         let hex = rgbToHex(imageData[0], imageData[1], imageData[2]);
 
-        document.getElementById('color-bar-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: -4px');
+        document.getElementById('color-bar-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: -3.5px');
+
+        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
+        <div>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+        </div>
+    </div>
+    <button class="btn btn-link" onclick="addColor('`+ rgb + `');">
+        <span class="material-symbols-rounded">add_circle</span>
+        Add Color
+    </button>`;
+    }
+    else {
+        let sY = document.getElementById('color-bar-indicator').offsetTop + 7;
+        let imageData = ctx2.getImageData(5, sY, 1, 1).data;
+        let rgb = 'rgb(' + imageData[0] + ', ' + imageData[1] + ', ' + imageData[2] + ')';
+        let hex = rgbToHex(imageData[0], imageData[1], imageData[2]);
 
         document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
@@ -1002,11 +1030,20 @@ function loadNewBlankInfo() {
     newWidthContainer = document.getElementById('new-width');
     newHeightContainer = document.getElementById('new-height');
     newBgColorContainer = document.getElementById('new-bg-color');
+    errMsg = document.getElementById('err-msg');
+
+    newWidthContainer.value = 1000;
+    newHeightContainer.value = 700;
+    newBgColorContainer.value = '#FFFFFF';
+
+    newWidthContainer.classList.remove('form-input-error');
+    newHeightContainer.classList.remove('form-input-error');
+    errMsg.innerHTML = '';
+    document.getElementById('new-blank-btn').disabled = false;
+
     newWidth = newWidthContainer.value;
     newHeight = newHeightContainer.value;
     newBgColor = newBgColorContainer.value;
-
-    errMsg = document.getElementById('err-msg');
 
     document.getElementById('new-width').addEventListener('input', (e) => {
         newWidth = document.getElementById('new-width').value;
@@ -1042,26 +1079,21 @@ function loadFileSelector() {
     });
 }
 
-function fixNewBlankError() {
-    newWidthContainer = document.getElementById('new-width');
-    newHeightContainer = document.getElementById('new-height');
-    newBgColorContainer = document.getElementById('new-bg-color');
-    // modal.addEventListener('onmousedown', closeModal(id));
+// function fixNewBlankError() {
 
-    if (newWidth > 10000 || newWidth < 10) {
-        newWidthContainer.value = 1000;
-        newWidth = 1000;
-    }
-    if (newHeight > 10000 || newHeight < 10) {
-        newHeightContainer.value = 700;
-        newHeight = 700;
-    }
+//     // modal.addEventListener('onmousedown', closeModal(id));
 
-    newWidthContainer.classList.remove('form-input-error');
-    newHeightContainer.classList.remove('form-input-error');
-    errMsg.innerHTML = '';
-    document.getElementById('new-blank-btn').disabled = false;
-}
+//     if (newWidth > 10000 || newWidth < 10) {
+//         newWidthContainer.value = 1000;
+//         newWidth = 1000;
+//     }
+//     if (newHeight > 10000 || newHeight < 10) {
+//         newHeightContainer.value = 700;
+//         newHeight = 700;
+//     }
+
+
+// }
 
 function closeModal(id) {
     let modal = document.getElementById(id);
