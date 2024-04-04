@@ -378,14 +378,24 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
+    @apply bg-slate-700/25;
     border-radius: 100px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
+    @apply bg-slate-700/50;
     border-radius: 100px;
 }
+
+/* *::-moz-scrollbar-thumb {
+    @apply bg-slate-700/25;
+    border-radius: 100px;
+}
+
+*::-moz-scrollbar-thumb:hover {
+    @apply bg-slate-900/25;
+    border-radius: 100px;
+} */
 
 .form-range {
     @apply relative w-full p-0;

@@ -1028,14 +1028,24 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background-color: rgb(51 65 85 / 0.25);
   border-radius: 100px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background-color: rgb(51 65 85 / 0.5);
   border-radius: 100px;
 }
+
+/* *::-moz-scrollbar-thumb {
+    @apply bg-slate-700/25;
+    border-radius: 100px;
+}
+
+*::-moz-scrollbar-thumb:hover {
+    @apply bg-slate-900/25;
+    border-radius: 100px;
+} */
 
 .form-range {
   position: relative;
@@ -1468,10 +1478,6 @@ input[type=color]::-moz-color-swatch {
 
 .overflow-auto {
   overflow: auto;
-}
-
-.overflow-scroll {
-  overflow: scroll;
 }
 
 .p-2 {
