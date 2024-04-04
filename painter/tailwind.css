@@ -264,7 +264,7 @@ body {
 }
 
 #draw-area {
-    @apply w-2/3 md:w-3/4 p-5 text-center overflow-scroll h-screen;
+    @apply w-2/3 md:w-3/4 p-5 text-center overflow-auto h-screen;
 }
 
 #canvas-container {
@@ -515,6 +515,7 @@ body {
     width: 50px;
     height: 20px;
     cursor: pointer;
+    /* transition: all .2s cubic-bezier(0, .7, .08, .99); */
 }
 
 #color-block-indicator {
@@ -545,7 +546,7 @@ body {
 }
 
 .modal-container {
-    @apply fixed w-screen h-screen top-0 p-5 left-0 flex justify-center items-center hidden overflow-scroll;
+    @apply fixed w-screen h-screen top-0 p-5 left-0 flex justify-center items-center hidden overflow-auto;
     background: rgba(0, 0, 0, 0.125);
     z-index: 1000;
     backdrop-filter: blur(7px);
