@@ -516,13 +516,10 @@ function resetCanvas() {
     ctxpse.clearRect(0, 0, canvasPseudo.offsetWidth, canvasPseudo.offsetHeight);
 
     newWidth = 1000;
-    newWidthContainer.value = 1000;
 
     newHeight = 700;
-    newHeightContainer = 700;
 
     newBgColor = '#FFFFFF';
-    newBgColorContainer.value = '#FFFFFF';
 
     newCanvas();
 
