@@ -264,7 +264,7 @@ body {
 }
 
 #draw-area {
-    @apply w-2/3 md:w-3/4 p-5 text-center overflow-auto h-screen;
+    @apply p-5 text-center overflow-auto h-screen;
 }
 
 #canvas-container {
@@ -375,6 +375,8 @@ body {
 
 *::-webkit-scrollbar {
     background: transparent;
+    width: 10px;
+    height: 10px;
 }
 
 *::-webkit-scrollbar-thumb {
