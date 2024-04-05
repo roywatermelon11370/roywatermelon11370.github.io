@@ -383,8 +383,7 @@ function draw(event) {
         cursorY = event.offsetY;
     }
     else if (mode == 'colorize') {
-        var imageData = ctxpse.getImageData(cursorX, cursorY, 1, 1).data;
-        updateColorInfo(imageData[0], imageData[1], imageData[2]);
+        updateColorInfo();
     }
 }
 
@@ -410,6 +409,15 @@ function fillTypeChange() {
 function toolChange() {
     mode = document.querySelector('[name=tool]:checked').value;
     canvasContainer.className = mode;
+
+    if(mode != 'colorize') {
+        try{
+            resetColorInfo();
+        }
+        catch(e) {
+
+        };
+    }
 
     if (mode != 'text') {
         try {
@@ -598,6 +606,10 @@ function removeColorChoice(rgb) {
     colorSelectionSet.delete(rgb);
     loadColorChoices();
     loadEditColorChoices();
+    try{chooseColorFromBar()} catch(e) {};
+    if(mode == 'colorize') {
+        if(document.getElementById('color-info-unknown').classList.contains('hidden')) try{updateColorInfo()} catch(e) {};
+    }
 }
 
 function toggleColorEditMode() {
@@ -618,17 +630,32 @@ function loadColorPicker() {
     colorHS = 'rgb(255, 0, 0)'
     document.getElementById('color-block-indicator').setAttribute('style', 'top: -2px; left: -2px;');
     document.getElementById('color-bar-indicator').setAttribute('style', 'top: -7.5px; left: -3.5px;');
-    document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+    if(colorSelectionSet.has('rgb(255, 0, 0)')) {
+        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
     <div>
         <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
         <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
     </div>
 </div>
+<button class="btn btn-link" disabled>
+    <span class="material-symbols-rounded">check_circle</span>
+    Added
+</button>`;
+    }
+    else {
+        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
+        <div>
+            <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
+        </div>
+</div>
 <button class="btn btn-link" onclick="addColor('rgb(255, 0, 0)');">
     <span class="material-symbols-rounded">add_circle</span>
     Add Color
 </button>`;
+    }
 
     isEditingColor = 0;
     document.getElementById('btn-color-edit').innerHTML = '<span class="material-symbols-rounded">edit</span>Edit';
@@ -740,7 +767,21 @@ function chooseColorFromBar(e) {
 
         document.getElementById('color-bar-indicator').setAttribute('style', 'top: ' + cYF + 'px; left: -3.5px');
 
-        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        if(colorSelectionSet.has(rgb)) {
+            document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
+        <div>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+        </div>
+    </div>
+    <button class="btn btn-link" disabled>
+        <span class="material-symbols-rounded">check_circle</span>
+        Added
+    </button>`;
+        }
+        else {
+            document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
             <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
@@ -751,6 +792,7 @@ function chooseColorFromBar(e) {
         <span class="material-symbols-rounded">add_circle</span>
         Add Color
     </button>`;
+        }
     }
     else {
         let sY = document.getElementById('color-bar-indicator').offsetTop + 7;
@@ -758,7 +800,21 @@ function chooseColorFromBar(e) {
         let rgb = 'rgb(' + imageData[0] + ', ' + imageData[1] + ', ' + imageData[2] + ')';
         let hex = rgbToHex(imageData[0], imageData[1], imageData[2]);
 
-        document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        if(colorSelectionSet.has(rgb)) {
+            document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
+        <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
+        <div>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+        </div>
+    </div>
+    <button class="btn btn-link" disabled>
+        <span class="material-symbols-rounded">check_circle</span>
+        Added
+    </button>`;
+        }
+        else {
+            document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
             <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
@@ -769,6 +825,7 @@ function chooseColorFromBar(e) {
         <span class="material-symbols-rounded">add_circle</span>
         Add Color
     </button>`;
+        }
     }
 }
 
@@ -812,13 +869,31 @@ function rgbToHex(r, g, b) {
     return "#" + elementToHex(r).toUpperCase() + elementToHex(g).toUpperCase() + elementToHex(b).toUpperCase();
 }
 
-function updateColorInfo(r, g, b) {
-    document.getElementById('color-info').classList.remove('hidden');
+function updateColorInfo() {
+    let imageData = ctxpse.getImageData(oriCursorX, oriCursorY, 1, 1).data;
+    let r = imageData[0];
+    let g = imageData[1];
+    let b = imageData[2];
+    try{document.getElementById('color-info').classList.remove('hidden');} catch(e) {};
     document.getElementById('color-info-unknown').classList.add('hidden');
     var hex = rgbToHex(r, g, b);
     var rgb = 'rgb(' + r + ', ' + g + ', ' + b + ')';
 
-    document.getElementById('color-info').innerHTML = `<div id="color-info" class="flex items-center gap-3">
+    if(colorSelectionSet.has(rgb)) {
+        document.getElementById('color-info').innerHTML = `<div class="flex items-center gap-3">
+    <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
+    <div>
+        <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
+    </div>
+</div>
+<button class="btn btn-link" disabled>
+    <span class="material-symbols-rounded">check_circle</span>
+    Added
+</button>`;
+    }
+    else {
+        document.getElementById('color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
     <div>
         <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
@@ -829,12 +904,22 @@ function updateColorInfo(r, g, b) {
     <span class="material-symbols-rounded">add_circle</span>
     Add Color
 </button>`;
+    }
+}
+
+function resetColorInfo() {
+    document.getElementById('color-info').classList.add('hidden');
+    try{document.getElementById('color-info-unknown').classList.remove('hidden');} catch(e) {};
 }
 
 function addColor(rgb) {
     colorSelectionSet.add(rgb);
     loadColorChoices();
     loadEditColorChoices();
+    try{chooseColorFromBar()} catch(e) {};
+    if(mode == 'colorize') {
+        if(document.getElementById('color-info-unknown').classList.contains('hidden')) try{updateColorInfo()} catch(e) {};
+    }
 }
 
 function download() {
