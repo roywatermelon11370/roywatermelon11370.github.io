@@ -91,20 +91,20 @@ body {
     @apply bg-indigo-400;
 }
 
-.orange .bg-primary {
-    @apply bg-orange-600;
+.rose .bg-primary {
+    @apply bg-rose-600;
 }
 
-.orange .bg-primary-darker {
-    @apply bg-orange-800;
+.rose .bg-primary-darker {
+    @apply bg-rose-800;
 }
 
-.dark .orange .bg-primary {
-    @apply bg-orange-500;
+.dark .rose .bg-primary {
+    @apply bg-rose-500;
 }
 
-.dark .orange .bg-primary-darker {
-    @apply bg-orange-400;
+.dark .rose .bg-primary-darker {
+    @apply bg-rose-400;
 }
 
 .sky .bg-primary {
@@ -173,20 +173,20 @@ body {
     @apply bg-indigo-400/25;
 }
 
-.orange .bg-primary\/25 {
-    @apply bg-orange-600/25;
+.rose .bg-primary\/25 {
+    @apply bg-rose-600/25;
 }
 
-.orange .bg-primary-darker\/25 {
-    @apply bg-orange-800/25;
+.rose .bg-primary-darker\/25 {
+    @apply bg-rose-800/25;
 }
 
-.dark .orange .bg-primary\/25 {
-    @apply bg-orange-500/25;
+.dark .rose .bg-primary\/25 {
+    @apply bg-rose-500/25;
 }
 
-.dark .orange .bg-primary-darker\/25 {
-    @apply bg-orange-400/25;
+.dark .rose .bg-primary-darker\/25 {
+    @apply bg-rose-400/25;
 }
 
 .sky .bg-primary\/25 {
@@ -230,12 +230,12 @@ body {
     @apply text-emerald-500;
 }
 
-.orange .text-primary {
-    @apply text-orange-600;
+.rose .text-primary {
+    @apply text-rose-600;
 }
 
-.dark .orange .text-primary {
-    @apply text-orange-500;
+.dark .rose .text-primary {
+    @apply text-rose-500;
 }
 
 .sky .text-primary {
@@ -271,12 +271,12 @@ body {
     @apply border-emerald-500;
 }
 
-.orange .border-primary {
-    @apply border-orange-600;
+.rose .border-primary {
+    @apply border-rose-600;
 }
 
-.dark .orange .border-primary {
-    @apply border-orange-500;
+.dark .rose .border-primary {
+    @apply border-rose-500;
 }
 
 .sky .border-primary {
