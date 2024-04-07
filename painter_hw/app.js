@@ -19,8 +19,6 @@ var textMode;
 var scale;
 var isEditingPhoto;
 var isEditingColor = 0;
-var theme = 0;
-var colorTheme = 'blue';
 
 // history
 var canvasHistory = [];
@@ -636,8 +634,8 @@ function loadColorPicker() {
         document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
     <div>
-        <p id="color-hex" class="text-muted text-sm">#FF0000</p>
-        <p id="color-rgb" class="text-muted text-sm">rgb(255, 0, 0)</p>
+        <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
     </div>
 </div>
 <button class="btn btn-link" disabled>
@@ -649,8 +647,8 @@ function loadColorPicker() {
         document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: rgb(255, 0, 0);"></span>
         <div>
-            <p id="color-hex" class="text-muted text-sm">#FF0000</p>
-            <p id="color-rgb" class="text-muted text-sm">rgb(255, 0, 0)</p>
+            <p id="color-hex" class="text-slate-500 text-sm">#FF0000</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">rgb(255, 0, 0)</p>
         </div>
 </div>
 <button class="btn btn-link" onclick="addColor('rgb(255, 0, 0)');">
@@ -773,8 +771,8 @@ function chooseColorFromBar(e) {
             document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
-            <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-            <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
         </div>
     </div>
     <button class="btn btn-link" disabled>
@@ -786,8 +784,8 @@ function chooseColorFromBar(e) {
             document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
-            <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-            <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
         </div>
     </div>
     <button class="btn btn-link" onclick="addColor('`+ rgb + `');">
@@ -806,8 +804,8 @@ function chooseColorFromBar(e) {
             document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
-            <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-            <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
         </div>
     </div>
     <button class="btn btn-link" disabled>
@@ -819,8 +817,8 @@ function chooseColorFromBar(e) {
             document.getElementById('edit-color-info').innerHTML = `<div class="flex items-center gap-3">
         <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
         <div>
-            <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-            <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+            <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+            <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
         </div>
     </div>
     <button class="btn btn-link" onclick="addColor('`+ rgb + `');">
@@ -885,8 +883,8 @@ function updateColorInfo() {
         document.getElementById('color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
     <div>
-        <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-        <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+        <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
     </div>
 </div>
 <button class="btn btn-link" disabled>
@@ -898,8 +896,8 @@ function updateColorInfo() {
         document.getElementById('color-info').innerHTML = `<div class="flex items-center gap-3">
     <span class="color-selection-alt ms-2" style="background: ` + rgb + `;"></span>
     <div>
-        <p id="color-hex" class="text-muted text-sm">` + hex + `</p>
-        <p id="color-rgb" class="text-muted text-sm">` + rgb + `</p>
+        <p id="color-hex" class="text-slate-500 text-sm">` + hex + `</p>
+        <p id="color-rgb" class="text-slate-500 text-sm">` + rgb + `</p>
     </div>
 </div>
 <button class="btn btn-link" onclick="addColor('`+ rgb + `');">
@@ -1219,24 +1217,4 @@ function resetDimension() {
     newHeightContainer.classList.remove('form-input-error');
     errMsg.innerHTML = '';
     document.getElementById('new-blank-btn').disabled = false;
-}
-
-function loadPreference() {
-    document.querySelectorAll('[name=theme]').forEach(input => input.addEventListener('change', themeChange));
-    document.querySelectorAll('[name=theme-color]').forEach(input => input.addEventListener('change', themeColorChange));
-}
-
-function themeChange() {
-    theme = document.querySelector('[name=theme]:checked').value;
-    if(theme == 1) {
-        document.documentElement.classList.add('dark');
-    }
-    else {
-        document.documentElement.classList.remove('dark');
-    }
-}
-
-function themeColorChange() {
-    themeColor = document.querySelector('[name=theme-color]:checked').value;
-    document.body.className = themeColor;
 }
