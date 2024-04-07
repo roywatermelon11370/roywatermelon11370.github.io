@@ -75,20 +75,20 @@ body {
     @apply bg-emerald-400;
 }
 
-.indigo .bg-primary {
-    @apply bg-indigo-600;
+.violet .bg-primary {
+    @apply bg-violet-600;
 }
 
-.indigo .bg-primary-darker {
-    @apply bg-indigo-800;
+.violet .bg-primary-darker {
+    @apply bg-violet-800;
 }
 
-.dark .indigo .bg-primary {
-    @apply bg-indigo-500;
+.dark .violet .bg-primary {
+    @apply bg-violet-500;
 }
 
-.dark .indigo .bg-primary-darker {
-    @apply bg-indigo-400;
+.dark .violet .bg-primary-darker {
+    @apply bg-violet-400;
 }
 
 .rose .bg-primary {
@@ -121,6 +121,22 @@ body {
 
 .dark .sky .bg-primary-darker {
     @apply bg-sky-400;
+}
+
+.teal .bg-primary {
+    @apply bg-teal-600;
+}
+
+.teal .bg-primary-darker {
+    @apply bg-teal-800;
+}
+
+.dark .teal .bg-primary {
+    @apply bg-teal-500;
+}
+
+.dark .teal .bg-primary-darker {
+    @apply bg-teal-400;
 }
 
 /* bg/25 */
@@ -157,20 +173,20 @@ body {
     @apply bg-emerald-400/25;
 }
 
-.indigo .bg-primary\/25 {
-    @apply bg-indigo-600/25;
+.violet .bg-primary\/25 {
+    @apply bg-violet-600/25;
 }
 
-.indigo .bg-primary-darker\/25 {
-    @apply bg-indigo-800/25;
+.violet .bg-primary-darker\/25 {
+    @apply bg-violet-800/25;
 }
 
-.dark .indigo .bg-primary\/25 {
-    @apply bg-indigo-500/25;
+.dark .violet .bg-primary\/25 {
+    @apply bg-violet-500/25;
 }
 
-.dark .indigo .bg-primary-darker\/25 {
-    @apply bg-indigo-400/25;
+.dark .violet .bg-primary-darker\/25 {
+    @apply bg-violet-400/25;
 }
 
 .rose .bg-primary\/25 {
@@ -205,6 +221,22 @@ body {
     @apply bg-sky-400/25;
 }
 
+.teal .bg-primary\/25 {
+    @apply bg-teal-600/25;
+}
+
+.teal .bg-primary-darker\/25 {
+    @apply bg-teal-800/25;
+}
+
+.dark .teal .bg-primary\/25 {
+    @apply bg-teal-500/25;
+}
+
+.dark .teal .bg-primary-darker\/25 {
+    @apply bg-teal-400/25;
+}
+
 /* text */
 .blue .text-primary {
     @apply text-blue-600;
@@ -214,12 +246,12 @@ body {
     @apply text-blue-500;
 }
 
-.indigo .text-primary {
-    @apply text-indigo-600;
+.violet .text-primary {
+    @apply text-violet-600;
 }
 
-.dark .indigo .text-primary {
-    @apply text-indigo-500;
+.dark .violet .text-primary {
+    @apply text-violet-500;
 }
 
 .emerald .text-primary {
@@ -246,6 +278,14 @@ body {
     @apply text-sky-500;
 }
 
+.teal .text-primary {
+    @apply text-teal-600;
+}
+
+.dark .teal .text-primary {
+    @apply text-teal-500;
+}
+
 /* border */
 .blue .border-primary {
     @apply border-blue-600;
@@ -255,12 +295,12 @@ body {
     @apply border-blue-500;
 }
 
-.indigo .border-primary {
-    @apply border-indigo-600;
+.violet .border-primary {
+    @apply border-violet-600;
 }
 
-.dark .indigo .border-primary {
-    @apply border-indigo-500;
+.dark .violet .border-primary {
+    @apply border-violet-500;
 }
 
 .emerald .border-primary {
@@ -285,6 +325,14 @@ body {
 
 .dark .sky .border-primary {
     @apply border-sky-500;
+}
+
+.teal .border-primary {
+    @apply border-teal-600;
+}
+
+.dark .teal .border-primary {
+    @apply border-teal-500;
 }
 
 /* theme end */
@@ -813,6 +861,22 @@ input[type=radio]:checked {
     border-radius: 100%;
     background-color: transparent;
     cursor: crosshair;
+}
+
+.theme-selection {
+    @apply border-2 border-slate-200 dark:border-slate-700 rounded-lg inline-flex justify-center items-center overflow-hidden relative cursor-pointer;
+    width: 3rem;
+    height: 3rem;
+    transition: all .2s ease-out;
+}
+
+.theme-selection-container input:checked + .theme-selection::after {
+    @apply text-white absolute right-0 bottom-0 bg-slate-900 flex justify-center items-center rounded-tl-md;
+    content: 'check';
+    font-family: 'Material Symbols Rounded';
+    font-size: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .form-input {
