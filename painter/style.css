@@ -2206,8 +2206,8 @@ body {
 .color-selection-active::after {
   content: "";
   background: transparent;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.45rem;
+  height: 1.45rem;
   border: 0.2rem solid #FFF;
   position: absolute;
   border-radius: 100%;
