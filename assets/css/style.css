@@ -1,4 +1,6 @@
-* {}
+* {
+    font-family: "Radio Canada Big", sans-serif;
+}
 
 
 .material-symbols-outlined {
@@ -11,6 +13,9 @@
         'opsz' 24
 }
 
+h4 {
+    font-weight: 700;
+}
 
 .navbar {
     transition: all .2s ease;
