@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/roywatermelon11370/roywatermelon11370.github.io/issues"
   },
-  "homepage": "https://github.com/roywatermelon11370/roywatermelon11370.github.io#readme"
+  "homepage": "https://github.com/roywatermelon11370/roywatermelon11370.github.io#readme",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7"
+  }
 }

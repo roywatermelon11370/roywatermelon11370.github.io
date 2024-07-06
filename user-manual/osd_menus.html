@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSD Menu</title>
+    <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="">
+            <a href="index.html" class="btn-icon">
+                <span class="material-symbols-rounded">
+                    arrow_back
+                </span>
+            </a><button class="btn-icon md:hidden" onclick="indexingToggle()">
+                <span class="material-symbols-rounded">
+                    list
+                </span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container p-5 mx-auto pt-16 flex flex-wrap">
+        <div id="indexing" class="indexing indexing-hidden">
+            <div>
+                <h4>Index</h4>
+                <a href="#gi">G.I.</a>
+                <a href="#input-source">Input Source</a>
+            </div>
+        </div>
+
+        <!-- main contents -->
+        <section class="main-contents">
+            <h1>OSD Menus</h1>
+
+            <img src="images/21.png" alt="">
+            <h3 class="important-title">
+                <span class="material-symbols-rounded">warning</span>
+                Important
+            </h3>
+            <p>The following settings will be grayed out when HDR signals are received:</p>
+
+            <div class="flex flex-wrap gap-8">
+                <ul>
+                    <li>Night Vision</li>
+                    <li>AI Vision</li>
+                    <li>Low Blue Light</li>
+                    <li>Brightness</li>
+                </ul>
+                <ul>
+                    <li>Contrast</li>
+                    <li>Color Temperature</li>
+                    <li>Optix Scope</li>
+                    <li>PIP/PBP</li>
+                </ul>
+            </div>
+
+            <h2 id="gi" class="pt-16">G.I.</h2>
+            <table>
+                <tr>
+                    <th>1st Level Menu</th>
+                    <th colspan="2">2nd/3rd Level Menu</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td rowspan="3">KVM</td>
+                    <td colspan="2">Auto</td>
+                    <td rowspan="3">
+                        ∙
+                        Auto allows the monitor to automatically switch between USB input sources, such as keyboards,
+                        mice or other USB devices.<br>
+                        ∙
+                        Users can also designate Upstream port or USB Type-C as the only USB signal source.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Upstream</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Type C
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="7">Smart Crosshair</td>
+                    <td rowspan="2">Icon</td>
+                    <td>None</td>
+                    <td rowspan="7">
+                        ∙
+                        Through AI algorithm, this function enhances the visibility of in-game crosshair.<br>
+                        ∙
+                        Users can select the color and position of the crosshair.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="images/22.png" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Color</td>
+                    <td>White</td>
+                </tr>
+                <tr>
+                    <td>Red</td>
+                </tr>
+                <tr>
+                    <td>Auto</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Position</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Reset</td>
+                </tr>
+
+                <tr>
+                    <td rowspan="8">Optix Scope</td>
+                    <td rowspan="3">Scope Size</td>
+                    <td>Small</td>
+                    <td rowspan="8">
+                        ∙
+                        The center point will zoom in when Optix Scope is enabled.<br>
+                        ∙
+                        Smart Crosshair and Optix Scope can be enabled at the same time.<br>
+                        ∙
+                        Activating Optix Scope will affect:<br>
+                        <table>
+                            <tr>
+                                <th>Affected Function</th>
+                                <th>Function Status</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    »
+                                    Adaptive-Sync<br>
+                                    »
+                                    PIP/PBP
+                                </td>
+                                <td>
+                                    Set to OFF
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>»
+                                    Screen Size 1:1
+                                </td>
+                                <td>
+                                    Set to Auto
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Medium</td>
+                </tr>
+                <tr>
+                    <td>Large</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Scope Ratio</td>
+                    <td>x1.5</td>
+                </tr>
+                <tr>
+                    <td>x2</td>
+                </tr>
+                <tr>
+                    <td>x4</td>
+                </tr>
+                <tr>
+                    <td colspan="2">OFF</td>
+                </tr>
+                <tr>
+                    <td colspan="2">ON</td>
+                </tr>
+            </table>
+
+            <h2 id="input-source" class="pt-16">Input Source</h2>
+            <table>
+                <tr>
+                    <th>1st Level Menu</th>
+                    <th>2nd Level Menu</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td colspan="2">HDMI™ 1</td>
+                    <td rowspan="4">∙ Users can adjust Input Source in any mode.</td>
+                </tr>
+                <tr>
+                    <td colspan="2">HDMI™ 2</td>
+                </tr>
+                <tr>
+                    <td colspan="2">DP</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Type C</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        Auto Scan
+                    </td>
+                    <td>OFF</td>
+                    <td rowspan="2">
+
+                        Users can use the Navi Key to select Input Source at below status: <br>
+                        •
+                        While “Auto Scan” is set to “OFF” with the monitor at power saving mode;<br>
+                        •
+                        While “No Signal” message box is shown on the monitor.
+                    </td>
+                </tr>
+                <tr>
+                    <td>ON</td>
+                </tr>
+            </table>
+        </section>
+        <!-- main contents end -->
+    </div>
+</body>
+
+</html>
