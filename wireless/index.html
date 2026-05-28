@@ -179,7 +179,7 @@
                         <div id="emptyState" class="empty-state-overlay d-none">
                             <span class="material-symbols-rounded text-muted mb-2" style="font-size: 3rem;"
                                 id="emptyStateIcon">inbox</span>
-                            <h5 class="text-muted fw-bold" id="emptyStateText">無資料</h5>
+                            <h5 class="text-muted fw-bold text-center" id="emptyStateText">無資料</h5>
                         </div>
                     </div>
                 </div>
@@ -316,7 +316,7 @@
 
             // 狀況二：資料庫有資料，但「所選的時間區間」內沒資料
             if (filteredData.length === 0) {
-                showHtmlEmptyState('選擇的時間區間內無資料，請嘗試擴大範圍', 'history_toggle_off'); // 使用 history_toggle_off 的 icon
+                showHtmlEmptyState('選擇的時間區間內無資料\n請嘗試擴大範圍', 'history_toggle_off'); // 使用 history_toggle_off 的 icon
                 updateAnalytics([], globalRawData);
                 return;
             }
