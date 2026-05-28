@@ -14,14 +14,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&display=swap" rel="stylesheet">
     <style>
-        @media (min-width: 768px) {
-            .offcanvas-md {
-                position: sticky;
-                top: 20px;
-                height: calc(100vh - 100px);
-            }
-        }
-
         .date-picker-group {
             display: flex;
             align-items: flex-end;
@@ -49,13 +41,46 @@
             gap: 0.5rem;
         }
 
-        .form-control {
+        .form-control,
+        .form-select {
             border-radius: 0.844rem;
         }
 
         .card {
             border-radius: 1.2rem;
             overflow: hidden;
+        }
+
+        .chart-container {
+            position: relative;
+            min-height: 300px;
+            width: 100%;
+        }
+
+        .empty-state-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .offcanvas-md {
+                position: sticky;
+                top: 20px;
+                height: calc(100vh - 100px);
+            }
+
+            .chart-container {
+                min-height: 400px;
+            }
         }
     </style>
 </head>
@@ -80,6 +105,15 @@
                 <div class="card shadow-sm border-0 mb-4">
                     <div class="card-body rounded d-flex justify-content-between flex-wrap gap-3">
                         <div class="date-picker-group">
+                            <div class="me-2 border-end border-muted pe-3">
+                                <label for="locationSelect" class="form-label mb-1"
+                                    style="font-size: 0.85rem;">偵測地點</label>
+                                <select class="form-select form-select-sm" id="locationSelect" onchange="fetchData()">
+                                    <option value="NTHU_Campus">清大校園 (NTHU_Campus)</option>
+                                    <option value="Library">圖書館 (Library)</option>
+                                    <option value="Canteen">餐廳 (Cafeteria)</option>
+                                </select>
+                            </div>
                             <div>
                                 <label for="startDate" class="form-label mb-1" style="font-size: 0.85rem;">開始時間</label>
                                 <input type="datetime-local" class="form-control form-control-sm" id="startDate"
@@ -139,8 +173,14 @@
                         <h6 class="fw-bold mb-0">裝置數量趨勢圖</h6>
                         <small class="text-muted" id="lastUpdateTime">狀態：等待載入中...</small>
                     </div>
-                    <div class="card-body">
+                    <div id="trendChartContainer" class="card-body chart-container">
                         <canvas id="trendChart" height="100"></canvas>
+
+                        <div id="emptyState" class="empty-state-overlay d-none">
+                            <span class="material-symbols-rounded text-muted mb-2" style="font-size: 3rem;"
+                                id="emptyStateIcon">inbox</span>
+                            <h5 class="text-muted fw-bold" id="emptyStateText">無資料</h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,27 +243,64 @@
         async function fetchData() {
             document.getElementById('lastUpdateTime').innerText = '狀態：正在同步資料...';
 
+            // 抓取下拉選單的地點名稱
+            const selectedLocation = document.getElementById('locationSelect').value;
+            const locationText = document.getElementById('locationSelect').options[document.getElementById('locationSelect').selectedIndex].text;
+
             try {
                 if (API_URL.includes("xxxxxx")) {
                     console.log("載入預覽用測試資料...");
                     globalRawData = generateMockData();
                 } else {
-                    const response = await fetch(API_URL);
+                    const requestUrl = `${API_URL}?location=${selectedLocation}`;
+                    const response = await fetch(requestUrl);
+
                     if (!response.ok) throw new Error('網路回應錯誤');
                     globalRawData = await response.json();
                 }
 
                 document.getElementById('lastUpdateTime').innerText = `狀態：最後更新於 ${new Date().toLocaleTimeString()}`;
+
+                // 抓完資料後，自動重新畫圖
                 updateChart();
+
             } catch (error) {
                 console.error("抓取資料失敗:", error);
-                document.getElementById('lastUpdateTime').innerText = '狀態：連線失敗，請檢查設定或 F12';
+                document.getElementById('lastUpdateTime').innerText = '狀態：連線失敗';
                 document.getElementById('lastUpdateTime').classList.add('text-danger');
             }
         }
 
+        function showHtmlEmptyState(message, iconName) {
+            if (myChart) {
+                myChart.destroy();
+                myChart = null;
+            }
+            // 隱藏圖表
+            document.getElementById('trendChart').style.display = 'none';
+            // 顯示無資料區塊
+            const emptyState = document.getElementById('emptyState');
+            emptyState.classList.remove('d-none');
+
+            // 更新文字與 Icon
+            document.getElementById('emptyStateText').innerText = message;
+            document.getElementById('emptyStateIcon').innerText = iconName;
+        }
+
+        function hideHtmlEmptyState() {
+            // 顯示圖表
+            document.getElementById('trendChart').style.display = 'block';
+            // 隱藏無資料區塊
+            document.getElementById('emptyState').classList.add('d-none');
+        }
+
         function updateChart() {
-            if (globalRawData.length === 0) return;
+            // 狀況一：資料庫裡完全沒資料
+            if (globalRawData.length === 0) {
+                showHtmlEmptyState('此地點目前無偵測資料', 'location_off'); // 使用 location_off 的 icon
+                updateAnalytics([], []);
+                return;
+            }
 
             const startInput = document.getElementById('startDate').value;
             const endInput = document.getElementById('endDate').value;
@@ -236,6 +313,16 @@
             const filteredData = globalRawData
                 .filter(item => item.timestamp >= startTimestamp && item.timestamp <= endTimestamp)
                 .sort((a, b) => a.timestamp - b.timestamp);
+
+            // 狀況二：資料庫有資料，但「所選的時間區間」內沒資料
+            if (filteredData.length === 0) {
+                showHtmlEmptyState('選擇的時間區間內無資料，請嘗試擴大範圍', 'history_toggle_off'); // 使用 history_toggle_off 的 icon
+                updateAnalytics([], globalRawData);
+                return;
+            }
+
+            // 🌟 進入正常畫圖流程，隱藏無資料區塊
+            hideHtmlEmptyState();
 
             const timeSpanHours = (endTimestamp - startTimestamp) / 3600;
             const showDateInLabel = timeSpanHours > 24;
@@ -253,8 +340,8 @@
             const rawCounts = filteredData.map(item => item.raw_count || item.device_count || 0);
 
             if (myChart) myChart.destroy();
-
             const ctx = document.getElementById('trendChart').getContext('2d');
+
             myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -263,7 +350,7 @@
                         {
                             label: '真實人數 (已過濾)',
                             data: realCounts,
-                            borderColor: '#4582ec',
+                            borderColor: '#0d6efd',
                             backgroundColor: 'rgba(13, 110, 253, 0.1)',
                             borderWidth: 3,
                             fill: true,
@@ -284,13 +371,13 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false, // 讓圖表適應外層容器高度
                     interaction: { mode: 'index', intersect: false },
                     scales: { y: { beginAtZero: true } },
                     plugins: { legend: { position: 'bottom' } }
                 }
             });
 
-            // 同步更新數據面板
             updateAnalytics(filteredData, globalRawData);
         }
 
