@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi 人流偵測系統</title>
+    <link href="assets/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300" rel="stylesheet" />
+    <style>
+        @media (min-width: 768px) {
+            .offcanvas-md { position: sticky; top: 20px; height: calc(100vh - 100px); }
+        }
+        .date-picker-group { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm mb-4">
+        <div class="container-fluid">
+            <button class="btn btn-light d-md-none me-2" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">
+                <span class="material-symbols-outlined align-middle"> menu </span>
+            </button>
+            <a class="navbar-brand fw-bold text-primary" href="#">
+                <span class="material-symbols-outlined align-middle me-1">sensors</span>
+                Wi-Fi 人流偵測系統
+            </a>
+        </div>
+    </nav>
+
+    <div class="container d-flex flex-wrap">
+        <div class="col-md-3 p-2">
+            <div class="offcanvas-md offcanvas-start bg-white rounded shadow-sm" tabindex="-1" id="offcanvasResponsive"
+                aria-labelledby="offcanvasResponsiveLabel">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title fw-bold" id="offcanvasResponsiveLabel">主選單</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                        data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-3">
+                    <div class="nav flex-column w-100 nav-pills gap-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <button class="nav-link active text-start d-flex align-items-center" id="v-pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                            <span class="material-symbols-outlined me-2"> dashboard </span> 總覽
+                        </button>
+                        <button class="nav-link text-start d-flex align-items-center" id="v-pills-settings-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                            <span class="material-symbols-outlined me-2"> settings </span> 系統設定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-9 p-2">
+            <div class="tab-content" id="v-pills-tabContent">
+                
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+                    <h4 class="mb-3">📡 人流監控儀表板</h4>
+                    
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-body rounded d-flex justify-content-between flex-wrap gap-3">
+                            <div class="date-picker-group">
+                                <div>
+                                    <label for="startDate" class="form-label mb-1" style="font-size: 0.85rem;">開始時間</label>
+                                    <input type="datetime-local" class="form-control form-control-sm" id="startDate" onchange="updateChart()">
+                                </div>
+                                <div class="pb-1 fw-bold text-muted">~</div>
+                                <div>
+                                    <label for="endDate" class="form-label mb-1" style="font-size: 0.85rem;">結束時間</label>
+                                    <input type="datetime-local" class="form-control form-control-sm" id="endDate" onchange="updateChart()">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="setToday()">今天</button>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="setLast24Hours()">近24小時</button>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end pb-1">
+                                <button class="btn btn-primary btn-sm d-flex align-items-center" onclick="fetchData()">
+                                    <span class="material-symbols-outlined me-1 fs-6">refresh</span> 更新資料
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm bg-primary text-white h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title opacity-75">當前推估人數</h6>
+                                    <h2 class="display-5 fw-bold mb-0" id="currentPeople">--</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">所選區間最高峰</h6>
+                                    <h3 class="fw-bold text-danger mb-0" id="peakPeople">--</h3>
+                                    <small class="text-muted" id="peakTime">發生於 --:--</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-muted">過濾常駐裝置數</h6>
+                                    <h3 class="fw-bold text-secondary mb-0" id="blockedDevices">--</h3>
+                                    <small class="text-muted">已列入黑名單</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-white border-0 pt-4 pb-0 d-flex justify-content-between">
+                            <h6 class="fw-bold mb-0">裝置數量趨勢圖</h6>
+                            <small class="text-muted" id="lastUpdateTime">狀態：等待載入中...</small>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="trendChart" height="100"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
+                    <h4 class="mb-3">系統設定</h4>
+                    <div class="card shadow-sm border-0 mb-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold">API 連線設定</h6>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">AWS API Gateway 網址</label>
+                                <input type="text" class="form-control" id="apiUrlInput" value="https://xxxxxx.execute-api.us-east-1.amazonaws.com/prod/traffic" placeholder="https://...">
+                            </div>
+                            <button class="btn btn-outline-primary" onclick="saveSettings()">儲存設定</button>
+                            <span id="saveStatus" class="ms-2 text-success" style="display:none;">已儲存！</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let myChart = null; 
+        let globalRawData = []; 
+
+        let API_URL = localStorage.getItem('wifi_api_url') || "https://xxxxxx.execute-api.us-east-1.amazonaws.com/prod/traffic";
+        document.getElementById('apiUrlInput').value = API_URL;
+
+        // 初始化
+        document.addEventListener("DOMContentLoaded", () => {
+            initDatePickers();
+            fetchData();
+        });
+
+        // ================= 日期選擇器相關 =================
+        function formatDateTimeLocal(date) {
+            const tzoffset = date.getTimezoneOffset() * 60000;
+            return new Date(date - tzoffset).toISOString().slice(0, 16);
+        }
+
+        function initDatePickers() {
+            setLast24Hours(); 
+        }
+
+        function setLast24Hours() {
+            const end = new Date();
+            const start = new Date(end.getTime() - (24 * 60 * 60 * 1000));
+            document.getElementById('startDate').value = formatDateTimeLocal(start);
+            document.getElementById('endDate').value = formatDateTimeLocal(end);
+            updateChart();
+        }
+
+        function setToday() {
+            const start = new Date();
+            start.setHours(0, 0, 0, 0); 
+            const end = new Date();
+            end.setHours(23, 59, 59, 999); 
+            document.getElementById('startDate').value = formatDateTimeLocal(start);
+            document.getElementById('endDate').value = formatDateTimeLocal(end);
+            updateChart();
+        }
+        // =======================================================
+
+        async function fetchData() {
+            document.getElementById('lastUpdateTime').innerText = '狀態：正在同步資料...';
+            
+            try {
+                if(API_URL.includes("xxxxxx")) {
+                    console.log("載入預覽用測試資料...");
+                    globalRawData = generateMockData();
+                } else {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error('網路回應錯誤');
+                    globalRawData = await response.json();
+                }
+
+                document.getElementById('lastUpdateTime').innerText = `狀態：最後更新於 ${new Date().toLocaleTimeString()}`;
+                updateChart();
+            } catch (error) {
+                console.error("抓取資料失敗:", error);
+                document.getElementById('lastUpdateTime').innerText = '狀態：連線失敗，請檢查設定或 F12';
+                document.getElementById('lastUpdateTime').classList.add('text-danger');
+            }
+        }
+
+        function updateChart() {
+            if (globalRawData.length === 0) return;
+
+            const startInput = document.getElementById('startDate').value;
+            const endInput = document.getElementById('endDate').value;
+            
+            if(!startInput || !endInput) return;
+
+            const startTimestamp = new Date(startInput).getTime() / 1000;
+            const endTimestamp = new Date(endInput).getTime() / 1000;
+
+            const filteredData = globalRawData
+                .filter(item => item.timestamp >= startTimestamp && item.timestamp <= endTimestamp)
+                .sort((a, b) => a.timestamp - b.timestamp);
+
+            const timeSpanHours = (endTimestamp - startTimestamp) / 3600;
+            const showDateInLabel = timeSpanHours > 24;
+
+            const labels = filteredData.map(item => {
+                let date = new Date(item.timestamp * 1000);
+                if (showDateInLabel) {
+                    return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                } else {
+                    return date.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+                }
+            });
+            
+            const realCounts = filteredData.map(item => item.filtered_count || item.device_count || 0);
+            const rawCounts = filteredData.map(item => item.raw_count || item.device_count || 0);
+
+            if (myChart) myChart.destroy();
+
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '真實人數 (已過濾)',
+                            data: realCounts,
+                            borderColor: '#0d6efd',
+                            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 2
+                        },
+                        {
+                            label: '含常駐裝置總數',
+                            data: rawCounts,
+                            borderColor: '#adb5bd',
+                            borderDash: [5, 5],
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // 同步更新數據面板
+            updateAnalytics(filteredData, globalRawData);
+        }
+
+        function updateAnalytics(filteredDataForChart, allRawData) {
+            if (allRawData.length === 0) return;
+
+            const latestRecord = allRawData[allRawData.length - 1];
+            document.getElementById('currentPeople').innerText = latestRecord.filtered_count || latestRecord.device_count || 0;
+
+            let maxPeople = 0;
+            let peakTime = 0;
+            if (filteredDataForChart.length > 0) {
+                filteredDataForChart.forEach(item => {
+                    const count = item.filtered_count || item.device_count || 0;
+                    if(count > maxPeople) {
+                        maxPeople = count;
+                        peakTime = item.timestamp;
+                    }
+                });
+                document.getElementById('peakPeople').innerText = maxPeople;
+                document.getElementById('peakTime').innerText = `發生於 ${new Date(peakTime * 1000).toLocaleTimeString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
+            } else {
+                document.getElementById('peakPeople').innerText = "--";
+                document.getElementById('peakTime').innerText = "無資料";
+            }
+
+            const diff = (latestRecord.raw_count || 0) - (latestRecord.filtered_count || 0);
+            document.getElementById('blockedDevices').innerText = diff > 0 ? diff : 0;
+        }
+
+        function saveSettings() {
+            const newUrl = document.getElementById('apiUrlInput').value;
+            localStorage.setItem('wifi_api_url', newUrl);
+            API_URL = newUrl;
+            
+            const status = document.getElementById('saveStatus');
+            status.style.display = 'inline';
+            setTimeout(() => { status.style.display = 'none'; }, 2000);
+
+            fetchData();
+        }
+
+        function generateMockData() {
+            let mock = [];
+            let now = Math.floor(Date.now() / 1000);
+            for(let i = 24 * 7 * 12; i >= 0; i--) { 
+                let ts = now - (i * 300);
+                let hour = new Date(ts * 1000).getHours();
+                let base = (hour > 8 && hour < 22) ? 120 : 30;
+                let noise = Math.floor(Math.random() * 40) - 20;
+                let real = base + noise;
+                if(real < 5) real = 5;
+                
+                mock.push({
+                    timestamp: ts,
+                    filtered_count: real,
+                    raw_count: real + 3500 
+                });
+            }
+            return mock;
+        }
+    </script>
+</body>
+
+</html>
