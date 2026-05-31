@@ -148,7 +148,7 @@
                     <div class="col-md-4">
                         <div class="card border-0 shadow-sm bg-primary text-white h-100">
                             <div class="card-body">
-                                <h6 class="card-title opacity-75">當前推估人數</h6>
+                                <h6 class="card-title opacity-75">區間內推估人數</h6>
                                 <h2 class="display-5 fw-bold mb-0" id="currentPeople">--</h2>
                             </div>
                         </div>
@@ -389,14 +389,24 @@
         }
 
         function updateAnalytics(filteredDataForChart, allRawData) {
-            if (allRawData.length === 0) return;
+            // 狀況一：資料庫完全沒資料
+            if (allRawData.length === 0) {
+                document.getElementById('currentPeople').innerText = "--";
+                document.getElementById('peakPeople').innerText = "--";
+                document.getElementById('peakTime').innerText = "無資料";
+                document.getElementById('blockedDevices').innerText = "--";
+                return;
+            }
 
-            const latestRecord = allRawData[allRawData.length - 1];
-            document.getElementById('currentPeople').innerText = latestRecord.filtered_count || latestRecord.device_count || 0;
-
-            let maxPeople = 0;
-            let peakTime = 0;
+            // 狀況二：您選擇的「時段內」有資料
             if (filteredDataForChart.length > 0) {
+                // 1. 抓取「所選時段內」的最後一筆資料，作為當前推估人數
+                const latestFilteredRecord = filteredDataForChart[filteredDataForChart.length - 1];
+                document.getElementById('currentPeople').innerText = latestFilteredRecord.filtered_count || latestFilteredRecord.device_count || 0;
+
+                // 2. 抓取「所選時段內」最高峰
+                let maxPeople = 0;
+                let peakTime = 0;
                 filteredDataForChart.forEach(item => {
                     const count = item.filtered_count || item.device_count || 0;
                     if (count > maxPeople) {
@@ -406,13 +416,18 @@
                 });
                 document.getElementById('peakPeople').innerText = maxPeople;
                 document.getElementById('peakTime').innerText = `發生於 ${new Date(peakTime * 1000).toLocaleTimeString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
-            } else {
-                document.getElementById('peakPeople').innerText = "--";
-                document.getElementById('peakTime').innerText = "無資料";
-            }
 
-            const diff = (latestRecord.raw_count || 0) - (latestRecord.filtered_count || 0);
-            document.getElementById('blockedDevices').innerText = diff > 0 ? diff : 0;
+                // 3. 計算該時段內「最後一筆」被過濾的常駐裝置數
+                const diff = (latestFilteredRecord.raw_count || 0) - (latestFilteredRecord.filtered_count || 0);
+                document.getElementById('blockedDevices').innerText = diff > 0 ? diff : 0;
+
+            } else {
+                // 狀況三：資料庫有資料，但您選擇的「時段內」沒資料
+                document.getElementById('currentPeople').innerText = "--";
+                document.getElementById('peakPeople').innerText = "--";
+                document.getElementById('peakTime').innerText = "此區間無資料";
+                document.getElementById('blockedDevices').innerText = "--";
+            }
         }
     </script>
 </body>
