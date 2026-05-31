@@ -148,7 +148,7 @@
                     <div class="col-md-4">
                         <div class="card border-0 shadow-sm bg-primary text-white h-100">
                             <div class="card-body">
-                                <h6 class="card-title opacity-75">區間內推估人數</h6>
+                                <h6 class="card-title opacity-75">區間內平均裝置數</h6>
                                 <h2 class="display-5 fw-bold mb-0" id="currentPeople">--</h2>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                     <div class="col-md-4">
                         <div class="card border-0 shadow-sm h-100">
                             <div class="card-body">
-                                <h6 class="card-title text-muted">過濾常駐裝置數</h6>
+                                <h6 class="card-title text-muted">過濾常駐裝置總數</h6>
                                 <h3 class="fw-bold mb-0" id="blockedDevices">--</h3>
                                 <small class="text-muted">已列入黑名單</small>
                             </div>
@@ -398,29 +398,43 @@
                 return;
             }
 
-            // 狀況二：您選擇的「時段內」有資料
+            // 狀況二：選擇的「時段內」有資料
             if (filteredDataForChart.length > 0) {
-                // 1. 抓取「所選時段內」的最後一筆資料，作為當前推估人數
-                const latestFilteredRecord = filteredDataForChart[filteredDataForChart.length - 1];
-                document.getElementById('currentPeople').innerText = latestFilteredRecord.filtered_count || latestFilteredRecord.device_count || 0;
-
-                // 2. 抓取「所選時段內」最高峰
+                let totalRealPeople = 0; // 用來加總過濾後的真實人數
+                let totalRawPeople = 0;  // 用來加總包含常駐裝置的原始人數
                 let maxPeople = 0;
                 let peakTime = 0;
+
+                // 1. 跑迴圈：把時段內的每一筆資料都加起來，順便找最高峰
                 filteredDataForChart.forEach(item => {
-                    const count = item.filtered_count || item.device_count || 0;
-                    if (count > maxPeople) {
-                        maxPeople = count;
+                    const realCount = item.filtered_count || item.device_count || 0;
+                    const rawCount = item.raw_count || item.device_count || 0;
+                    
+                    totalRealPeople += realCount;
+                    totalRawPeople += rawCount;
+
+                    if (realCount > maxPeople) {
+                        maxPeople = realCount;
                         peakTime = item.timestamp;
                     }
                 });
+
+                // 2. 算出平均值
+                const dataCount = filteredDataForChart.length;
+                const avgRealPeople = Math.round(totalRealPeople / dataCount);
+                const avgRawPeople = Math.round(totalRawPeople / dataCount);
+
+                // 顯示時段內的平均人數
+                document.getElementById('currentPeople').innerText = avgRealPeople;
+                
+                // 顯示最高峰
                 document.getElementById('peakPeople').innerText = maxPeople;
                 document.getElementById('peakTime').innerText = `發生於 ${new Date(peakTime * 1000).toLocaleTimeString('zh-TW', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}`;
 
-                // 3. 計算該時段內「最後一筆」被過濾的常駐裝置數
-                const diff = (latestFilteredRecord.raw_count || 0) - (latestFilteredRecord.filtered_count || 0);
-                document.getElementById('blockedDevices').innerText = diff > 0 ? diff : 0;
-
+                // 顯示擋下的常駐裝置數
+                const avgBlocked = rawCount - realCount;
+                document.getElementById('blockedDevices').innerText = avgBlocked > 0 ? avgBlocked : 0;
+                
             } else {
                 // 狀況三：資料庫有資料，但您選擇的「時段內」沒資料
                 document.getElementById('currentPeople').innerText = "--";
