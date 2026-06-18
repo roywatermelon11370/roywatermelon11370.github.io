@@ -779,7 +779,7 @@ function buildRecipe(id, mushroom, protein, style, method, variant, groupId) {
     tips: [
       mushroom.cookTip,
       protein.cook,
-      `搭配 ${method.side} 很合拍。`,
+      `適合搭配 ${method.side} 。`,
       variant.tip
     ],
     variation: variant.note,
