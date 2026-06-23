@@ -1,73 +1,79 @@
 <!doctype html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>菇菇食譜生成器</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <main class="app-shell">
-      <section class="hero">
-        <img src="assets/mushroom-hero.png" alt="菇類、肉片與香草擺放在廚房料理檯面上">
-        <div class="hero-panel">
-          <p class="eyebrow">5760 組食譜</p>
-          <h1>菇菇食譜生成器</h1>
-          <div class="selector-grid" aria-label="食譜條件">
-            <label>
-              <span>菇類</span>
-              <select id="mushroomSelect"></select>
-            </label>
-            <label>
-              <span>肉類</span>
-              <select id="proteinSelect"></select>
-            </label>
-            <label>
-              <span>風格</span>
-              <select id="styleSelect"></select>
-            </label>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>菇菇食譜生成器</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <img src="assets/mushroom-hero.png" alt="菇類、肉片與香草擺放在廚房料理檯面上">
+      <div class="hero-panel">
+        <p class="eyebrow">5760 組食譜</p>
+        <h1>菇菇食譜生成器</h1>
+        <div class="selector-grid" aria-label="食譜條件">
+          <label>
+            <span>菇類</span>
+            <select id="mushroomSelect"></select>
+          </label>
+          <label>
+            <span>肉類</span>
+            <select id="proteinSelect"></select>
+          </label>
+          <label>
+            <span>風格</span>
+            <select id="styleSelect"></select>
+          </label>
+        </div>
+        <div class="actions">
+          <button class="primary" id="generateBtn" type="button">生成食譜</button>
+          <button class="secondary" id="randomBtn" type="button">隨機搭配</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <article class="recipe-card" id="recipeCard" aria-live="polite"></article>
+      <aside class="side-panel">
+        <div class="stat-strip">
+          <div>
+            <strong id="recipeCount">5760</strong>
+            <span>內建組合</span>
           </div>
-          <div class="actions">
-            <button class="primary" id="generateBtn" type="button">生成食譜</button>
-            <button class="secondary" id="randomBtn" type="button">隨機搭配</button>
+          <div>
+            <strong id="favoriteCount">0</strong>
+            <span>收藏</span>
           </div>
         </div>
-      </section>
 
-      <section class="content-grid">
-        <article class="recipe-card" id="recipeCard" aria-live="polite"></article>
-        <aside class="side-panel">
-          <div class="stat-strip">
-            <div>
-              <strong id="recipeCount">5760</strong>
-              <span>內建組合</span>
-            </div>
-            <div>
-              <strong id="favoriteCount">0</strong>
-              <span>收藏</span>
-            </div>
+        <div class="saved-box">
+          <div class="section-heading">
+            <h2>收藏</h2>
+            <button id="clearFavoritesBtn" type="button">清空</button>
           </div>
+          <ul id="favoritesList" class="favorites-list"></ul>
+        </div>
 
-          <div class="saved-box">
-            <div class="section-heading">
-              <h2>收藏</h2>
-              <button id="clearFavoritesBtn" type="button">清空</button>
-            </div>
-            <ul id="favoritesList" class="favorites-list"></ul>
+        <div class="matrix-box">
+          <div class="section-heading">
+            <h2>可選組合</h2>
           </div>
+          <div id="comboMatrix" class="combo-matrix"></div>
+        </div>
+      </aside>
+    </section>
 
-          <div class="matrix-box">
-            <div class="section-heading">
-              <h2>可選組合</h2>
-            </div>
-            <div id="comboMatrix" class="combo-matrix"></div>
-          </div>
-        </aside>
-      </section>
+    <footer class="site-footer">包含 AI 生成的資訊，內容僅供參考</footer>
+  </main>
 
-      <footer class="site-footer">包含 AI 生成的資訊，內容僅供參考</footer>
-    </main>
+  <script src="script.js"></script>
+</body>
 
-    <script src="script.js"></script>
-  </body>
 </html>
