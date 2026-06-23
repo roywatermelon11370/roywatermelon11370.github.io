@@ -511,6 +511,13 @@ select option {
   background: var(--leaf);
 }
 
+.site-footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 @media (max-width: 900px) {
   .content-grid,
   .recipe-layout {
